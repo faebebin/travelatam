@@ -4,10 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Using OpenLayers with Vite</title>
+    <title>View Animation</title>
   </head>
   <body>
     <div id="map"></div>
+    <button id="rotate-left" title="Rotate clockwise">↻</button>
+    <button id="rotate-right" title="Rotate counterclockwise">↺</button>
+    <button id="pan-to-london">Pan to London</button>
+    <button id="elastic-to-moscow">Elastic to Moscow</button>
+    <button id="bounce-to-istanbul">Bounce to Istanbul</button>
+    <button id="spin-to-rome">Spin to Rome</button>
+    <button id="fly-to-bern">Fly to Bern</button>
+    <button id="rotate-around-rome">Rotate around Rome</button>
+    <button id="tour">Take a tour</button>
+    <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
+    <script src="https://unpkg.com/elm-pep@1.0.6/dist/elm-pep.js"></script>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
