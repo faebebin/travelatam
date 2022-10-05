@@ -5,14 +5,14 @@ import OSM from 'ol/source/OSM';
 import {easeIn, easeOut} from 'ol/easing';
 import {fromLonLat} from 'ol/proj';
 
-const london = fromLonLat([-0.12755, 51.507222]);
-const moscow = fromLonLat([37.6178, 55.7517]);
-const istanbul = fromLonLat([28.9744, 41.0128]);
-const rome = fromLonLat([12.5, 41.9]);
-const bern = fromLonLat([7.4458, 46.95]);
+const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
+const madridAirport = fromLonLat([40.4989, -3.5748].reverse());
+const medellinAirport = fromLonLat([6.167265, -75.423193].reverse());
+const cartagenaAirport = fromLonLat([10.446947, -75.512570].reverse());
+const cartagenaHostalRepublica = fromLonLat([10.425705, -75.548614].reverse());
 
 const view = new View({
-  center: istanbul,
+  center: medellinAirport,
   zoom: 6,
 });
 
@@ -80,12 +80,12 @@ onClick('rotate-around-rome', function () {
   view.animate(
     {
       rotation: rotation + Math.PI,
-      anchor: rome,
+      anchor: cartagenaAirport,
       easing: easeIn,
     },
     {
       rotation: rotation + 2 * Math.PI,
-      anchor: rome,
+      anchor: cartagenaAirport,
       easing: easeOut,
     }
   );
@@ -93,14 +93,14 @@ onClick('rotate-around-rome', function () {
 
 onClick('pan-to-london', function () {
   view.animate({
-    center: london,
+    center: zurichAirport,
     duration: 2000,
   });
 });
 
 onClick('elastic-to-moscow', function () {
   view.animate({
-    center: moscow,
+    center: madridAirport,
     duration: 2000,
     easing: elastic,
   });
@@ -108,7 +108,7 @@ onClick('elastic-to-moscow', function () {
 
 onClick('bounce-to-istanbul', function () {
   view.animate({
-    center: istanbul,
+    center: medellinAirport,
     duration: 2000,
     easing: bounce,
   });
@@ -120,14 +120,14 @@ onClick('spin-to-rome', function () {
   view.animate(
     {
       center: [
-        center[0] + (rome[0] - center[0]) / 2,
-        center[1] + (rome[1] - center[1]) / 2,
+        center[0] + (cartagenaAirport[0] - center[0]) / 2,
+        center[1] + (cartagenaAirport[1] - center[1]) / 2,
       ],
       rotation: Math.PI,
       easing: easeIn,
     },
     {
-      center: rome,
+      center: cartagenaAirport,
       rotation: 2 * Math.PI,
       easing: easeOut,
     }
@@ -170,11 +170,11 @@ function flyTo(location, done) {
 }
 
 onClick('fly-to-bern', function () {
-  flyTo(bern, function () {});
+  flyTo(cartagenaHostalRepublica, function () {});
 });
 
 function tour() {
-  const locations = [london, bern, rome, moscow, istanbul];
+  const locations = [zurichAirport, madridAirport, medellinAirport, cartagenaAirport, cartagenaHostalRepublica];
   let index = -1;
   function next(more) {
     if (more) {
