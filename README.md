@@ -1,5 +1,8 @@
 # very WIP
 
+new approach
+use instragram api
+
 # travelatam
 Visualize my Latinamerica travel adventure 2022
 
