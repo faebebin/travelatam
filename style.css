@@ -11,3 +11,10 @@ html, body {
   width: 100%;
   z-index: -1;
 }
+#tour {
+  position: absolute;
+  right: 20px;
+  top: 2;
+  padding: 10px;
+  top: 20px;       
+}
