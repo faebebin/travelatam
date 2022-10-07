@@ -59,7 +59,7 @@ function elastic(t) {
 }
 
 function onClick(id, callback) {
-  document.getElementById(id).addEventListener('click', callback);
+  document.getElementById(id)?.addEventListener('click', callback);
 }
 
 onClick('rotate-left', function () {
