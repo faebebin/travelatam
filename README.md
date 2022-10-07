@@ -6,6 +6,8 @@ use instragram api
 # travelatam
 Visualize my Latinamerica travel adventure 2022
 
+IDEA longterm: photo first (insta) travel animation. ie maintain your insta travel adding geo-location and then having this client animate your travel :)
+
 # Using OpenLayers + Vite
 Following https://openlayers.org/doc/quickstart.html
 
