@@ -3,7 +3,7 @@ import { Map, View, Overlay } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { fromLonLat } from 'ol/proj';
-import { getMediaUrls } from './helpers/media'
+import { getPostItems } from './helpers/media'
 import { createImageCollectionElement } from './helpers/htmlElements'
 
 const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
@@ -12,25 +12,6 @@ const medellinAirport = fromLonLat([6.167265, -75.423193].reverse());
 const cartagenaAirport = fromLonLat([10.446947, -75.512570].reverse());
 const cartagenaHostalRepublica = fromLonLat([10.425705, -75.548614].reverse());
 
-// Yes, I hardcoded my shortlived readonly insta api token for this frontend-only POC :D
-// But if you want to see my insta media, rather just connect with me, I will accept ;)
-const INSTA_API_TOKEN = 'IGQVJVREFMaWVpQjMtMmFweEw1TW5TSDNYTFZA0LW5qS3BVS0lmRkprVzhWRzZAfckxVaG5GX1RaQlF0N2w2dnNLU1V6U1hLM09LRkoxQVh3MENFQ3FCQWkwOE9ER3I5Rll3M3Uya3JB'
-
-// all fields: caption,id,media_type,media_url,permalink,thumbnail_url,timestamp,username
-
-// Add a location or coordinates per post/album in the form "travelatam[lat,lon]"
-// The client will make a stop there and request and display the photos.
-//
-// TODO: https://www.npmjs.com/package/node-geocoder
-// get coordinates from location name
-
-async function getPosts() {
-  const fields = 'id,caption'
-  // Posts / Albums / Carousel Albums (eg Bogota)
-  fetch(`https://graph.instagram.com/me/media?fields=${fields}&access_token=${INSTA_API_TOKEN}`)
-    .then(response => response.json())
-    .then(data => console.log(data))
-}
 
 // TODO read Posts captions
 //  for each caption containing '[\d,\d]'
@@ -41,16 +22,6 @@ async function getPosts() {
 //          with media_url create popup with <img url=media_url
 //
 //   fly to next lat,lon :)
-
-async function getPostItems() {
-  const mediaId = '17988232330581426'
-  const fields = 'media_type,media_url'
-  const url = `https://graph.instagram.com/${mediaId}/children?fields=${fields}&access_token=${INSTA_API_TOKEN}`
-  const response = await fetch(url)
-  // TODO if !response.ok { return text}
-  const json = await response.json()
-  return getMediaUrls(json.data)
-}
 
 /* ======================
   * OL-Map
@@ -100,41 +71,6 @@ closer.onclick = function() {
   // {boolean} Don't follow the href.
   return false;
 };
-
-/* ======================
-  * Movements
-  */
-
-// A bounce easing method (from https://github.com/DmitryBaranovskiy/raphael).
-function bounce(t) {
-  const s = 7.5625;
-  const p = 2.75;
-  let l;
-  if (t < 1 / p) {
-    l = s * t * t;
-  } else {
-    if (t < 2 / p) {
-      t -= 1.5 / p;
-      l = s * t * t + 0.75;
-    } else {
-      if (t < 2.5 / p) {
-        t -= 2.25 / p;
-        l = s * t * t + 0.9375;
-      } else {
-        t -= 2.625 / p;
-        l = s * t * t + 0.984375;
-      }
-    }
-  }
-  return l;
-}
-
-// An elastic easing method (from https://github.com/DmitryBaranovskiy/raphael).
-function elastic(t) {
-  return (
-    Math.pow(2, -10 * t) * Math.sin(((t - 0.075) * (2 * Math.PI)) / 0.3) + 1
-  );
-}
 
 function onClick(id, callback) {
   document.getElementById(id)?.addEventListener('click', callback);

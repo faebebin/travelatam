@@ -1,7 +1,55 @@
 import { describe, expect, it } from 'vitest'
-import { getMediaUrls } from '../helpers/media'
+import { getMediaUrls, getPostsCoordinates } from '../helpers/media'
 
-const data = {
+const posts = {
+  "data": [
+    {
+      "id": "17952176918177715",
+      "caption": "Cartagena, [10.425664,-75.548631]"
+    },
+    {
+      "id": "17864596673760827"
+    },
+    {
+      "id": "17988232330581426",
+      "caption": "Bogota, [4.605762,-74.055313]"
+    },
+    {
+      "id": "18031800007247472",
+      "caption": "Schweizer Schwan"
+    },
+    {
+      "id": "17915301601392503",
+      "caption": "m\u1ed9t hai ba yoooo"
+    },
+  ],
+  "paging": {
+    "cursors": {
+      "before": "QVFIUmd6alB0U0VpUUZAfQ2pRRU1BQ0g1bUtrZAE1XYWVHZAmNrZA2NUdjBwOGpOUWlvd2c2WmRaeWhrSTBzM1N5N094QVB1Y2dZAQzVDeW5JbE9TWlIwX0ZAtVUNn",
+      "after": "QVFIUmdRMGpTVHQzLUI3LUs0UnlEVkpyOXBaSk9jR2VTNFpnLXk5eWwtdWtiTTZA3QTRsN3RFb3dCem5ZATWZAFUll0SGJtdTRCMHZAnLW0xaFI1Qm9Ra0VZAWUp3"
+    }
+  }
+}
+
+describe("getPostsCoordinates", () => {
+  it('returns only coordinates if caption contains them', () => {
+    const captionAndCoordinates = [
+    {
+      id: "17952176918177715",
+      coordinates: [10.425664,-75.548631],
+      caption: "Cartagena, [10.425664,-75.548631]"
+    },
+    {
+      id: "17988232330581426",
+      coordinates: [4.605762,-74.055313],
+      caption: "Bogota, [4.605762,-74.055313]"
+    },
+    ]
+    expect(getPostsCoordinates(posts.data)).toEqual(captionAndCoordinates);
+  });
+});
+
+const postChildren = {
   // TODO get from fixtures
   "data": [
     {
@@ -30,6 +78,8 @@ const data = {
 
 describe("getMediaUrls", () => {
   it('returns only urls for type IMAGE', () => { // TODO adjust for vide thumbnails
-    expect(getMediaUrls(data.data)).toEqual(['url1', 'url3']);
+    expect(getMediaUrls(postChildren.data)).toEqual(['url1', 'url3']);
   });
 });
+
+
