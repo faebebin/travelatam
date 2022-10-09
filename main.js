@@ -1,9 +1,11 @@
 import './style.css';
-import { Map, View } from 'ol';
+import { Map, View, Overlay } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { easeIn, easeOut } from 'ol/easing';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
+import XYZ from 'ol/source/XYZ';
+import { toStringHDMS } from 'ol/coordinate';
 
 const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
 const madridAirport = fromLonLat([40.4989, -3.5748].reverse());
@@ -55,11 +57,24 @@ async function getPostItems() {
 }
 
 // await getPosts() TODO readout ones with [lat, lon]
-await getPostItems()
+// await getPostItems()
 
 /* ======================
   * OL-Map
   */
+
+const container = document.getElementById('popup');
+const content = document.getElementById('popup-content');
+const closer = document.getElementById('popup-closer');
+
+const overlay = new Overlay({
+  element: container,
+  autoPan: {
+    animation: {
+      duration: 250,
+    },
+  },
+});
 
 const view = new View({
   center: medellinAirport,
@@ -75,8 +90,20 @@ const map = new Map({
     }),
   ],
   view: view,
+  overlays: [overlay],
 });
 
+map.on('singleclick', function(evt) {
+  content.innerHTML = '<p>You clicked here:</p><code>' + evt.coordinate + '</code>';
+  overlay.setPosition(evt.coordinate);
+});
+
+closer.onclick = function() {
+  overlay.setPosition(undefined);
+  closer.blur();
+  // {boolean} Don't follow the href.
+  return false;
+};
 
 /* ======================
   * Movements
