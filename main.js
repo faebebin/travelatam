@@ -2,7 +2,6 @@ import './style.css';
 import { Map, View, Overlay } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import { easeIn, easeOut } from 'ol/easing';
 import { fromLonLat } from 'ol/proj';
 import { getMediaUrls } from './helpers/media'
 import { createImageCollectionElement } from './helpers/htmlElements'
@@ -25,10 +24,10 @@ const INSTA_API_TOKEN = 'IGQVJVREFMaWVpQjMtMmFweEw1TW5TSDNYTFZA0LW5qS3BVS0lmRkpr
 // TODO: https://www.npmjs.com/package/node-geocoder
 // get coordinates from location name
 
-const CAROUSEL_ALBUM_FIELDS = 'id,caption'
 async function getPosts() {
+  const fields = 'id,caption'
   // Posts / Albums / Carousel Albums (eg Bogota)
-  fetch(`https://graph.instagram.com/me/media?fields=${CAROUSEL_ALBUM_FIELDS}&access_token=${INSTA_API_TOKEN}`)
+  fetch(`https://graph.instagram.com/me/media?fields=${fields}&access_token=${INSTA_API_TOKEN}`)
     .then(response => response.json())
     .then(data => console.log(data))
 }
@@ -198,84 +197,4 @@ function tour() {
 }
 
 onClick('tour', tour);
-
-// Further moves ... ========================================
-//
-
-onClick('fly-to-bern', function() {
-  flyTo(cartagenaHostalRepublica, function() { });
-});
-
-
-onClick('rotate-left', function() {
-  view.animate({
-    rotation: view.getRotation() + Math.PI / 2,
-  });
-});
-
-onClick('rotate-right', function() {
-  view.animate({
-    rotation: view.getRotation() - Math.PI / 2,
-  });
-});
-
-onClick('rotate-around-rome', function() {
-  // Rotation animation takes the shortest arc, so animate in two parts
-  const rotation = view.getRotation();
-  view.animate(
-    {
-      rotation: rotation + Math.PI,
-      anchor: cartagenaAirport,
-      easing: easeIn,
-    },
-    {
-      rotation: rotation + 2 * Math.PI,
-      anchor: cartagenaAirport,
-      easing: easeOut,
-    }
-  );
-});
-
-onClick('pan-to-london', function() {
-  view.animate({
-    center: zurichAirport,
-    duration: 2000,
-  });
-});
-
-onClick('elastic-to-moscow', function() {
-  view.animate({
-    center: madridAirport,
-    duration: 2000,
-    easing: elastic,
-  });
-});
-
-onClick('bounce-to-istanbul', function() {
-  view.animate({
-    center: medellinAirport,
-    duration: 2000,
-    easing: bounce,
-  });
-});
-
-onClick('spin-to-rome', function() {
-  // Rotation animation takes the shortest arc, so animate in two parts
-  const center = view.getCenter();
-  view.animate(
-    {
-      center: [
-        center[0] + (cartagenaAirport[0] - center[0]) / 2,
-        center[1] + (cartagenaAirport[1] - center[1]) / 2,
-      ],
-      rotation: Math.PI,
-      easing: easeIn,
-    },
-    {
-      center: cartagenaAirport,
-      rotation: 2 * Math.PI,
-      easing: easeOut,
-    }
-  );
-});
 
