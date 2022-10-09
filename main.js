@@ -6,7 +6,7 @@ import { easeIn, easeOut } from 'ol/easing';
 import { fromLonLat, toLonLat } from 'ol/proj';
 import XYZ from 'ol/source/XYZ';
 import { toStringHDMS } from 'ol/coordinate';
-import { getMediaUrls } from 'helpers/media'
+import { getMediaUrls } from './helpers/media'
 
 const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
 const madridAirport = fromLonLat([40.4989, -3.5748].reverse());
