@@ -21,8 +21,7 @@ export async function getPosts() { // [{id, coordinates, caption}]
   return getPostsCoordinates(json.data)
 }
 
-export async function getPostItems() {
-  const mediaId = '17988232330581426'
+export async function getPostItems(mediaId) {
   const fields = 'media_type,media_url'
   const url = `https://graph.instagram.com/${mediaId}/children?fields=${fields}&access_token=${INSTA_API_TOKEN}`
   const response = await fetch(url)

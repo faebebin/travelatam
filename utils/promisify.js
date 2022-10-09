@@ -17,10 +17,10 @@ export function animate(view, var_args) {
         // it will get called at the end of an animation series,
         // with true if the series completed on its own
         // or false if it was cancelled.
-        if (!animationComplete) { // cancelled
-          reject()
+        if (!animationComplete) {
+          reject('cancelled')
         }
-        resolve()
+        resolve('completed')
       }
     )
   })
