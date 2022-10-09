@@ -6,6 +6,7 @@ import { easeIn, easeOut } from 'ol/easing';
 import { fromLonLat, toLonLat } from 'ol/proj';
 import XYZ from 'ol/source/XYZ';
 import { toStringHDMS } from 'ol/coordinate';
+import { getMediaUrls } from 'helpers/media'
 
 const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
 const madridAirport = fromLonLat([40.4989, -3.5748].reverse());
@@ -46,12 +47,14 @@ async function getPosts() {
 //
 //   fly to next lat,lon :)
 
-const CAROUSEL_CHILDREN_FIELDS = 'media_type,media_url'
 async function getPostItems() {
-  const response = await fetch(`https://graph.instagram.com/17988232330581426/children?fields=${CAROUSEL_CHILDREN_FIELDS}&access_token=${INSTA_API_TOKEN}`)
+  const mediaId = '17988232330581426'
+  const fields = 'media_type,media_url'
+  const url = `https://graph.instagram.com/${mediaId}/children?fields=${fields}&access_token=${INSTA_API_TOKEN}`
+  const response = await fetch(url)
   // TODO if !response.ok { return text}
   const json = await response.json()
-  return json.data[0].media_url
+  return getMediaUrls(json.data)
 }
 
 /* ======================
@@ -89,7 +92,6 @@ const map = new Map({
 });
 
 map.on('singleclick', async function(evt) {
-  // const img_url = 'https://scontent.cdninstagram.com/v/t51.29350-15/310963308_3205356926382408_2553179327949290407_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8ae9d6&_nc_ohc=LHtOXrbz1FYAX9PnD_N&_nc_ht=scontent.cdninstagram.com&edm=ABbrh9MEAAAA&oh=00_AT9Y-w9RGTMOLuSCwosSY_H4zmz-LFjCVn0S5H3R-NV-EA&oe=6345EF41'
   const img_url = await getPostItems()
   content.innerHTML = `<img height=100 width=100 src=${img_url}>`;
   overlay.setPosition(evt.coordinate);
