@@ -5,6 +5,7 @@ import OSM from 'ol/source/OSM';
 import { easeIn, easeOut } from 'ol/easing';
 import { fromLonLat } from 'ol/proj';
 import { getMediaUrls } from './helpers/media'
+import { createImageCollectionElement } from './helpers/htmlElements'
 
 const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
 const madridAirport = fromLonLat([40.4989, -3.5748].reverse());
@@ -86,9 +87,11 @@ const map = new Map({
   overlays: [overlay],
 });
 
+
+
 map.on('singleclick', async function(evt) {
-  const img_url = await getPostItems()
-  content.innerHTML = `<img height=100 width=100 src=${img_url}>`;
+  const img_urls = await getPostItems()
+  content.innerHTML = createImageCollectionElement(img_urls);
   overlay.setPosition(evt.coordinate);
 });
 
