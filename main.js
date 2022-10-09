@@ -1,15 +1,65 @@
 import './style.css';
-import {Map, View} from 'ol';
+import { Map, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import {easeIn, easeOut} from 'ol/easing';
-import {fromLonLat} from 'ol/proj';
+import { easeIn, easeOut } from 'ol/easing';
+import { fromLonLat } from 'ol/proj';
 
 const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
 const madridAirport = fromLonLat([40.4989, -3.5748].reverse());
 const medellinAirport = fromLonLat([6.167265, -75.423193].reverse());
 const cartagenaAirport = fromLonLat([10.446947, -75.512570].reverse());
 const cartagenaHostalRepublica = fromLonLat([10.425705, -75.548614].reverse());
+
+const locations = []
+const images = []
+
+// Yes, I hardcoded my shortlived readonly insta api token for this frontend-only POC :D
+// But if you want to see my insta media, rather just connect with me, I will accept ;)
+const INSTA_API_TOKEN = 'IGQVJVREFMaWVpQjMtMmFweEw1TW5TSDNYTFZA0LW5qS3BVS0lmRkprVzhWRzZAfckxVaG5GX1RaQlF0N2w2dnNLU1V6U1hLM09LRkoxQVh3MENFQ3FCQWkwOE9ER3I5Rll3M3Uya3JB'
+
+// all fields: caption,id,media_type,media_url,permalink,thumbnail_url,timestamp,username
+
+// Add a location or coordinates per post/album in the form "travelatam[lat,lon]"
+// The client will make a stop there and request and display the photos.
+//
+// TODO: https://www.npmjs.com/package/node-geocoder
+// get coordinates from location name
+
+const CAROUSEL_ALBUM_FIELDS = 'id,caption'
+async function getPosts() {
+  // Posts / Albums / Carousel Albums (eg Bogota)
+  fetch(`https://graph.instagram.com/me/media?fields=${CAROUSEL_ALBUM_FIELDS}&access_token=${INSTA_API_TOKEN}`)
+    .then(response => response.json())
+    .then(data => console.log(data))
+}
+
+// TODO read Posts captions
+//  for each caption containing '[\d,\d]'
+//    get lat,lon and id
+//
+//      with id => getPostItems
+//        for each item 
+//          with media_url create popup with <img url=media_url
+//
+//   fly to next lat,lon :)
+
+const CAROUSEL_CHILDREN_FIELDS = 'id,media_type,media_url,timestamp'
+async function getPostItems() {
+  fetch(`https://graph.instagram.com/17988232330581426/children?fields=${CAROUSEL_CHILDREN_FIELDS}&access_token=${INSTA_API_TOKEN}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      images.push(data[0].media_url)
+    })
+}
+
+// await getPosts() TODO readout ones with [lat, lon]
+await getPostItems()
+
+/* ======================
+  * OL-Map
+  */
 
 const view = new View({
   center: medellinAirport,
@@ -26,6 +76,11 @@ const map = new Map({
   ],
   view: view,
 });
+
+
+/* ======================
+  * Movements
+  */
 
 // A bounce easing method (from https://github.com/DmitryBaranovskiy/raphael).
 function bounce(t) {
@@ -62,78 +117,6 @@ function onClick(id, callback) {
   document.getElementById(id)?.addEventListener('click', callback);
 }
 
-onClick('rotate-left', function () {
-  view.animate({
-    rotation: view.getRotation() + Math.PI / 2,
-  });
-});
-
-onClick('rotate-right', function () {
-  view.animate({
-    rotation: view.getRotation() - Math.PI / 2,
-  });
-});
-
-onClick('rotate-around-rome', function () {
-  // Rotation animation takes the shortest arc, so animate in two parts
-  const rotation = view.getRotation();
-  view.animate(
-    {
-      rotation: rotation + Math.PI,
-      anchor: cartagenaAirport,
-      easing: easeIn,
-    },
-    {
-      rotation: rotation + 2 * Math.PI,
-      anchor: cartagenaAirport,
-      easing: easeOut,
-    }
-  );
-});
-
-onClick('pan-to-london', function () {
-  view.animate({
-    center: zurichAirport,
-    duration: 2000,
-  });
-});
-
-onClick('elastic-to-moscow', function () {
-  view.animate({
-    center: madridAirport,
-    duration: 2000,
-    easing: elastic,
-  });
-});
-
-onClick('bounce-to-istanbul', function () {
-  view.animate({
-    center: medellinAirport,
-    duration: 2000,
-    easing: bounce,
-  });
-});
-
-onClick('spin-to-rome', function () {
-  // Rotation animation takes the shortest arc, so animate in two parts
-  const center = view.getCenter();
-  view.animate(
-    {
-      center: [
-        center[0] + (cartagenaAirport[0] - center[0]) / 2,
-        center[1] + (cartagenaAirport[1] - center[1]) / 2,
-      ],
-      rotation: Math.PI,
-      easing: easeIn,
-    },
-    {
-      center: cartagenaAirport,
-      rotation: 2 * Math.PI,
-      easing: easeOut,
-    }
-  );
-});
-
 function flyTo(location, done) {
   const duration = 2000;
   const zoom = view.getZoom();
@@ -169,10 +152,6 @@ function flyTo(location, done) {
   );
 }
 
-onClick('fly-to-bern', function () {
-  flyTo(cartagenaHostalRepublica, function () {});
-});
-
 function tour() {
   const locations = [zurichAirport, madridAirport, medellinAirport, cartagenaAirport, cartagenaHostalRepublica];
   let index = -1;
@@ -181,7 +160,7 @@ function tour() {
       ++index;
       if (index < locations.length) {
         const delay = index === 0 ? 0 : 750;
-        setTimeout(function () {
+        setTimeout(function() {
           flyTo(locations[index], next);
         }, delay);
       } else {
@@ -195,3 +174,84 @@ function tour() {
 }
 
 onClick('tour', tour);
+
+// Further moves ... ========================================
+//
+
+onClick('fly-to-bern', function() {
+  flyTo(cartagenaHostalRepublica, function() { });
+});
+
+
+onClick('rotate-left', function() {
+  view.animate({
+    rotation: view.getRotation() + Math.PI / 2,
+  });
+});
+
+onClick('rotate-right', function() {
+  view.animate({
+    rotation: view.getRotation() - Math.PI / 2,
+  });
+});
+
+onClick('rotate-around-rome', function() {
+  // Rotation animation takes the shortest arc, so animate in two parts
+  const rotation = view.getRotation();
+  view.animate(
+    {
+      rotation: rotation + Math.PI,
+      anchor: cartagenaAirport,
+      easing: easeIn,
+    },
+    {
+      rotation: rotation + 2 * Math.PI,
+      anchor: cartagenaAirport,
+      easing: easeOut,
+    }
+  );
+});
+
+onClick('pan-to-london', function() {
+  view.animate({
+    center: zurichAirport,
+    duration: 2000,
+  });
+});
+
+onClick('elastic-to-moscow', function() {
+  view.animate({
+    center: madridAirport,
+    duration: 2000,
+    easing: elastic,
+  });
+});
+
+onClick('bounce-to-istanbul', function() {
+  view.animate({
+    center: medellinAirport,
+    duration: 2000,
+    easing: bounce,
+  });
+});
+
+onClick('spin-to-rome', function() {
+  // Rotation animation takes the shortest arc, so animate in two parts
+  const center = view.getCenter();
+  view.animate(
+    {
+      center: [
+        center[0] + (cartagenaAirport[0] - center[0]) / 2,
+        center[1] + (cartagenaAirport[1] - center[1]) / 2,
+      ],
+      rotation: Math.PI,
+      easing: easeIn,
+    },
+    {
+      center: cartagenaAirport,
+      rotation: 2 * Math.PI,
+      easing: easeOut,
+    }
+  );
+});
+
