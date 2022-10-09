@@ -3,9 +3,7 @@ import { Map, View, Overlay } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { easeIn, easeOut } from 'ol/easing';
-import { fromLonLat, toLonLat } from 'ol/proj';
-import XYZ from 'ol/source/XYZ';
-import { toStringHDMS } from 'ol/coordinate';
+import { fromLonLat } from 'ol/proj';
 import { getMediaUrls } from './helpers/media'
 
 const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
@@ -13,9 +11,6 @@ const madridAirport = fromLonLat([40.4989, -3.5748].reverse());
 const medellinAirport = fromLonLat([6.167265, -75.423193].reverse());
 const cartagenaAirport = fromLonLat([10.446947, -75.512570].reverse());
 const cartagenaHostalRepublica = fromLonLat([10.425705, -75.548614].reverse());
-
-const locations = []
-const images = []
 
 // Yes, I hardcoded my shortlived readonly insta api token for this frontend-only POC :D
 // But if you want to see my insta media, rather just connect with me, I will accept ;)
