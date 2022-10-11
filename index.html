@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>View Animation</title>
-  </head>
-  <body>
-    <div id="map"></div>
-    <div id="popup" class="ol-popup">
-      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-      <div id="popup-content"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Animation</title>
+</head>
+
+<body>
+  <div id="map"></div>
+  <div id="popup" class="ol-popup">
+    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+    <div id="popup-content">
+      <div id="popup-caption"></div>
+      <div id="popup-images"></div>
     </div>
-    <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
-    <script src="https://unpkg.com/elm-pep@1.0.6/dist/elm-pep.js"></script>
-    <button id="tour">Vamos 🎒</button>
-    <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
-    <script src="https://unpkg.com/elm-pep@1.0.6/dist/elm-pep.js"></script>
-    <script type="module" src="./main.js"></script>
-  </body>
+  </div>
+  <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
+  <script src="https://unpkg.com/elm-pep@1.0.6/dist/elm-pep.js"></script>
+  <button id="tour">Vamos 🎒</button>
+  <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
+  <script src="https://unpkg.com/elm-pep@1.0.6/dist/elm-pep.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+
 </html>
