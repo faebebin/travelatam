@@ -1,4 +1,4 @@
-import { extractCoordinatesLatLon, fromLatLon } from '../utils/coordinates'
+import { extractCoordinatesLatLon, fromLatLon } from '../utils/parseCaption'
 
 // Yes, I hardcoded my shortlived readonly insta api token for this frontend-only POC :D
 // But if you want to see my insta media, rather just connect with me, I will accept ;)

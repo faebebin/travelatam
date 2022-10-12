@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { extractCoordinatesLatLon, fromLatLon } from '../../utils/coordinates'
+import { extractCoordinatesLatLon, fromLatLon } from '../../utils/parseCaption'
 
 describe("extractCoordinates", () => {
   it('extracts coordinates from a string', () => {

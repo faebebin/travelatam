@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { getMediaUrls, getPostsCoordinates } from '../../helpers/media'
-import { fromLatLon } from '../../utils/coordinates'
+import { fromLatLon } from '../../utils/parseCaption'
 
 const posts = {
   "data": [
