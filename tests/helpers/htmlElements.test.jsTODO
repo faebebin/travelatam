@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createImageCollectionElement, createImageElement } from '../helpers/htmlElements'
+import { createImageCollectionElement, createImageElement } from '../../helpers/htmlElements'
 
 // describe("createImageElement", () => {
 // TODO: vitest 'new Image() is not defined'

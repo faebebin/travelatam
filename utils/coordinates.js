@@ -10,6 +10,7 @@ export function extractCoordinatesLatLon(stringWithCoordinates) {
 }
 
 export function fromLatLon(latLon) {
+  // To default EPSG:3857
   if (!Array.isArray(latLon)) {
     // NOTE: Else strange error '.reverse() not a function'
     return false

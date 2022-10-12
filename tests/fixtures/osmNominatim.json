@@ -1,0 +1,189 @@
+[
+  {
+    "place_id": 299475023,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "relation",
+    "osm_id": 7426387,
+    "boundingbox": [
+      "4.4711754",
+      "4.8331695",
+      "-74.2235137",
+      "-74.0102577"
+    ],
+    "lat": "4.6534649",
+    "lon": "-74.0836453",
+    "display_name": "Bogota, Bogota Capital District - Municipality, Colombia",
+    "class": "boundary",
+    "type": "administrative",
+    "importance": 0.8831743429157826,
+    "icon": "https://nominatim.openstreetmap.org/ui/mapicons/poi_boundary_administrative.p.20.png"
+  },
+  {
+    "place_id": 299674944,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "relation",
+    "osm_id": 12893646,
+    "boundingbox": [
+      "3.7281062",
+      "4.8369566",
+      "-74.4509502",
+      "-73.9890468"
+    ],
+    "lat": "4.6534649",
+    "lon": "-74.0836453",
+    "display_name": "Bogota, Capital District, Colombia",
+    "class": "boundary",
+    "type": "administrative",
+    "importance": 0.8831743429157826,
+    "icon": "https://nominatim.openstreetmap.org/ui/mapicons/poi_boundary_administrative.p.20.png"
+  },
+  {
+    "place_id": 298268562,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "relation",
+    "osm_id": 1387968,
+    "boundingbox": [
+      "3.7281062",
+      "4.8369566",
+      "-74.4509502",
+      "-73.9890468"
+    ],
+    "lat": "4.6534649",
+    "lon": "-74.0836453",
+    "display_name": "Bogota Capital District - Municipality, 11001, Colombia",
+    "class": "boundary",
+    "type": "administrative",
+    "importance": 0.8831743429157826,
+    "icon": "https://nominatim.openstreetmap.org/ui/mapicons/poi_boundary_administrative.p.20.png"
+  },
+  {
+    "place_id": 199934569,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 405944786,
+    "boundingbox": [
+      "4.6064676",
+      "4.6073268",
+      "-74.0716637",
+      "-74.0710521"
+    ],
+    "lat": "4.60695315",
+    "lon": "-74.07132368840931",
+    "display_name": "Sede Central ETB, Cl. 20 #7-44, Bogotá, Carrera 7, UPZs de Bogotá, Localidad La Candelaria, Bogota, Bogota Capital District - Municipality, 111711, Colombia",
+    "class": "building",
+    "type": "public",
+    "importance": 0.5324222070032212
+  },
+  {
+    "place_id": 6664565,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 836006483,
+    "boundingbox": [
+      "7.8576956",
+      "7.8976956",
+      "-72.5066182",
+      "-72.4666182"
+    ],
+    "lat": "7.8776956",
+    "lon": "-72.4866182",
+    "display_name": "Bogota, Cúcuta, Oriental, Norte de Santander, 540006, Colombia",
+    "class": "place",
+    "type": "hamlet",
+    "importance": 0.45,
+    "icon": "https://nominatim.openstreetmap.org/ui/mapicons/poi_place_village.p.20.png"
+  },
+  {
+    "place_id": 36371567,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 2987276233,
+    "boundingbox": [
+      "9.284715",
+      "9.304715",
+      "-75.392365",
+      "-75.372365"
+    ],
+    "lat": "9.294715",
+    "lon": "-75.382365",
+    "display_name": "BOGOTÁ, Sincelejo, Montes de María, Sucre, 700020, Colombia",
+    "class": "place",
+    "type": "neighbourhood",
+    "importance": 0.35
+  },
+  {
+    "place_id": 74818260,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 7063553985,
+    "boundingbox": [
+      "5.1886006",
+      "5.2086006",
+      "-74.7538513",
+      "-74.7338513"
+    ],
+    "lat": "5.1986006",
+    "lon": "-74.7438513",
+    "display_name": "Bogotá, Historisches Zentrum, Honda, Norte, Tolima, 732040, Colombia",
+    "class": "place",
+    "type": "neighbourhood",
+    "importance": 0.35
+  },
+  {
+    "place_id": 5834319,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 703468903,
+    "boundingbox": [
+      "9.3312629",
+      "9.3512629",
+      "-74.5050717",
+      "-74.4850717"
+    ],
+    "lat": "9.3412629",
+    "lon": "-74.4950717",
+    "display_name": "Bogota, Santa Ana, Magdalena, Colombia",
+    "class": "place",
+    "type": "locality",
+    "importance": 0.325,
+    "icon": "https://nominatim.openstreetmap.org/ui/mapicons/poi_place_village.p.20.png"
+  },
+  {
+    "place_id": 5819772,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 703376011,
+    "boundingbox": [
+      "3.0184384",
+      "3.0384384",
+      "-75.1815835",
+      "-75.1615835"
+    ],
+    "lat": "3.0284384",
+    "lon": "-75.1715835",
+    "display_name": "Bogota, Tello, Norte, Huila, Colombia",
+    "class": "place",
+    "type": "locality",
+    "importance": 0.325,
+    "icon": "https://nominatim.openstreetmap.org/ui/mapicons/poi_place_village.p.20.png"
+  },
+  {
+    "place_id": 5756260,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 703227927,
+    "boundingbox": [
+      "5.4943842",
+      "5.5143842",
+      "-73.0475052",
+      "-73.0275052"
+    ],
+    "lat": "5.5043842",
+    "lon": "-73.0375052",
+    "display_name": "Bogota, Tota, Sagamuxi, Boyacá, 152447, Colombia",
+    "class": "place",
+    "type": "locality",
+    "importance": 0.325,
+    "icon": "https://nominatim.openstreetmap.org/ui/mapicons/poi_place_village.p.20.png"
+  }
+]
