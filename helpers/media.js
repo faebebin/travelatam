@@ -13,7 +13,7 @@ const INSTA_API_TOKEN = 'IGQVJVREFMaWVpQjMtMmFweEw1TW5TSDNYTFZA0LW5qS3BVS0lmRkpr
 // get coordinates from location name
 
 export async function getPosts() { // [{id, coordinates, caption}]
-  const fields = 'id,caption,timestamp'
+  const fields = 'id,caption,media_type,media_url,timestamp'
   const url = `https://graph.instagram.com/me/media?fields=${fields}&access_token=${INSTA_API_TOKEN}`
   const response = await fetch(url)
   // TODO if !response.ok { return text}
