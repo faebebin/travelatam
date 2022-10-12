@@ -33,7 +33,7 @@ const posts = {
 }
 
 describe("getPostsCoordinates", () => {
-  it('returns only coordinates if caption contains them', () => {
+  it('returns only coordinates if caption contains them', async () => {
     const captionAndCoordinates = [
       {
         id: "17952176918177715",
@@ -46,7 +46,7 @@ describe("getPostsCoordinates", () => {
         caption: "Bogota, [4.605762,-74.055313]"
       },
     ]
-    expect(getPostsCoordinates(posts.data)).toEqual(captionAndCoordinates);
+    expect(await getPostsCoordinates(posts.data)).toEqual(captionAndCoordinates);
   });
 });
 

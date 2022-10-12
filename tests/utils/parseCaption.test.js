@@ -1,29 +1,31 @@
 import { describe, expect, it } from 'vitest'
-import { extractCoordinatesLatLon, fromLatLon } from '../../utils/parseCaption'
+import { extractLocationLatLon, fromLatLon } from '../../utils/parseCaption'
 
 describe("extractCoordinates", () => {
-  it('extracts coordinates from a string', () => {
+  it('extracts coordinates from a string', async () => {
     const coordinates = '[10.425664,75.548631]'
     const someStringWithCoordinates = `Some text, ${coordinates} and more`
-    expect(extractCoordinatesLatLon(someStringWithCoordinates)).toEqual(JSON.parse(coordinates));
+    expect(await extractLocationLatLon(someStringWithCoordinates)).toEqual(JSON.parse(coordinates));
   });
 
-  it('tolerates whitespaces', () => {
+  it('tolerates whitespaces', async () => {
     const coordinates = '[  10.425664, -75.548631]'
     const someStringWithCoordinates = `Some text, ${coordinates} and more`
-    expect(extractCoordinatesLatLon(someStringWithCoordinates)).toEqual(JSON.parse(coordinates));
+    expect(await extractLocationLatLon(someStringWithCoordinates)).toEqual(JSON.parse(coordinates));
   });
 
-  it('extracts negative coordinates from a string', () => {
+  it('extracts negative coordinates from a string', async () => {
     const coordinates = '[-10.425664,-75.548631]'
     const someStringWithCoordinates = `Some text, ${coordinates} and more`
-    expect(extractCoordinatesLatLon(someStringWithCoordinates)).toEqual(JSON.parse(coordinates));
+    expect(await extractLocationLatLon(someStringWithCoordinates)).toEqual(JSON.parse(coordinates));
   });
 
-  it('returns falls if no coordinates', () => {
+  it('returns falls if no coordinates', async () => {
     const someStringWithoutCoordinates = `Some text without coordinates`
-    expect(extractCoordinatesLatLon(someStringWithoutCoordinates)).toBeFalsy;
+    expect(await extractLocationLatLon(someStringWithoutCoordinates)).toBeNull();
   });
+
+  // TODO test 
 });
 
 describe("fromLatLon", () => {
