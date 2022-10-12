@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { extractLocationLatLon, fromLatLon } from '../../utils/parseCaption'
+import { extractLocationLatLon, fromLatLon, extractLocationNames } from '../../utils/parseCaption'
 
 describe("extractCoordinates", () => {
   it('extracts coordinates from a string', async () => {
@@ -25,7 +25,16 @@ describe("extractCoordinates", () => {
     expect(await extractLocationLatLon(someStringWithoutCoordinates)).toBeNull();
   });
 
-  // TODO test 
+  // TODO test also for location names
+});
+
+describe("extractLocationNames", () => {
+  it('returns an array of osm search strings', () => {
+    const searchString = '[Bogota,Colombia]'
+    const someStringWithLocationNames = `Sometext,${searchString}andmore`
+    expect(extractLocationNames(someStringWithLocationNames)).toEqual(['Bogota', 'Colombia']
+    );
+  });
 });
 
 describe("fromLatLon", () => {

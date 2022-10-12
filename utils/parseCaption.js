@@ -7,7 +7,9 @@ export async function extractLocationLatLon(stringWithCoordinates) {
   const stringWithoutSpaces = stringWithCoordinates.replace(/\s/g, '')
   let coordinates = extractLocationCoordinates(stringWithoutSpaces)
   if (!coordinates) {
-    const coordinates = await extractLocationNames(stringWithoutSpaces)
+    const osmSearchArray = extractLocationNames(stringWithoutSpaces)
+    if (!osmSearchArray) return null
+    coordinates = await getOSMLatLonFromNames(...osmSearchArray)
   }
   return coordinates
 }
@@ -19,12 +21,11 @@ export function extractLocationCoordinates(locationCoordinates) {
   return JSON.parse(match[0])
 }
 
-export async function extractLocationNames(locationNames) {
-  const namesPattern = /\[[a-z0-9,]+\]/g;
+export function extractLocationNames(locationNames) {
+  const namesPattern = /\[[a-zA-Z0-9,]+\]/g;
   const match = locationNames.match(namesPattern)
   if (!match) return null
-  const osmSearchNames = match[0].replace(/\[|\]/g, '').split(',')
-  return await getOSMLatLonFromNames(...osmSearchNames)
+  return match[0].replace(/\[|\]/g, '').split(',')
 }
 
 export function fromLatLon(latLon) {
