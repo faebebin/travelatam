@@ -1,4 +1,4 @@
-import { extractCoordinates } from '../utils/coordinates'
+import { extractCoordinatesLatLon, fromLatLon } from '../utils/coordinates'
 
 // Yes, I hardcoded my shortlived readonly insta api token for this frontend-only POC :D
 // But if you want to see my insta media, rather just connect with me, I will accept ;)
@@ -33,7 +33,7 @@ export async function getPostItems(mediaId) {
 export function getPostsCoordinates(posts) {
   // TODO sort according timestamp
   return posts.reduce(function(postCoordinates, post) {
-    const coordinates = extractCoordinates(post.caption || '')
+    const coordinates = fromLatLon(extractCoordinatesLatLon(post.caption || ''))
     if (coordinates) {
       post['coordinates'] = coordinates
       postCoordinates.push(post);

@@ -1,4 +1,4 @@
-function createImageElement(img_url) {
+export function createImageElement(img_url) {
   const img = new Image();
   img.src = img_url;
   img.height = 100

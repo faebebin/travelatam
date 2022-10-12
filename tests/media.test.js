@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { getMediaUrls, getPostsCoordinates } from '../helpers/media'
+import { fromLatLon } from '../utils/coordinates'
 
 const posts = {
   "data": [
@@ -34,16 +35,16 @@ const posts = {
 describe("getPostsCoordinates", () => {
   it('returns only coordinates if caption contains them', () => {
     const captionAndCoordinates = [
-    {
-      id: "17952176918177715",
-      coordinates: [10.425664,-75.548631],
-      caption: "Cartagena, [10.425664,-75.548631]"
-    },
-    {
-      id: "17988232330581426",
-      coordinates: [4.605762,-74.055313],
-      caption: "Bogota, [4.605762,-74.055313]"
-    },
+      {
+        id: "17952176918177715",
+        coordinates: fromLatLon([10.425664, -75.548631]),
+        caption: "Cartagena, [10.425664,-75.548631]"
+      },
+      {
+        id: "17988232330581426",
+        coordinates: fromLatLon([4.605762, -74.055313]),
+        caption: "Bogota, [4.605762,-74.055313]"
+      },
     ]
     expect(getPostsCoordinates(posts.data)).toEqual(captionAndCoordinates);
   });
