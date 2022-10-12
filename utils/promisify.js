@@ -1,3 +1,12 @@
+/**
+ * Wrap Browser API (like setTimeout()) and old callback APIs (used by Openlayers) 
+ * in Promises to send them to the async job queue like fetch() calls.
+ *
+ * Otherwise, ie. send them to the callback/task queue, will lead to unexpected
+ * order of invokation. The async data fetching  would not await Openlayers animations.
+ * see https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop
+*/
+
 export function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
