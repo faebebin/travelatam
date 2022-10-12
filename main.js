@@ -138,19 +138,20 @@ async function tour() {
 
 
   const instaPosts = await getPosts()
-  // posts.push(...instaPosts)
-  posts = instaPosts
+  posts.push(...instaPosts)
   let arrived = true
   let mediaItems = []
 
   for await (const [index, post] of posts.entries()) {
     const { id, coordinates, caption, media_type } = post
-    await wait(index === 0 ? 0 : 750)
     arrived = await flyTo(coordinates);
 
     if (!arrived) {
       break
     }
+
+    captionEl.innerHTML = caption
+    overlay.setPosition(coordinates);
 
     if (SUPPORTED_INSTA_MEDIA_TYPES.includes(media_type)) {
       if (media_type === image_type) {
@@ -159,17 +160,13 @@ async function tour() {
       if (media_type === carousel_album_type) {
         mediaItems = await getPostItems(id)
       }
-      console.log(caption)
-      console.log(mediaItems)
       const imgUrls = getMediaUrls(mediaItems)
-      console.log(imgUrls)
-      captionEl.innerHTML = caption
-      overlay.setPosition(coordinates);
       const imageCollectionResult = await createImageCollectionElement(imagesEl, imgUrls);
       // TODO display image load errors / timeouts
-      await wait(3000)
-      closeOverlay()
     }
+
+    await wait(2000)
+    closeOverlay()
   }
 
   if (!arrived) {

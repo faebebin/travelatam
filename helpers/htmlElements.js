@@ -1,8 +1,6 @@
 export function createImageElement(imgUrl) {
-  const img = new Image();
+  const img = new Image(300, 300);
   img.src = imgUrl;
-  img.height = 100
-  img.width = 100
   return img
 }
 
