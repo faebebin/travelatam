@@ -3,7 +3,7 @@ import { Map, View, Overlay } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { fromLonLat } from 'ol/proj';
-import { getPostItems, getPosts } from './helpers/media'
+import { getMediaUrls, getPostItems, getPosts } from './helpers/media'
 import { createImageCollectionElement } from './helpers/htmlElements'
 import { wait, animate } from './utils/promisify'
 
@@ -137,10 +137,17 @@ async function tour() {
 
 
   const instaPosts = await getPosts()
-  posts.push(...instaPosts)
+  // posts.push(...instaPosts)
+  posts = instaPosts
   let arrived = true
+  let mediaItems = []
 
-  for await (const [index, { id, coordinates, caption }] of posts.entries()) {
+  // TODO typescript anyway
+  const image_type = 'IMAGE'
+  const carousel_album_type = 'CAROUSEL_ALBUM'
+
+  for await (const [index, post] of posts.entries()) {
+    const { id, coordinates, caption, media_type } = post
     await wait(index === 0 ? 0 : 750)
     arrived = await flyTo(coordinates);
 
@@ -148,12 +155,21 @@ async function tour() {
       break
     }
 
-    if (id) { // FIXME remove once all insta post
-      const img_urls = await getPostItems(id)
+    if ([image_type, carousel_album_type].includes(media_type)) {
+      if (media_type === image_type) {
+        mediaItems = [post]
+      }
+      if (media_type === carousel_album_type) {
+        mediaItems = await getPostItems(id)
+      }
+      console.log(caption)
+      console.log(mediaItems)
+      const imgUrls = getMediaUrls(mediaItems)
+      console.log(imgUrls)
       captionEl.innerHTML = caption
       overlay.setPosition(coordinates);
-      const imageCollectionResult = await createImageCollectionElement(imagesEl, img_urls);
-      console.log(imageCollectionResult)
+      const imageCollectionResult = await createImageCollectionElement(imagesEl, imgUrls);
+      // TODO display image load errors / timeouts
       await wait(3000)
       closeOverlay()
     }

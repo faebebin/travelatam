@@ -1,24 +1,24 @@
-export function createImageElement(img_url) {
+export function createImageElement(imgUrl) {
   const img = new Image();
-  img.src = img_url;
+  img.src = imgUrl;
   img.height = 100
   img.width = 100
   return img
 }
 
-export function appendImageToDOM(container, img_url) {
-  const img = createImageElement(img_url)
+export function appendImageToDOM(container, imgUrl) {
+  const img = createImageElement(imgUrl)
   container.appendChild(img)
   // TODO handle failure
   return img.decode()
 }
 
-export function createImageCollectionElement(container, img_urls) {
+export function createImageCollectionElement(container, imgUrls) {
   // TODO: create all images and keep them ready for inserting into overlay? OR create and destroy
   // precaching? https://stackoverflow.com/questions/10240110/how-do-you-cache-an-image-in-javascript
 
   // TODO handle order of images?
   return Promise.allSettled(
-    img_urls.map(img_url => appendImageToDOM(container, img_url))
+    imgUrls.map(imgUrl => appendImageToDOM(container, imgUrl))
   )
 }

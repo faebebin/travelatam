@@ -12,7 +12,7 @@ const INSTA_API_TOKEN = 'IGQVJVREFMaWVpQjMtMmFweEw1TW5TSDNYTFZA0LW5qS3BVS0lmRkpr
 // TODO: https://www.npmjs.com/package/node-geocoder
 // get coordinates from location name
 
-export async function getPosts() { // [{id, coordinates, caption}]
+export async function getPosts() {
   const fields = 'id,caption,media_type,media_url,timestamp'
   const url = `https://graph.instagram.com/me/media?fields=${fields}&access_token=${INSTA_API_TOKEN}`
   const response = await fetch(url)
@@ -27,7 +27,7 @@ export async function getPostItems(mediaId) {
   const response = await fetch(url)
   // TODO if !response.ok { return text}
   const json = await response.json()
-  return getMediaUrls(json.data)
+  return json.data
 }
 
 export function getPostsCoordinates(posts) {
