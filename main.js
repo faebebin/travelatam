@@ -7,9 +7,12 @@ import { getMediaUrls, getPostItems, getPosts } from './helpers/media'
 import { createImageCollectionElement } from './helpers/htmlElements'
 import { wait, animate } from './utils/promisify'
 
-/* ======================
-  * OL-Map
-  */
+// TODO typescript anyway
+const image_type = 'IMAGE'
+const carousel_album_type = 'CAROUSEL_ALBUM'
+const SUPPORTED_INSTA_MEDIA_TYPES = [image_type, carousel_album_type]
+// TODO if (item.media_type === 'VIDEO') { thumbnail_url
+
 
 const containerEl = document.getElementById('popup');
 const closerEl = document.getElementById('popup-closer');
@@ -23,8 +26,6 @@ const madridAirport = fromLonLat([40.4989, -3.5748].reverse());
 const medellinAirport = fromLonLat([6.167265, -75.423193].reverse());
 const cartagenaAirport = fromLonLat([10.446947, -75.512570].reverse());
 const cartagenaHostalRepublica = fromLonLat([10.425705, -75.548614].reverse());
-
-
 
 const overlay = new Overlay({
   element: containerEl,
@@ -142,10 +143,6 @@ async function tour() {
   let arrived = true
   let mediaItems = []
 
-  // TODO typescript anyway
-  const image_type = 'IMAGE'
-  const carousel_album_type = 'CAROUSEL_ALBUM'
-
   for await (const [index, post] of posts.entries()) {
     const { id, coordinates, caption, media_type } = post
     await wait(index === 0 ? 0 : 750)
@@ -155,7 +152,7 @@ async function tour() {
       break
     }
 
-    if ([image_type, carousel_album_type].includes(media_type)) {
+    if (SUPPORTED_INSTA_MEDIA_TYPES.includes(media_type)) {
       if (media_type === image_type) {
         mediaItems = [post]
       }

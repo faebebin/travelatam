@@ -8,9 +8,6 @@ const INSTA_API_TOKEN = 'IGQVJVREFMaWVpQjMtMmFweEw1TW5TSDNYTFZA0LW5qS3BVS0lmRkpr
 
 // Add a location or coordinates per post/album in the form "travelatam[lat,lon]"
 // The client will make a stop there and request and display the photos.
-//
-// TODO: https://www.npmjs.com/package/node-geocoder
-// get coordinates from location name
 
 export async function getPosts() {
   const fields = 'id,caption,media_type,media_url,timestamp'
