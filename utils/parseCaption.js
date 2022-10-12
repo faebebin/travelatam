@@ -2,7 +2,8 @@ import { fromLonLat } from 'ol/proj';
 
 export function extractCoordinatesLatLon(stringWithCoordinates) {
   const coordinatesPattern = /\[-?\d+\.\d+,-?\d+\.\d+\]/g;
-  const match = stringWithCoordinates.match(coordinatesPattern)
+  const stringWithCoordinatesNoSpaces = stringWithCoordinates.replace(/\s/g, '')
+  const match = stringWithCoordinatesNoSpaces.match(coordinatesPattern)
   if (!match) {
     return false
   }

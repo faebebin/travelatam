@@ -8,6 +8,12 @@ describe("extractCoordinates", () => {
     expect(extractCoordinatesLatLon(someStringWithCoordinates)).toEqual(JSON.parse(coordinates));
   });
 
+  it('tolerates whitespaces', () => {
+    const coordinates = '[  10.425664, -75.548631]'
+    const someStringWithCoordinates = `Some text, ${coordinates} and more`
+    expect(extractCoordinatesLatLon(someStringWithCoordinates)).toEqual(JSON.parse(coordinates));
+  });
+
   it('extracts negative coordinates from a string', () => {
     const coordinates = '[-10.425664,-75.548631]'
     const someStringWithCoordinates = `Some text, ${coordinates} and more`
