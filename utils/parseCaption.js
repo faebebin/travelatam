@@ -2,16 +2,15 @@ import { fromLonLat } from 'ol/proj';
 import { getOSMLatLonFromNames } from '../helpers/geo'
 
 
-export async function extractLocationLatLon(stringInclLocation) {
+export async function extractLocationLatLon(stringInclLocation) { // Promise
   if (!stringInclLocation) return null
   const stringWithoutSpaces = removeWhitespace(stringInclLocation)
   let coordinates = extractLocationCoordinates(stringWithoutSpaces)
-  if (!coordinates) {
-    const osmSearchTerms = extractLocationNames(stringWithoutSpaces)
-    if (!osmSearchTerms) return null
-    coordinates = await getOSMLatLonFromNames(osmSearchTerms)
-  }
-  return coordinates
+  if (coordinates) return coordinates
+
+  const osmSearchTerms = extractLocationNames(stringWithoutSpaces)
+  if (!osmSearchTerms) return null
+  return getOSMLatLonFromNames(osmSearchTerms)
 }
 
 export function extractLocationCoordinates(stringInclCoordinates) {

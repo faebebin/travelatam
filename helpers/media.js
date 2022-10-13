@@ -28,21 +28,30 @@ export async function getPostItems(mediaId) {
 }
 
 export async function processPosts(posts) {
-  const readyPosts = []
-  for await (const post of posts) {
-    const { caption, timestamp } = post
-    const latLon = await extractLocationLatLon(caption)
-    const coordinates = fromLatLon(latLon || '')
-    if (coordinates) {
-      // NOTE: Location information is required
-      post['coordinates'] = coordinates
-      const date = extractDateTime(caption) || new Date(timestamp)
-      post['date'] = date
-      readyPosts.push(post);
+  const processedPosts = await Promise.allSettled(
+    posts.map(post => processPost(post))
+  )
+  const readyPosts = processedPosts.reduce((posts, post) => {
+    if (post.status === 'fulfilled') {
+      posts.push(post.value)
     }
-  }
+    return posts
+  },
+    []
+  )
   readyPosts.sort(sortPosts)
   return readyPosts
+}
+
+async function processPost(post) { // Promise
+  const { caption, timestamp } = post
+  const latLon = await extractLocationLatLon(caption)
+  if (!latLon) return Promise.reject('No location information')
+  // NOTE: Location information is required
+  post['coordinates'] = fromLatLon(latLon)
+  const date = extractDateTime(caption) || new Date(timestamp)
+  post['date'] = date
+  return Promise.resolve(post)
 }
 
 function sortPosts(a, b) {
