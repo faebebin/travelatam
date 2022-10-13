@@ -18,6 +18,8 @@ const closerEl = document.getElementById('popup-closer');
 const captionEl = document.getElementById('popup-caption');
 const imagesEl = document.getElementById('popup-images');
 
+const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
+
 const overlay = new Overlay({
   element: containerEl,
   autoPan: {
@@ -28,7 +30,7 @@ const overlay = new Overlay({
 });
 
 const view = new View({
-  center: medellinAirport,
+  center: zurichAirport,
   zoom: 6,
 });
 
