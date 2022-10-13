@@ -1,4 +1,4 @@
-import { extractLocationLatLon, fromLatLon } from '../utils/parseCaption'
+import { extractDate, extractLocationLatLon, fromLatLon } from '../utils/parseCaption'
 
 // Yes, I hardcoded my shortlived readonly insta api token for this frontend-only POC :D
 // But if you want to see my insta media, rather just connect with me, I will accept ;)
@@ -15,8 +15,7 @@ export async function getPosts() {
   const response = await fetch(url)
   // TODO if !response.ok { return text}
   const json = await response.json()
-  const coordinates = await getPostsCoordinates(json.data)
-  return coordinates
+  return await processPosts(json.data)
 }
 
 export async function getPostItems(mediaId) {
@@ -28,18 +27,28 @@ export async function getPostItems(mediaId) {
   return json.data
 }
 
-export async function getPostsCoordinates(posts) {
-  // TODO sort according timestamp
-  const postsWithCoordinates = []
+export async function processPosts(posts) {
+  const readyPosts = []
   for await (const post of posts) {
-    const latLon = await extractLocationLatLon(post.caption)
+    const { caption, timestamp } = post
+    const latLon = await extractLocationLatLon(caption)
     const coordinates = fromLatLon(latLon || '')
     if (coordinates) {
+      // NOTE: Location information is required
       post['coordinates'] = coordinates
-      postsWithCoordinates.push(post);
+      const date = extractDate(caption) || new Date(timestamp)
+      post['date'] = date
+      readyPosts.push(post);
     }
   }
-  return postsWithCoordinates
+  readyPosts.sort(sortPosts)
+  return readyPosts
+}
+
+function sortPosts(a, b) {
+  if (a.date < b.date) return -1;
+  if (a.date > b.date) return 1;
+  return 0;
 }
 
 export function getMediaUrls(mediaItems) {

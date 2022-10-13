@@ -1,19 +1,21 @@
 import { describe, expect, it } from 'vitest'
-import { getMediaUrls, getPostsCoordinates } from '../../helpers/media'
+import { getMediaUrls, processPosts } from '../../helpers/media'
 import { fromLatLon } from '../../utils/parseCaption'
 
 const posts = {
   "data": [
     {
       "id": "17952176918177715",
-      "caption": "Cartagena, [10.425664,-75.548631]"
+      "caption": "Cartagena, [10.425664,-75.548631] 10.9.2022",
+      "timestamp": "2022-10-06T14:25:56+0000"
     },
     {
       "id": "17864596673760827"
     },
     {
       "id": "17988232330581426",
-      "caption": "Bogota, [4.605762,-74.055313]"
+      "caption": "Bogota, [4.605762,-74.055313]",
+      "timestamp": "2022-10-06T14:22:40+0000"
     },
     {
       "id": "18031800007247472",
@@ -36,17 +38,24 @@ describe("getPostsCoordinates", () => {
   it('returns only coordinates if caption contains them', async () => {
     const captionAndCoordinates = [
       {
-        id: "17952176918177715",
-        coordinates: fromLatLon([10.425664, -75.548631]),
-        caption: "Cartagena, [10.425664,-75.548631]"
-      },
-      {
         id: "17988232330581426",
         coordinates: fromLatLon([4.605762, -74.055313]),
-        caption: "Bogota, [4.605762,-74.055313]"
+        caption: "Bogota, [4.605762,-74.055313]",
+        timestamp: "2022-10-06T14:22:40+0000",
+        date: new Date("2022-10-06T14:22:40+0000"),
       },
+      {
+        "caption": "Cartagena, [10.425664,-75.548631] 10.9.2022",
+        "coordinates": [
+          -8410035.133048922,
+          1167037.646029753,
+        ],
+        "date": new Date("10.9.2022"),
+        "id": "17952176918177715",
+        "timestamp": "2022-10-06T14:25:56+0000",
+      }
     ]
-    expect(await getPostsCoordinates(posts.data)).toEqual(captionAndCoordinates);
+    expect(await processPosts(posts.data)).toEqual(captionAndCoordinates);
   });
 });
 
