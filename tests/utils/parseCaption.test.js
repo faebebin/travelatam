@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { extractLocationLatLon, fromLatLon, extractLocationNames } from '../../utils/parseCaption'
+import { extractLocationLatLon, fromLatLon, extractLocationNames, removeWhitespace, extractDate } from '../../utils/parseCaption'
 
 describe("extractCoordinates", () => {
   it('extracts coordinates from a string', async () => {
@@ -43,6 +43,25 @@ describe("fromLatLon", () => {
       [-8409074.334523886,
         1166396.554068148]
     );
+  });
+});
+
+describe("extractDate", () => {
+  it.each([
+    ['1.2.2022'],
+    ['01.2.2022'],
+    ['01.02.2022'],
+    ['1.2.22'],
+    ['1.2.022'],
+    ['11.12.2022'],
+  ])('returns new Date for a string including date like "%s"', (dateString) => {
+    expect(extractDate(`Some text, written on ${dateString} and before`)).toEqual(new Date(dateString))
+  })
+});
+
+describe("removeWhitespace", () => {
+  it('returns string without any whitespaces', () => {
+    expect(removeWhitespace(' ab    sdf . ')).toMatch('absdf.');
   });
 });
 
