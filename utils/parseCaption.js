@@ -44,7 +44,9 @@ export function extractDateTime(stringInclDate) {
   if (!dateMatch) return null
   const timePattern = /\d{1,2}\:\d{1,2}/g;
   const timeMatch = stringInclDate.match(timePattern)
-  const dateString = dateMatch[0]
+  // NOTE: js parses datestring as mm.dd.yy
+  const [m, d, y] = dateMatch[0].split('.')
+  const dateString = `${d}.${m}.${y}`
   const timeString = timeMatch ? ` ${timeMatch[0]}` : ''
   return new Date(`${dateString}${timeString}`)
 }

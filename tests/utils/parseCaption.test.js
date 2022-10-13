@@ -59,18 +59,19 @@ describe("fromLatLon", () => {
 
 describe("extractDateTime", () => {
   it.each([
-    ['1.2.2022', '', [2022, 0]],
-    ['01.2.2022', 'notime', [2022, 0]],
-    ['01.02.2022', '', [2022, 0]],
-    ['1.2.22', '1:1', [2022, 1]],
-    ['1.2.022', '01:01', [2022, 1]],
-    ['11.12.2022', '11:11', [2022, 11]],
-    ['', '12:00', [undefined, undefined]],
+    ['5.2.2022', '', [2022, 1, 0]],
+    ['05.2.2022', 'notime', [2022, 1, 0]],
+    ['15.02.2022', '', [2022, 1, 0]],
+    ['5.2.22', '1:1', [2022, 1, 1]],
+    ['5.2.022', '01:01', [2022, 1, 1]],
+    ['10.12.2022', '11:11', [2022, 11, 11]],
+    ['', '12:00', [undefined, undefined, undefined]],
     // ['222.1.2022', '12:00', [undefined, undefined]], TODO exclude neighbouring numbers
-    // ['1.2.20221', '', [undefined, undefined]],
+    // ['5.2.20221', '', [undefined, undefined]],
   ])('returns Date given a string including date "%s" and time "%s"', (date, time, expected) => {
     const extracted = extractDateTime(`Some text, written on ${date}  at ${time} and before`)
-    expect([extracted?.getFullYear(), extracted?.getHours()]).toEqual(expected)
+    const dateCheck = [extracted?.getFullYear(), extracted?.getMonth(), extracted?.getHours()]
+    expect(dateCheck).toEqual(expected)
   })
 });
 

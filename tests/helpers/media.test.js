@@ -6,7 +6,7 @@ const posts = {
   "data": [
     {
       "id": "17952176918177715",
-      "caption": "Cartagena, [10.425664,-75.548631] 10.9.2022", // includes date
+      "caption": "Cartagena, [10.425664,-75.548631] 10.9.2022  20:00 chevre", // includes date and time
       "timestamp": "2022-10-06T14:25:56+0000"
     },
     {
@@ -20,6 +20,11 @@ const posts = {
     {
       "id": "18031800007247472",
       "caption": "Schweizer Schwan"
+    },
+    {
+      "id": "18031800007247499",
+      "caption": "Zürich [ 40.425664, 10.548631] 10.9.2022 so guet", // include date
+      "timestamp": "2022-10-06T14:22:40+0000"
     },
     {
       "id": "17915301601392503",
@@ -36,23 +41,34 @@ const posts = {
 
 describe("getPostsCoordinates", () => {
   it('returns only coordinates if caption contains them', async () => {
+    // TODO mock the osm location names search
     const captionAndCoordinates = [
+      {
+        "caption": "Zürich [ 40.425664, 10.548631] 10.9.2022 so guet",
+        "coordinates": [
+          1174268.2314861403,
+          4927992.7926541045,
+        ],
+        "date": new Date("2022-9-10"),
+        "id": "18031800007247499",
+        "timestamp": "2022-10-06T14:22:40+0000",
+      },
+      {
+        "caption": "Cartagena, [10.425664,-75.548631] 10.9.2022  20:00 chevre",
+        "coordinates": [
+          -8410035.133048922,
+          1167037.646029753,
+        ],
+        "date": new Date("2022-9-10 20:00"),
+        "id": "17952176918177715",
+        "timestamp": "2022-10-06T14:25:56+0000",
+      },
       {
         id: "17988232330581426",
         coordinates: fromLatLon([4.605762, -74.055313]),
         caption: "Bogota, [4.605762,-74.055313]",
         timestamp: "2022-10-06T14:22:40+0000",
         date: new Date("2022-10-06T14:22:40+0000"),
-      },
-      {
-        "caption": "Cartagena, [10.425664,-75.548631] 10.9.2022",
-        "coordinates": [
-          -8410035.133048922,
-          1167037.646029753,
-        ],
-        "date": new Date("10.9.2022"),
-        "id": "17952176918177715",
-        "timestamp": "2022-10-06T14:25:56+0000",
       }
     ]
     expect(await processPosts(posts.data)).toEqual(captionAndCoordinates);
