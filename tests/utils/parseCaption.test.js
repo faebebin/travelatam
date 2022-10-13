@@ -20,21 +20,32 @@ describe("extractCoordinates", () => {
     expect(await extractLocationLatLon(someStringWithCoordinates)).toEqual(JSON.parse(coordinates));
   });
 
+  // it('find coorinates for location names in a string', async () => {
+  //   TODO fetch mock
+  //   const location = '[Bogota, Colombia]'
+  //   const someStringWithNames = `Some text, ${location} and more`
+  //   const coordinates = await extractLocationLatLon(someStringWithNames)
+  //   expect(JSON.stringify(coordinates)).toMatch(/\[-?\d+\.\d+,-?\d+\.\d+\]/g);
+  // });
+
+
   it('returns falls if no coordinates', async () => {
     const someStringWithoutCoordinates = `Some text without coordinates`
     expect(await extractLocationLatLon(someStringWithoutCoordinates)).toBeNull();
   });
-
-  // TODO test also for location names
 });
 
 describe("extractLocationNames", () => {
-  it('returns an array of osm search strings', () => {
-    const searchString = '[Bogota,Colombia]'
+  it.each([
+    ['[Bogota,Colombia]', 'Bogota,Colombia'],
+    ['[Zürich,Schweiz]', 'Zürich,Schweiz'],
+    ['[Yvéèrdoñ]', 'Yvéèrdoñ'],
+    ['[Street,nr,City,Country]', 'Street,nr,City,Country'],
+  ])('returns an osm search string for "%s"', (searchString, expected) => {
     const someStringWithLocationNames = `Sometext,${searchString}andmore`
-    expect(extractLocationNames(someStringWithLocationNames)).toEqual(['Bogota', 'Colombia']
-    );
-  });
+    expect(extractLocationNames(someStringWithLocationNames)).toMatch(expected);
+    // it('returns an array of osm search strings', () => {
+  })
 });
 
 describe("fromLatLon", () => {

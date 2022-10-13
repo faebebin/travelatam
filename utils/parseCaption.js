@@ -7,9 +7,9 @@ export async function extractLocationLatLon(stringInclLocation) {
   const stringWithoutSpaces = removeWhitespace(stringInclLocation)
   let coordinates = extractLocationCoordinates(stringWithoutSpaces)
   if (!coordinates) {
-    const osmSearchArray = extractLocationNames(stringWithoutSpaces)
-    if (!osmSearchArray) return null
-    coordinates = await getOSMLatLonFromNames(...osmSearchArray)
+    const osmSearchTerms = extractLocationNames(stringWithoutSpaces)
+    if (!osmSearchTerms) return null
+    coordinates = await getOSMLatLonFromNames(osmSearchTerms)
   }
   return coordinates
 }
@@ -22,10 +22,11 @@ export function extractLocationCoordinates(stringInclCoordinates) {
 }
 
 export function extractLocationNames(stringInclNames) {
-  const pattern = /\[[a-zA-Z0-9,]+\]/g;
+  const pattern = /\[[\w\W,]+\]/g;
   const match = stringInclNames.match(pattern)
   if (!match) return null
-  return match[0].replace(/\[|\]/g, '').split(',')
+  // return match[0].replace(/\[|\]/g, '').split(',')
+  return match[0].replace(/\[|\]/g, '')
 }
 
 export function fromLatLon(latLon) {
