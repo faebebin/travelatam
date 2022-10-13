@@ -38,7 +38,7 @@ describe("extractCoordinates", () => {
 describe("extractLocationNames", () => {
   it.each([
     ['[Bogota,Colombia]', 'Bogota,Colombia'],
-    ['[Zürich,Schweiz]', 'Zürich,Schweiz'],
+    ['[Zürich,Flughafen,Schweiz]', 'Zürich,Flughafen,Schweiz'],
     ['[Yvéèrdoñ]', 'Yvéèrdoñ'],
     ['[Street,nr,City,Country]', 'Street,nr,City,Country'],
   ])('returns an osm search string for "%s"', (searchString, expected) => {
