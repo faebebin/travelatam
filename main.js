@@ -19,14 +19,6 @@ const closerEl = document.getElementById('popup-closer');
 const captionEl = document.getElementById('popup-caption');
 const imagesEl = document.getElementById('popup-images');
 
-
-// FIXME remove and add insta post
-const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
-const madridAirport = fromLonLat([40.4989, -3.5748].reverse());
-const medellinAirport = fromLonLat([6.167265, -75.423193].reverse());
-const cartagenaAirport = fromLonLat([10.446947, -75.512570].reverse());
-const cartagenaHostalRepublica = fromLonLat([10.425705, -75.548614].reverse());
-
 const overlay = new Overlay({
   element: containerEl,
   autoPan: {
@@ -107,38 +99,7 @@ async function flyTo(location) {
 }
 
 async function tour() {
-  // FIXME remove and add insta posts instead
-  let posts = [
-    {
-      id: null,
-      coordinates: zurichAirport,
-      caption: "Zürich"
-    },
-    {
-      id: null,
-      coordinates: madridAirport,
-      caption: "Madrid"
-    },
-    {
-      id: null,
-      coordinates: medellinAirport,
-      caption: "Medellin"
-    },
-    {
-      id: null,
-      coordinates: cartagenaAirport,
-      caption: "Cartagena"
-    },
-    {
-      id: null,
-      coordinates: cartagenaHostalRepublica,
-      caption: "Cartagena, Republica Hostal"
-    }
-  ]
-
-
-  const instaPosts = await getPosts()
-  posts.push(...instaPosts)
+  const posts = await getPosts()
   let arrived = true
   let mediaItems = []
 
