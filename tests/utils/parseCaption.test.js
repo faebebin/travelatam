@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { extractLocationLatLon, fromLatLon, extractLocationNames, removeWhitespace, extractDate } from '../../utils/parseCaption'
+import { extractLocationLatLon, fromLatLon, extractLocationNames, removeWhitespace, extractDateTime } from '../../utils/parseCaption'
 
 describe("extractCoordinates", () => {
   it('extracts coordinates from a string', async () => {
@@ -57,16 +57,20 @@ describe("fromLatLon", () => {
   });
 });
 
-describe("extractDate", () => {
+describe("extractDateTime", () => {
   it.each([
-    ['1.2.2022'],
-    ['01.2.2022'],
-    ['01.02.2022'],
-    ['1.2.22'],
-    ['1.2.022'],
-    ['11.12.2022'],
-  ])('returns new Date for a string including date like "%s"', (dateString) => {
-    expect(extractDate(`Some text, written on ${dateString} and before`)).toEqual(new Date(dateString))
+    ['1.2.2022', '', [2022, 0]],
+    ['01.2.2022', 'notime', [2022, 0]],
+    ['01.02.2022', '', [2022, 0]],
+    ['1.2.22', '1:1', [2022, 1]],
+    ['1.2.022', '01:01', [2022, 1]],
+    ['11.12.2022', '11:11', [2022, 11]],
+    ['', '12:00', [undefined, undefined]],
+    // ['222.1.2022', '12:00', [undefined, undefined]], TODO exclude neighbouring numbers
+    // ['1.2.20221', '', [undefined, undefined]],
+  ])('returns Date given a string including date "%s" and time "%s"', (date, time, expected) => {
+    const extracted = extractDateTime(`Some text, written on ${date}  at ${time} and before`)
+    expect([extracted?.getFullYear(), extracted?.getHours()]).toEqual(expected)
   })
 });
 

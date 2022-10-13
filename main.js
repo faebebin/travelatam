@@ -2,7 +2,6 @@ import './style.css';
 import { Map, View, Overlay } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
-import { fromLonLat } from 'ol/proj';
 import { getMediaUrls, getPostItems, getPosts } from './helpers/media'
 import { createImageCollectionElement } from './helpers/htmlElements'
 import { wait, animate } from './utils/promisify'

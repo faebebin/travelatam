@@ -1,4 +1,4 @@
-import { extractDate, extractLocationLatLon, fromLatLon } from '../utils/parseCaption'
+import { extractDateTime, extractLocationLatLon, fromLatLon } from '../utils/parseCaption'
 
 // Yes, I hardcoded my shortlived readonly insta api token for this frontend-only POC :D
 // But if you want to see my insta media, rather just connect with me, I will accept ;)
@@ -36,7 +36,7 @@ export async function processPosts(posts) {
     if (coordinates) {
       // NOTE: Location information is required
       post['coordinates'] = coordinates
-      const date = extractDate(caption) || new Date(timestamp)
+      const date = extractDateTime(caption) || new Date(timestamp)
       post['date'] = date
       readyPosts.push(post);
     }

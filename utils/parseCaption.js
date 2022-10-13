@@ -38,12 +38,16 @@ export function fromLatLon(latLon) {
   return fromLonLat(latLon.reverse())
 }
 
-export function extractDate(stringInclDate) {
+export function extractDateTime(stringInclDate) {
   if (!stringInclDate) return null
-  const pattern = /\d{1,2}\.\d{1,2}\.\d{2,4}/g;
-  const match = stringInclDate.match(pattern)
-  if (!match) return null
-  return new Date(match[0])
+  const datePattern = /\d{1,2}\.\d{1,2}\.\d{2,4}/g;
+  const dateMatch = stringInclDate.match(datePattern)
+  if (!dateMatch) return null
+  const timePattern = /\d{1,2}\:\d{1,2}/g;
+  const timeMatch = stringInclDate.match(timePattern)
+  const dateString = dateMatch[0]
+  const timeString = timeMatch ? ` ${timeMatch[0]}` : ''
+  return new Date(`${dateString}${timeString}`)
 }
 
 export function removeWhitespace(string) {

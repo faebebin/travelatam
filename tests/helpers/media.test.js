@@ -6,7 +6,7 @@ const posts = {
   "data": [
     {
       "id": "17952176918177715",
-      "caption": "Cartagena, [10.425664,-75.548631] 10.9.2022",
+      "caption": "Cartagena, [10.425664,-75.548631] 10.9.2022", // includes date
       "timestamp": "2022-10-06T14:25:56+0000"
     },
     {
