@@ -1,11 +1,9 @@
 import './style.css';
-import { Map, View, Overlay } from 'ol';
-import { fromLonLat } from 'ol/proj'
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
+import { Map } from 'ol';
 import { getMediaUrls, getPostItems, getPosts } from './helpers/media'
 import { createImageCollectionElement } from './helpers/htmlElements'
 import { wait, animate } from './utils/promisify'
+import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature } from './helpers/geo';
 
 // TODO typescript anyway
 const image_type = 'IMAGE'
@@ -14,64 +12,60 @@ const SUPPORTED_INSTA_MEDIA_TYPES = [image_type, carousel_album_type]
 // TODO if (item.media_type === 'VIDEO') { thumbnail_url
 
 
-const containerEl = document.getElementById('popup');
 const closerEl = document.getElementById('popup-closer');
 const captionEl = document.getElementById('popup-caption');
 const imagesEl = document.getElementById('popup-images');
 const cancelEl = document.getElementById('cancel');
 const tourEl = document.getElementById('tour');
 
-const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
+const mediaOverlay = createMediaOverlay();
 
-const overlay = new Overlay({
-  element: containerEl,
-  autoPan: {
-    animation: {
-      duration: 250,
-    },
-  },
-  positioning: 'bottom-center',
-  offset: [0, -12]
-});
+const view = createView();
 
-const view = new View({
-  center: zurichAirport,
-  zoom: 6,
-});
+const [destinationsSource, destinationsLayer] = createVectorLayer()
 
 const map = new Map({
   target: 'map',
   layers: [
-    new TileLayer({
-      preload: 4,
-      source: new OSM(),
-    }),
+    createOSMLayer(),
+    destinationsLayer
   ],
   view: view,
-  overlays: [overlay],
+  overlays: [
+    mediaOverlay
+  ],
 });
+
+showMapSpinner(map)
+
+let posts = []
+
+async function initApp() {
+  const posts = await getPosts()
+  console.log(posts)
+  const destinations = posts.map(({ coordinates }) => createDestinationFeature(coordinates))
+  destinationsSource.addFeatures(destinations)
+  removeMapSpinner(map)
+  return posts
+}
+
+// FIXME Window.onload ?
+posts = await initApp()
 
 const interactions = map.getInteractions()
 const controls = map.getControls()
 
-function showSpinner(map) {
-  // TODO move to module
-  map.getTargetElement().classList.add('spinner');
-}
-function removeSpinner(map) {
-  map.getTargetElement().classList.remove('spinner');
-}
 // loading spinner
 // map.on('loadstart', function() {
 //   showSpinner(map)
 // });
 // map.on('loadend', function() {
-//   removeSpinner(map)
+//   removeMapSpinner(map)
 // });
 
 function closeOverlay() {
   clearOverlay()
-  overlay.setPosition(undefined);
+  mediaOverlay.setPosition(undefined);
   closerEl.blur();
   // {boolean} Don't follow the href.
   return false;
@@ -138,7 +132,6 @@ function pauseTour() {
 }
 
 function onTourStart() {
-  showSpinner(map)
   play = 'playing'
   interactions.forEach(interaction => {
     // TODO move to module
@@ -168,11 +161,8 @@ function onTourEnd() {
 
 async function tour() {
   onTourStart()
-  const posts = await getPosts()
   let arrived = true
   let mediaItems = []
-
-  removeSpinner(map)
 
   for await (const [index, post] of posts.entries()) {
     const { id, coordinates, caption, media_type } = post
@@ -181,7 +171,7 @@ async function tour() {
     if (!arrived) break
 
     captionEl.textContent = caption
-    overlay.setPosition(coordinates);
+    mediaOverlay.setPosition(coordinates);
 
     if (play === 'paused') {
       confirm('▶️  Resume tour')
