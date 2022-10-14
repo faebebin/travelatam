@@ -1,5 +1,6 @@
 import './style.css';
 import { Map, View, Overlay } from 'ol';
+import { fromLonLat } from 'ol/proj'
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { getMediaUrls, getPostItems, getPosts } from './helpers/media'
@@ -17,6 +18,8 @@ const containerEl = document.getElementById('popup');
 const closerEl = document.getElementById('popup-closer');
 const captionEl = document.getElementById('popup-caption');
 const imagesEl = document.getElementById('popup-images');
+const cancelEl = document.getElementById('cancel');
+const tourEl = document.getElementById('tour');
 
 const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
 
@@ -45,6 +48,24 @@ const map = new Map({
   view: view,
   overlays: [overlay],
 });
+
+const interactions = map.getInteractions()
+const controls = map.getControls()
+
+function showSpinner(map) {
+  // TODO move to module
+  map.getTargetElement().classList.add('spinner');
+}
+function removeSpinner(map) {
+  map.getTargetElement().classList.remove('spinner');
+}
+// loading spinner
+// map.on('loadstart', function() {
+//   showSpinner(map)
+// });
+// map.on('loadend', function() {
+//   removeSpinner(map)
+// });
 
 function closeOverlay() {
   clearOverlay()
@@ -99,21 +120,71 @@ async function flyTo(location) {
   }
 }
 
+let play = null // null | 'playing' | 'paused'
+const initTourContent = tourEl.textContent
+
+function resumeTour() {
+  play = 'playing'
+  tourEl.textContent = '⏸️  Pause'
+  onClick('tour', pauseTour)
+}
+
+function pauseTour() {
+  play = 'paused'
+  tourEl.textContent = '▶️  Play'
+  onClick('tour', resumeTour)
+}
+
+function onTourStart() {
+  showSpinner(map)
+  play = 'playing'
+  interactions.forEach(interaction => {
+    // TODO move to module
+    interaction.setActive(false)
+  })
+  controls.forEach(control => {
+    control.setMap(null)
+  })
+  tourEl.textContent = '⏸️  Pause'
+
+  cancelEl.style.display = 'block'
+  onClick('tour', pauseTour)
+}
+
+function onTourEnd() {
+  interactions.forEach(interaction => {
+    interaction.setActive(true)
+  })
+  controls.forEach(control => {
+    control.setMap(map)
+  })
+
+  cancelEl.style.display = 'none'
+  tourEl.textContent = initTourContent
+  onClick('tour', tour);
+}
+
 async function tour() {
+  onTourStart()
   const posts = await getPosts()
   let arrived = true
   let mediaItems = []
+
+  removeSpinner(map)
 
   for await (const [index, post] of posts.entries()) {
     const { id, coordinates, caption, media_type } = post
     arrived = await flyTo(coordinates);
 
-    if (!arrived) {
-      break
-    }
+    if (!arrived) break
 
-    captionEl.innerHTML = caption
+    captionEl.textContent = caption
     overlay.setPosition(coordinates);
+
+    if (play === 'paused') {
+      confirm('▶️  Resume tour')
+      play = 'playing'
+    }
 
     if (SUPPORTED_INSTA_MEDIA_TYPES.includes(media_type)) {
       if (media_type === image_type) {
@@ -129,7 +200,12 @@ async function tour() {
 
     await wait(2000)
     closeOverlay()
+
+    // TODO for debugging
+    // if (index > 0) break
   }
+
+  onTourEnd()
 
   if (!arrived) {
     return alert('Tour cancelled');
@@ -137,5 +213,13 @@ async function tour() {
   alert('Tour complete');
 }
 
+function cancel() {
+  view.cancelAnimations()
+  alert('Tour cancelled');
+  onClick('tour', tour);
+  tourEl.textContent = initTourContent
+}
+
 onClick('tour', tour);
+onClick('cancel', cancel);
 

@@ -4,19 +4,28 @@ html, body {
   margin: 0;
   height: 100%;
 }
+button {
+  cursor: pointer;
+}
 #map {
   position: absolute;
   top: 0;
   bottom: 0;
   width: 100%;
 }
-#tour {
+.travel-control {
   position: absolute;
-  right: 20px;
   top: 2;
   padding: 10px;
   top: 20px;       
   z-index: 1;
+}
+#tour {
+  right: 20px;
+}
+#cancel {
+  right: 120px;
+  display: none;
 }
 .ol-popup {
   position: absolute;
@@ -58,4 +67,28 @@ html, body {
 }
 .ol-popup-closer:after {
   content: "✖";
+}
+/*
+#popup-images {
+  display: 
+}*/
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner:after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  border-radius: 50%;
+  border: 5px solid rgba(180, 180, 180, 0.6);
+  border-top-color: rgba(0, 0, 0, 0.6);
+  animation: spinner 0.6s linear infinite;
 }
