@@ -30,6 +30,8 @@ const overlay = new Overlay({
       duration: 250,
     },
   },
+  positioning: 'bottom-center',
+  offset: [0, -12]
 });
 
 const view = new View({
