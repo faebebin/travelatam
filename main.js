@@ -3,7 +3,7 @@ import { Map } from 'ol';
 import { getMediaUrls, getPostItems, getPosts } from './helpers/media'
 import { createImageCollectionElement } from './helpers/htmlElements'
 import { wait, animate } from './utils/promisify'
-import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature } from './helpers/geo';
+import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove } from './helpers/geo';
 
 // TODO typescript anyway
 const image_type = 'IMAGE'
@@ -35,6 +35,9 @@ const map = new Map({
     mediaOverlay
   ],
 });
+
+
+map.on("pointermove", handlePointerMove);
 
 showMapSpinner(map)
 

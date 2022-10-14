@@ -92,3 +92,15 @@ export function removeMapSpinner(map) {
   map.getTargetElement().classList.remove('spinner');
 }
 
+export function handlePointerMove(ev) {
+  // Only emit `onHover` event when no buttons are pressed, to avoid
+  // unexpected behavior on touch devices, when there is a slight
+  if (ev.originalEvent.buttons === 0) {
+    if (this.hasFeatureAtPixel(ev.pixel)) {
+      this.getTargetElement().style.cursor = 'pointer';
+    } else {
+      this.getTargetElement().style.cursor = '';
+    }
+  }
+}
+
