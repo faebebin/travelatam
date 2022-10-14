@@ -7,6 +7,9 @@ html, body {
 button {
   cursor: pointer;
 }
+img {
+  margin: 0 2px;
+}
 #map {
   position: absolute;
   top: 0;
@@ -59,6 +62,9 @@ button {
   margin-top: -2px;
   text-align: right;
 }
+#popup-caption {
+  margin: 5px
+}
 .ol-popup-closer {
   text-decoration: none;
 }
@@ -69,12 +75,10 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  overflow-x: scroll;
 }
 #popup-images {
   display: flex;
-  width: 90%
-
 }
 @keyframes spinner {
   to {

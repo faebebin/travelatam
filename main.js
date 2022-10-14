@@ -9,6 +9,7 @@ import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeM
 const image_type = 'IMAGE'
 const carousel_album_type = 'CAROUSEL_ALBUM'
 const SUPPORTED_INSTA_MEDIA_TYPES = [image_type, carousel_album_type]
+const MAX_IMAGE_DIMENSION = 300
 // TODO if (item.media_type === 'VIDEO') { thumbnail_url
 
 
@@ -38,6 +39,7 @@ const map = new Map({
 
 
 map.on("pointermove", handlePointerMove);
+map.on("click", handleDestinationClick);
 
 showMapSpinner(map)
 
@@ -45,8 +47,7 @@ let posts = []
 
 async function initApp() {
   const posts = await getPosts()
-  console.log(posts)
-  const destinations = posts.map(({ coordinates }) => createDestinationFeature(coordinates))
+  const destinations = posts.map(post => createDestinationFeature(post))
   destinationsSource.addFeatures(destinations)
   removeMapSpinner(map)
   return posts
@@ -85,6 +86,15 @@ closerEl.onclick = function() {
 
 function onClick(id, callback) {
   document.getElementById(id)?.addEventListener('click', callback);
+}
+
+async function moveTo(location) {
+  await animate(view,
+    {
+      center: location,
+      duration: 1000,
+    }
+  )
 }
 
 async function flyTo(location) {
@@ -162,36 +172,65 @@ function onTourEnd() {
   onClick('tour', tour);
 }
 
+async function handleDestinationClick(ev) {
+  const feature = this.getFeaturesAtPixel(ev.pixel)[0]
+  if (feature) {
+    const coordinates = feature.getGeometry().getCoordinates()
+    await moveTo(coordinates)
+    await showMediaOverlay({ coordinates, ...feature.getProperties() })
+  }
+}
+
+
+async function showMediaOverlay({ id, caption, media_type, media_url, coordinates }) { // TODO just pass feature instead
+  captionEl.textContent = caption
+  mediaOverlay.setPosition(coordinates);
+
+  if (SUPPORTED_INSTA_MEDIA_TYPES.includes(media_type)) {
+    const imgMargin = 0.1
+    const img_size = Math.min(
+      (window.innerWidth * (1 - imgMargin)),
+      (window.innerHeight / 2 * (1 - imgMargin)),
+      MAX_IMAGE_DIMENSION
+    )
+
+    let mediaItems = []
+    if (media_type === image_type) {
+      mediaItems = [{ id, caption, media_type, media_url, coordinates }]
+    }
+    if (media_type === carousel_album_type) {
+      mediaItems = await getPostItems(id)
+    }
+    const imgUrls = getMediaUrls(mediaItems)
+
+    const width = Math.min(
+      (imgUrls.length * img_size),
+      window.innerWidth * (1 - imgMargin)
+    )
+    mediaOverlay.getElement().style.width = `${width}px`
+
+    const imageCollectionResult = await createImageCollectionElement(img_size, imagesEl, imgUrls);
+    // TODO display image load errors / timeouts
+  }
+}
+
 async function tour() {
   onTourStart()
   let arrived = true
-  let mediaItems = []
 
   for await (const [index, post] of posts.entries()) {
-    const { id, coordinates, caption, media_type } = post
+    // TODO just iterate map.features instead? (using collecion?)
+    const { id, coordinates, caption, media_type, media_url } = post
     arrived = await flyTo(coordinates);
 
     if (!arrived) break
-
-    captionEl.textContent = caption
-    mediaOverlay.setPosition(coordinates);
 
     if (play === 'paused') {
       confirm('▶️  Resume tour')
       play = 'playing'
     }
 
-    if (SUPPORTED_INSTA_MEDIA_TYPES.includes(media_type)) {
-      if (media_type === image_type) {
-        mediaItems = [post]
-      }
-      if (media_type === carousel_album_type) {
-        mediaItems = await getPostItems(id)
-      }
-      const imgUrls = getMediaUrls(mediaItems)
-      const imageCollectionResult = await createImageCollectionElement(imagesEl, imgUrls);
-      // TODO display image load errors / timeouts
-    }
+    await showMediaOverlay({ id, coordinates, caption, media_type, media_url })
 
     await wait(2000)
     closeOverlay()

@@ -57,10 +57,12 @@ export function createVectorLayer() {
   return [destinationsSource, destinationsLayer]
 }
 
-export function createDestinationFeature(coordinates) {
-  return new Feature({
+export function createDestinationFeature({ coordinates, ...rest }) {
+  const feature = new Feature({
     geometry: new Point(coordinates),
   });
+  feature.setProperties(rest, true)
+  return feature
 }
 
 export function createMediaOverlay() {
