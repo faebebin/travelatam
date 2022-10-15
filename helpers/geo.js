@@ -89,6 +89,7 @@ export function createView() {
 
 export function showMapSpinner(map) {
   map.getTargetElement().classList.add('spinner');
+  // TODO add message (wg fetching instagram posts)
 }
 export function removeMapSpinner(map) {
   map.getTargetElement().classList.remove('spinner');
@@ -100,6 +101,7 @@ export function handlePointerMove(ev) {
   if (ev.originalEvent.buttons === 0) {
     if (this.hasFeatureAtPixel(ev.pixel)) {
       this.getTargetElement().style.cursor = 'pointer';
+      // TODO show caption
     } else {
       this.getTargetElement().style.cursor = '';
     }

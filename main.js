@@ -40,13 +40,12 @@ const map = new Map({
 
 
 map.on("pointermove", handlePointerMove);
-map.on("click", handleDestinationClick);
-
-showMapSpinner(map)
+map.on("click", handlePointerClick);
 
 let posts = []
 
 async function initApp() {
+  showMapSpinner(map)
   const posts = await getPosts()
   const destinations = posts.map(post => createDestinationFeature(post))
   destinationsSource.addFeatures(destinations)
@@ -178,7 +177,7 @@ function onTourEnd() {
   onClick('tour', tour);
 }
 
-async function handleDestinationClick(ev) {
+async function handlePointerClick(ev) {
   const feature = this.getFeaturesAtPixel(ev.pixel)[0]
   if (feature) {
     const coordinates = feature.getGeometry().getCoordinates()
@@ -226,6 +225,14 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
     const imageCollectionResult = await createImageCollectionElement(img_size, imagesEl, imgUrls);
     // TODO display image load errors / timeouts
   }
+}
+
+function vehicleAnimation() {
+  const bus = '🚌'
+  const airplane = '✈️ '
+  const bicycle = '🚲'
+
+
 }
 
 async function tour() {
