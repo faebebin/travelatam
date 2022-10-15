@@ -18,6 +18,7 @@ const captionEl = document.getElementById('popup-caption');
 const imagesEl = document.getElementById('popup-images');
 const cancelEl = document.getElementById('cancel');
 const tourEl = document.getElementById('tour');
+const vehicleEl = document.getElementById('vehicle');
 
 const mediaOverlay = createMediaOverlay();
 
@@ -153,6 +154,10 @@ function onTourStart() {
   controls.forEach(control => {
     control.setMap(null)
   })
+  vehicleEl.style.display = 'block'
+  vehicleEl.style.transform = 'rotate(225deg)' /* west facing */
+  vehicleEl.style.transition = 'transform 1s ease-in-out'
+
   tourEl.textContent = '⏸️  Pause'
 
   cancelEl.style.display = 'block'
@@ -167,6 +172,7 @@ function onTourEnd() {
     control.setMap(map)
   })
 
+  vehicleEl.style.display = 'none'
   cancelEl.style.display = 'none'
   tourEl.textContent = initTourContent
   onClick('tour', tour);

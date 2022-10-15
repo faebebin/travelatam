@@ -30,6 +30,14 @@ img {
   right: 120px;
   display: none;
 }
+#vehicle {
+  position: fixed;
+  top: calc(50% - 15px);
+  left: calc(50% - 15px);
+  font-size: 30px;
+  cursor: grabbing;
+  display: none;
+}
 #media-popup {
   background-color: white;
   box-shadow: 0 1px 4px rgba(0,0,0,0.2);
