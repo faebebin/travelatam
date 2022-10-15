@@ -187,11 +187,13 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
   mediaOverlay.setPosition(coordinates);
 
   if (SUPPORTED_INSTA_MEDIA_TYPES.includes(media_type)) {
-    const imgMargin = 0.1
+    const overlayMargin = 0.1
+    const imgMargin = 2
+
     const img_size = Math.min(
-      (window.innerWidth * (1 - imgMargin)),
-      (window.innerHeight / 2 * (1 - imgMargin)),
-      MAX_IMAGE_DIMENSION
+      (window.innerWidth * (1 - overlayMargin)),
+      (window.innerHeight / 2 * (1 - overlayMargin)),
+      MAX_IMAGE_DIMENSION + (2 * imgMargin)
     )
 
     let mediaItems = []
@@ -203,10 +205,16 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
     }
     const imgUrls = getMediaUrls(mediaItems)
 
-    const width = Math.min(
-      (imgUrls.length * img_size),
-      window.innerWidth * (1 - imgMargin)
-    )
+    const allImagesWidth = imgUrls.length * img_size
+    const elMaxWidth = window.innerWidth * (1 - overlayMargin)
+    let width = allImagesWidth
+    if (allImagesWidth > elMaxWidth) {
+      imagesEl.style.overflowX = 'scroll';
+      width = elMaxWidth
+    } else {
+      imagesEl.style.overflowX = 'hidden';
+    }
+
     mediaOverlay.getElement().style.width = `${width}px`
 
     const imageCollectionResult = await createImageCollectionElement(img_size, imagesEl, imgUrls);

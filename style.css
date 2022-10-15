@@ -8,7 +8,7 @@ button {
   cursor: pointer;
 }
 img {
-  margin: 0 2px;
+  margin: 2px;
 }
 #map {
   position: absolute;
@@ -75,10 +75,11 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: scroll;
 }
 #popup-images {
   display: flex;
+  overflow-x: hidden;
+  width: 100%
 }
 @keyframes spinner {
   to {
