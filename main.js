@@ -154,9 +154,9 @@ function onTourStart() {
   controls.forEach(control => {
     control.setMap(null)
   })
-  vehicleEl.style.display = 'block'
+  vehicleEl.style.zIndex = 1
   vehicleEl.style.transform = 'rotate(225deg)' /* west facing */
-  vehicleEl.style.transition = 'transform 1s ease-in-out'
+
 
   tourEl.textContent = '⏸️  Pause'
 

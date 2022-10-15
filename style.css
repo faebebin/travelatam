@@ -36,7 +36,8 @@ img {
   left: calc(50% - 15px);
   font-size: 30px;
   cursor: grabbing;
-  display: none;
+  z-index: -1; /* hidden */
+  transition: transform 1s ease-in-out;
 }
 #media-popup {
   background-color: white;
