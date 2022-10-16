@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "vite",
+    "start-dev": "API=dev python3 -m http.server & vite",
     "build": "vite build",
     "serve": "vite preview",
     "deploy": "npm run build && gh-pages -d dist",

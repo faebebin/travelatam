@@ -11,7 +11,9 @@ const INSTA_API_TOKEN = 'IGQVJVREFMaWVpQjMtMmFweEw1TW5TSDNYTFZA0LW5qS3BVS0lmRkpr
 
 export async function getPosts() {
   const fields = 'id,caption,media_type,media_url,timestamp'
-  const url = `https://graph.instagram.com/me/media?fields=${fields}&access_token=${INSTA_API_TOKEN}`
+  const url = import.meta.env.API === 'dev'
+    ? 'localhost:8000/tests/fixtures/postItems.json'
+    : `https://graph.instagram.com/me/media?fields=${fields}&access_token=${INSTA_API_TOKEN}`
   const response = await fetch(url)
   // TODO if !response.ok { return text}
   const json = await response.json()
@@ -20,7 +22,9 @@ export async function getPosts() {
 
 export async function getPostItems(mediaId) {
   const fields = 'media_type,media_url'
-  const url = `https://graph.instagram.com/${mediaId}/children?fields=${fields}&access_token=${INSTA_API_TOKEN}`
+  const url = import.meta.env.API === 'dev'
+    ? 'localhost:8000/tests/fixtures/posts.json'
+    : `https://graph.instagram.com/${mediaId}/children?fields=${fields}&access_token=${INSTA_API_TOKEN}`
   const response = await fetch(url)
   // TODO if !response.ok { return text}
   const json = await response.json()
