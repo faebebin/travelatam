@@ -1,5 +1,6 @@
 import './style.css';
-import { Map } from 'ol';
+import { Collection, Map } from 'ol';
+import VectorSource from "ol/source/Vector";
 import { getMediaUrls, getPostItems, getPosts } from './helpers/media'
 import { createImageCollectionElement } from './helpers/htmlElements'
 import { wait, animate } from './utils/promisify'
@@ -24,7 +25,7 @@ const mediaOverlay = createMediaOverlay();
 
 const view = createView();
 
-const [destinationsSource, destinationsLayer] = createVectorLayer()
+const destinationsLayer = createVectorLayer()
 
 const map = new Map({
   target: 'map',
@@ -38,23 +39,22 @@ const map = new Map({
   ],
 });
 
+let features = []
 
 map.on("pointermove", handlePointerMove);
 map.on("click", handlePointerClick);
 
-let posts = []
-
 async function initApp() {
   showMapSpinner(map)
   const posts = await getPosts()
-  const destinations = posts.map(post => createDestinationFeature(post))
-  destinationsSource.addFeatures(destinations)
+  features = new Collection(posts.map(post => createDestinationFeature(post)))
+  destinationsLayer.setSource(new VectorSource({ features }))
   removeMapSpinner(map)
-  return posts
+  console.log(destinationsLayer.getSource().getFeaturesCollection())
 }
 
 // FIXME Window.onload ?
-posts = await initApp()
+await initApp()
 
 const interactions = map.getInteractions()
 const controls = map.getControls()
@@ -180,14 +180,14 @@ function onTourEnd() {
 async function handlePointerClick(ev) {
   const feature = this.getFeaturesAtPixel(ev.pixel)[0]
   if (feature) {
-    const coordinates = feature.getGeometry().getCoordinates()
+    const { coordinates, ...rest } = getFeatureData(feature)
     await moveTo(coordinates)
-    await showMediaOverlay({ coordinates, ...feature.getProperties() })
+    await showMediaOverlay({ coordinates, ...rest })
   }
 }
 
 
-async function showMediaOverlay({ id, caption, media_type, media_url, coordinates }) { // TODO just pass feature instead
+async function showMediaOverlay({ id, caption, media_type, media_url, coordinates }) {
   captionEl.textContent = caption
   mediaOverlay.setPosition(coordinates);
 
@@ -203,7 +203,7 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
 
     let mediaItems = []
     if (media_type === image_type) {
-      mediaItems = [{ id, caption, media_type, media_url, coordinates }]
+      mediaItems = [{ id, media_type, media_url }]
     }
     if (media_type === carousel_album_type) {
       mediaItems = await getPostItems(id)
@@ -231,41 +231,54 @@ function vehicleAnimation() {
   const bus = '🚌'
   const airplane = '✈️ '
   const bicycle = '🚲'
+}
 
+function getFeatureCoordinates(feature) {
+  return feature.getGeometry().getCoordinates()
+}
 
+function getFeatureData(feature) {
+  const coordinates = getFeatureCoordinates(feature)
+  return { coordinates, ...feature.getProperties() }
 }
 
 async function tour() {
   onTourStart()
+
+  if (!features) {
+    Promise.reject(new Error('no post features'))
+  }
   let arrived = true
+  let index = -1
 
-  for await (const [index, post] of posts.entries()) {
-    // TODO just iterate map.features instead? (using collecion?)
-    const { id, coordinates, caption, media_type, media_url } = post
-    arrived = await flyTo(coordinates);
-
-    if (!arrived) break
-
+  async function next(more) {
     if (play === 'paused') {
-      confirm('▶️  Resume tour')
-      play = 'playing'
+      await wait(1000)
+      // confirm('▶️  Resume tour')
+      next(true)
     }
 
-    await showMediaOverlay({ id, coordinates, caption, media_type, media_url })
+    if (more) {
+      ++index;
+      if (index < features.getLength()) {
+        const { coordinates, ...rest } = getFeatureData(features.item(index))
+        arrived = await flyTo(coordinates);
+        if (!arrived) {
+          alert('Tour cancelled');
+        }
+        await showMediaOverlay({ coordinates, ...rest })
 
-    await wait(2000)
-    closeOverlay()
+        await wait(2000)
+        closeOverlay()
 
-    // TODO for debugging
-    // if (index > 0) break
+      } else {
+        alert('Tour complete');
+        onTourEnd()
+      }
+    }
+    await next(true);
   }
-
-  onTourEnd()
-
-  if (!arrived) {
-    return alert('Tour cancelled');
-  }
-  alert('Tour complete');
+  await next(true)
 }
 
 function cancel() {

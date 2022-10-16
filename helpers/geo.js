@@ -1,6 +1,5 @@
 import { fromLonLat } from 'ol/proj'
 import TileLayer from 'ol/layer/Tile';
-import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import Point from 'ol/geom/Point';
 import OSM from 'ol/source/OSM';
@@ -38,7 +37,7 @@ export function createOSMLayer() {
 export function createVectorLayer() {
   const stroke = new Stroke({ color: 'black', width: 2 });
   const fill = new Fill({ color: 'red' });
-  const starShape = new Style({
+  const style = new Style({
     image: new RegularShape({
       fill: fill,
       stroke: stroke,
@@ -48,13 +47,7 @@ export function createVectorLayer() {
       angle: 0,
     }),
   })
-  const destinationsSource = new VectorSource({
-  });
-  const destinationsLayer = new VectorLayer({
-    source: destinationsSource,
-    style: starShape
-  });
-  return [destinationsSource, destinationsLayer]
+  return new VectorLayer({ style });
 }
 
 export function createDestinationFeature({ coordinates, ...rest }) {
