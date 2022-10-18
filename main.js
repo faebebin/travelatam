@@ -3,7 +3,7 @@ import { Collection, Map } from 'ol';
 import VectorSource from "ol/source/Vector";
 import { getMediaUrls, getPostItems, getPosts } from './src/api'
 import { createImageCollectionElement } from './src/image'
-import { flyTo, driveTo } from './src/animate'
+import { movements, turnTowards, vehicleByDistance } from './src/animate'
 import { wait } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove } from './src/geo';
 
@@ -47,7 +47,6 @@ async function initApp() {
   features = new Collection(posts.map(post => createDestinationFeature(post)))
   destinationsLayer.setSource(new VectorSource({ features }))
   removeMapSpinner(map)
-  console.log(destinationsLayer.getSource().getFeaturesCollection())
 }
 
 // FIXME Window.onload ?
@@ -65,7 +64,8 @@ async function handlePointerClick(ev) {
   const feature = this.getFeaturesAtPixel(ev.pixel)[0]
   if (feature) {
     const { coordinates, ...rest } = getFeatureData(feature)
-    await driveTo(coordinates, view)
+    await movements.driveTo(coordinates, view)
+
     await showMediaOverlay({ coordinates, ...rest })
   }
 }
@@ -127,10 +127,14 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
   }
 }
 
-function vehicleAnimation() {
-  const bus = '🚌'
-  const airplane = '✈️ '
-  const bicycle = '🚲'
+function choseVehicle(current, destination) {
+  const vehicleConfig = [
+    { maxDistance: 1 * 1000, symbol: '🚶', name: 'walk', mode: 'walk', azimuthCorrection: 1.5708 }, // radians
+    { maxDistance: 10 * 1000, symbol: '🚲', name: 'bicycle', mode: 'drive', azimuthCorrection: 1.5708 },
+    { maxDistance: 1000 * 1000, symbol: '🚌', name: 'bus', mode: 'drive', azimuthCorrection: 1.5708 },
+    { maxDistance: Infinity, symbol: '✈️ ', name: 'airplane', mode: 'fly', azimuthCorrection: -0.785398 }
+  ]
+  return vehicleByDistance(current, destination, vehicleConfig)
 }
 
 function getFeatureCoordinates(feature) {
@@ -147,10 +151,16 @@ async function next(index) {
   if (index < features.getLength()) {
     const { coordinates, ...rest } = getFeatureData(features.item(index))
     if (index === 0) {
-      arrived = await driveTo(coordinates, view);
+      arrived = await movements.driveTo(coordinates, view);
       onTravelStart()
     } else {
-      arrived = await flyTo(coordinates, view);
+      const currentCoordinates = view.getCenter()
+      const { symbol, mode, azimuthCorrection } = choseVehicle(currentCoordinates, coordinates)
+      const azimuthRad = turnTowards(currentCoordinates, coordinates, azimuthCorrection)
+      vehicleEl.textContent = symbol
+      vehicleEl.style.transform = `rotate(${azimuthRad}rad)`
+      await wait(1000) // TODO transition is set to 1s. Set as css constant (less?)
+      arrived = await movements[`${mode}To`](coordinates, view);
     }
     if (!arrived) {
       arrived = 'cancelled 😔'
@@ -158,7 +168,7 @@ async function next(index) {
     }
     // await showMediaOverlay({ coordinates, ...rest })
 
-    await wait(2000)
+    await wait(500)
     // closeOverlay()
     await next(index + 1);
   } else {
@@ -198,7 +208,6 @@ function initTravel() {
 }
 
 function onTravelStart() {
-  vehicleEl.style.transform = 'rotate(225deg)' /* west facing */
   vehicleEl.style.zIndex = 1
 }
 

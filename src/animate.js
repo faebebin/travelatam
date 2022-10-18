@@ -1,6 +1,8 @@
-import { wait, animate } from '../utils/promisify'
+import { animate } from '../utils/promisify'
+import { toLonLat } from 'ol/proj';
+import { getDistance } from 'ol/sphere';
 
-export async function flyTo(location, view) {
+async function flyTo(location, view) {
   const duration = 2000;
   const zoom = view.getZoom();
 
@@ -13,7 +15,7 @@ export async function flyTo(location, view) {
     );
     const verticalMove = animate(view,
       {
-        zoom: zoom - 1,
+        zoom: zoom - 1.5,
         duration: duration / 2,
       },
       {
@@ -31,22 +33,37 @@ export async function flyTo(location, view) {
   }
 }
 
-export async function driveTo(location, view) {
+async function driveTo(location, view) {
   try {
-  await animate(view,
-    {
-      center: location,
-      duration: 1000,
-    }
-  )
+    await animate(view,
+      {
+        center: location,
+        duration: 1000,
+      }
+    )
     return true
   } catch (error) {
     if (error === 'cancelled') {
       return false
     }
     throw new Error(error)
-  } 
+  }
 
+}
+
+export const movements = {
+  flyTo,
+  driveTo
+}
+
+export function turnTowards(current, destination, azimuthCorrection) {
+  const azimuthRad = Math.atan2(destination[0] - current[0], destination[1] - current[1])
+  return azimuthRad + azimuthCorrection
+}
+
+export function vehicleByDistance(current, destination, vehicleConfig) { // Vehicle
+  const airDistance = getDistance(toLonLat(current), toLonLat(destination))
+  return vehicleConfig.find((vehicle) => airDistance <= vehicle.maxDistance)
 }
 
 /*

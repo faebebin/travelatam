@@ -50,6 +50,8 @@ export function createVectorLayer() {
   return new VectorLayer({ style });
 }
 
+
+
 export function createDestinationFeature({ coordinates, ...rest }) {
   const feature = new Feature({
     geometry: new Point(coordinates),
