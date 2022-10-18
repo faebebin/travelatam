@@ -1,18 +1,38 @@
-# very WIP
-
-new approach
-use instragram api
-
 # travelatam
+
 Visualize my Latinamerica travel adventure 2022
 
-IDEA longterm: photo first (insta) travel animation. ie maintain your insta travel adding geo-location and then having this client animate your travel :)
+# very WIP
+
+Idea: Animate your travel pictures collection based on instagram (hopefully later also more plattforms)
 
 # Using OpenLayers + Vite
+
 Following https://openlayers.org/doc/quickstart.html
 
-# Tools choice
-Initial idea: Create a ol-based github page that reads from google photos
-  - google photos api requesting photos with metadata as location can only be accessed via Oauth2
-Then thinking about using qfield/cloud to add photos directly on qgis project and using qfield.cloud api or running qgis-server somewhere eg. DO
-  + Have all data (geo + photos) in qgs. Add all the animation in github website
+# TODO
+
+## Refact:
+
+*   rethink naming
+
+## Optimize
+
+*   data fetching / image loading during animations
+
+## Dev:
+
+*   Build locally on docker and use test API serving fixtures (eg python http.server)
+*   Add Typescript
+*   Add Redux
+*   Tryout https://rxjs.dev/ for more advance animations and interactions/controls
+*   Add React or View (latter just for training)
+
+## Prod
+
+*   Add some backend for API tocken management (try Heroku?)
+
+## Features:
+
+*   Add more controls (pause, back, forward)
+*   Client cashing to continue continue jurney?
