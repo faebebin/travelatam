@@ -1,5 +1,5 @@
 import { fromLonLat } from 'ol/proj';
-import { getOSMLatLonFromNames } from '../helpers/geo'
+import { getOSMLatLonFromNames } from '../src/geo'
 
 
 export async function extractLocationLatLon(stringInclLocation) { // Promise

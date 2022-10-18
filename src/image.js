@@ -11,7 +11,7 @@ export function appendImageToDOM(img_size, container, imgUrl) {
   return img.decode()
 }
 
-export function createImageCollectionElement(img_size, container, imgUrls) {
+export async function createImageCollectionElement(img_size, container, imgUrls) {
   // TODO: create all images and keep them ready for inserting into overlay? OR create and destroy
   // precaching? https://stackoverflow.com/questions/10240110/how-do-you-cache-an-image-in-javascript
 

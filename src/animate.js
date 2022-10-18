@@ -1,9 +1,57 @@
+import { wait, animate } from '../utils/promisify'
+
+export async function flyTo(location, view) {
+  const duration = 2000;
+  const zoom = view.getZoom();
+
+  try {
+    const horizontalMove = animate(view,
+      {
+        center: location,
+        duration: duration,
+      }
+    );
+    const verticalMove = animate(view,
+      {
+        zoom: zoom - 1,
+        duration: duration / 2,
+      },
+      {
+        zoom: zoom,
+        duration: duration / 2,
+      }
+    );
+    await Promise.all([horizontalMove, verticalMove])
+    return true
+  } catch (error) {
+    if (error === 'cancelled') {
+      return false
+    }
+    throw new Error(error)
+  }
+}
+
+export async function driveTo(location, view) {
+  try {
+  await animate(view,
+    {
+      center: location,
+      duration: 1000,
+    }
+  )
+    return true
+  } catch (error) {
+    if (error === 'cancelled') {
+      return false
+    }
+    throw new Error(error)
+  } 
+
+}
+
+/*
 import { easeIn, easeOut } from 'ol/easing';
 
-
-/* ======================
-  * Movements
-  */
 
 // A bounce easing method (from https://github.com/DmitryBaranovskiy/raphael).
 function bounce(t) {
@@ -112,4 +160,4 @@ onClick('spin-to-rome', function() {
     }
   );
 });
-
+*/

@@ -1,10 +1,11 @@
 import './style.css';
 import { Collection, Map } from 'ol';
 import VectorSource from "ol/source/Vector";
-import { getMediaUrls, getPostItems, getPosts } from './helpers/media'
-import { createImageCollectionElement } from './helpers/htmlElements'
-import { wait, animate } from './utils/promisify'
-import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove } from './helpers/geo';
+import { getMediaUrls, getPostItems, getPosts } from './src/api'
+import { createImageCollectionElement } from './src/image'
+import { flyTo, driveTo } from './src/animate'
+import { wait } from './utils/promisify'
+import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove } from './src/geo';
 
 // TODO typescript anyway
 const image_type = 'IMAGE'
@@ -13,13 +14,9 @@ const SUPPORTED_INSTA_MEDIA_TYPES = [image_type, carousel_album_type]
 const MAX_IMAGE_DIMENSION = 300
 // TODO if (item.media_type === 'VIDEO') { thumbnail_url
 
-
 const closerEl = document.getElementById('popup-closer');
 const captionEl = document.getElementById('popup-caption');
 const imagesEl = document.getElementById('popup-images');
-const cancelEl = document.getElementById('cancel');
-const tourEl = document.getElementById('tour');
-const vehicleEl = document.getElementById('vehicle');
 
 const mediaOverlay = createMediaOverlay();
 
@@ -56,9 +53,6 @@ async function initApp() {
 // FIXME Window.onload ?
 await initApp()
 
-const interactions = map.getInteractions()
-const controls = map.getControls()
-
 // loading spinner
 // map.on('loadstart', function() {
 //   showSpinner(map)
@@ -66,6 +60,15 @@ const controls = map.getControls()
 // map.on('loadend', function() {
 //   removeMapSpinner(map)
 // });
+
+async function handlePointerClick(ev) {
+  const feature = this.getFeaturesAtPixel(ev.pixel)[0]
+  if (feature) {
+    const { coordinates, ...rest } = getFeatureData(feature)
+    await driveTo(coordinates, view)
+    await showMediaOverlay({ coordinates, ...rest })
+  }
+}
 
 function closeOverlay() {
   clearOverlay()
@@ -80,96 +83,8 @@ function clearOverlay() { // TODO necessary ?
   imagesEl.textContent = '';
 }
 
-closerEl.onclick = function() {
-  closeOverlay()
-};
 
-function onClick(id, callback) {
-  document.getElementById(id)?.addEventListener('click', callback);
-}
-
-async function moveTo(location) {
-  await animate(view,
-    {
-      center: location,
-      duration: 1000,
-    }
-  )
-}
-
-async function flyTo(location) {
-  const duration = 2000;
-  const zoom = view.getZoom();
-
-
-  try {
-    const horizontalMove = animate(view,
-      {
-        center: location,
-        duration: duration,
-      }
-    );
-    const verticalMove = animate(view,
-      {
-        zoom: zoom - 1,
-        duration: duration / 2,
-      },
-      {
-        zoom: zoom,
-        duration: duration / 2,
-      }
-    );
-    await Promise.all([horizontalMove, verticalMove])
-    return true
-  } catch (error) {
-    if (error === 'cancelled') {
-      return false
-    }
-    throw new Error(error)
-  }
-}
-
-const initTourContent = tourEl.textContent
-
-function onTourStart() {
-  interactions.forEach(interaction => {
-    // TODO move to module
-    interaction.setActive(false)
-  })
-  controls.forEach(control => {
-    control.setMap(null)
-  })
-  vehicleEl.style.zIndex = 1
-  vehicleEl.style.transform = 'rotate(225deg)' /* west facing */
-
-
-  tourEl.style.display = 'none'
-
-  cancelEl.style.display = 'block'
-}
-
-function onTourEnd() {
-  interactions.forEach(interaction => {
-    interaction.setActive(true)
-  })
-  controls.forEach(control => {
-    control.setMap(map)
-  })
-
-  vehicleEl.style.display = 'none'
-  cancelEl.style.display = 'none'
-  tourEl.textContent = initTourContent
-  onClick('tour', tour);
-}
-
-async function handlePointerClick(ev) {
-  const feature = this.getFeaturesAtPixel(ev.pixel)[0]
-  if (feature) {
-    const { coordinates, ...rest } = getFeatureData(feature)
-    await moveTo(coordinates)
-    await showMediaOverlay({ coordinates, ...rest })
-  }
-}
+closerEl.onclick = closeOverlay
 
 
 async function showMediaOverlay({ id, caption, media_type, media_url, coordinates }) {
@@ -227,44 +142,84 @@ function getFeatureData(feature) {
   return { coordinates, ...feature.getProperties() }
 }
 
-async function tour() {
-  onTourStart()
+let arrived = null
+async function next(index) {
+  if (index < features.getLength()) {
+    const { coordinates, ...rest } = getFeatureData(features.item(index))
+    if (index === 0) {
+      arrived = await driveTo(coordinates, view);
+      onTravelStart()
+    } else {
+      arrived = await flyTo(coordinates, view);
+    }
+    if (!arrived) {
+      arrived = 'cancelled 😔'
+      return Promise.resolve('cancelled')
+    }
+    // await showMediaOverlay({ coordinates, ...rest })
+
+    await wait(2000)
+    // closeOverlay()
+    await next(index + 1);
+  } else {
+    arrived = 'complete 🙌'
+  }
+}
+
+async function travel() {
+  initTravel()
 
   if (!features) {
     Promise.reject(new Error('no post features'))
   }
-  let arrived = true
-  let index = -1
 
-  async function next(index) {
-    if (index < features.getLength()) {
-      const { coordinates, ...rest } = getFeatureData(features.item(index))
-      arrived = await flyTo(coordinates);
-      if (!arrived) {
-        // alert('Tour cancelled');
-        return Promise.reject()
-      }
-      // await showMediaOverlay({ coordinates, ...rest })
-
-      await wait(2000)
-      closeOverlay()
-
-    } else {
-      onTourEnd()
-    }
-    await next(index + 1);
-  }
-  // alert('Tour complete');
   await next(0)
+
+  onTravelEnd(arrived)
+}
+
+// TODO move to controls.js
+
+const travelEl = document.getElementById('travel');
+const vehicleEl = document.getElementById('vehicle');
+const cancelEl = document.getElementById('cancel');
+
+function initTravel() {
+  map.getInteractions().forEach(interaction => {
+    // TODO move to module
+    interaction.setActive(false)
+  })
+  map.getControls().forEach(control => {
+    control.setMap(null)
+  })
+
+  travelEl.style.display = 'none'
+  cancelEl.style.display = 'block'
+}
+
+function onTravelStart() {
+  vehicleEl.style.transform = 'rotate(225deg)' /* west facing */
+  vehicleEl.style.zIndex = 1
+}
+
+function onTravelEnd(arrived) {
+  map.getInteractions().forEach(interaction => {
+    interaction.setActive(true)
+  })
+  map.getControls().forEach(control => {
+    control.setMap(map)
+  })
+
+  vehicleEl.style.zIndex = -1
+  cancelEl.style.display = 'none'
+  travelEl.style.display = 'block'
+  alert(`Tour ${arrived}`)
 }
 
 function cancel() {
-  view.cancelAnimations()
-  // alert('Tour cancelled');
-  onClick('tour', tour);
-  tourEl.textContent = initTourContent
+  map.getView().cancelAnimations()
 }
 
-onClick('tour', tour);
-onClick('cancel', cancel);
+travelEl.onclick = travel
+cancelEl.onclick = cancel
 

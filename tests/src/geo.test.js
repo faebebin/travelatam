@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { toNominatimSearchParams } from '../../helpers/geo'
+import { toNominatimSearchParams } from '../../src/geo'
 
 describe("toNominatimSearchParams", () => {
   it('returns OSM nominatim search string', () => {
