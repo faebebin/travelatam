@@ -22,12 +22,9 @@ img {
   padding: 10px;
   top: 20px;       
   z-index: 1;
-}
-#tour {
   right: 20px;
 }
 #cancel {
-  right: 120px;
   display: none;
 }
 #vehicle {
