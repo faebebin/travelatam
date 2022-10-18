@@ -129,23 +129,9 @@ async function flyTo(location) {
   }
 }
 
-let play = null // null | 'playing' | 'paused'
 const initTourContent = tourEl.textContent
 
-function resumeTour() {
-  play = 'playing'
-  tourEl.textContent = '⏸️  Pause'
-  onClick('tour', pauseTour)
-}
-
-function pauseTour() {
-  play = 'paused'
-  tourEl.textContent = '▶️  Play'
-  onClick('tour', resumeTour)
-}
-
 function onTourStart() {
-  play = 'playing'
   interactions.forEach(interaction => {
     // TODO move to module
     interaction.setActive(false)
@@ -157,10 +143,9 @@ function onTourStart() {
   vehicleEl.style.transform = 'rotate(225deg)' /* west facing */
 
 
-  tourEl.textContent = '⏸️  Pause'
+  tourEl.style.display = 'none'
 
   cancelEl.style.display = 'block'
-  onClick('tour', pauseTour)
 }
 
 function onTourEnd() {
@@ -251,39 +236,31 @@ async function tour() {
   let arrived = true
   let index = -1
 
-  async function next(more) {
-    if (play === 'paused') {
-      await wait(1000)
-      // confirm('▶️  Resume tour')
-      next(true)
-    }
-
-    if (more) {
-      ++index;
-      if (index < features.getLength()) {
-        const { coordinates, ...rest } = getFeatureData(features.item(index))
-        arrived = await flyTo(coordinates);
-        if (!arrived) {
-          alert('Tour cancelled');
-        }
-        await showMediaOverlay({ coordinates, ...rest })
-
-        await wait(2000)
-        closeOverlay()
-
-      } else {
-        alert('Tour complete');
-        onTourEnd()
+  async function next(index) {
+    if (index < features.getLength()) {
+      const { coordinates, ...rest } = getFeatureData(features.item(index))
+      arrived = await flyTo(coordinates);
+      if (!arrived) {
+        // alert('Tour cancelled');
+        return Promise.reject()
       }
+      // await showMediaOverlay({ coordinates, ...rest })
+
+      await wait(2000)
+      closeOverlay()
+
+    } else {
+      onTourEnd()
     }
-    await next(true);
+    await next(index + 1);
   }
-  await next(true)
+  // alert('Tour complete');
+  await next(0)
 }
 
 function cancel() {
   view.cancelAnimations()
-  alert('Tour cancelled');
+  // alert('Tour cancelled');
   onClick('tour', tour);
   tourEl.textContent = initTourContent
 }
