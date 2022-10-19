@@ -2,21 +2,18 @@ import './style.css';
 import { Collection, Map } from 'ol';
 import VectorSource from "ol/source/Vector";
 import { getMediaUrls, getPostItems, getPosts } from './src/api'
-import { createImageCollectionElement } from './src/image'
+import { carouselNext, carouselPrevious, createImageCollectionElement, setCarouselNextVisibility, setCarouselPreviousVisibility } from './src/image'
 import { zoomTo, turnTowards, choseVehicle, vehicles, movements } from './src/animate'
 import { wait } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove } from './src/geo';
+import { SUPPORTED_INSTA_MEDIA_TYPES, MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
 
-// TODO typescript anyway
-const image_type = 'IMAGE'
-const carousel_album_type = 'CAROUSEL_ALBUM'
-const SUPPORTED_INSTA_MEDIA_TYPES = [image_type, carousel_album_type]
-const MAX_IMAGE_DIMENSION = 300
-// TODO if (item.media_type === 'VIDEO') { thumbnail_url
 
 const closerEl = document.getElementById('popup-closer');
 const captionEl = document.getElementById('popup-caption');
 const imagesEl = document.getElementById('popup-images');
+const nextImageEl = document.getElementById('next-image')
+const previousImageEl = document.getElementById('previous-image')
 
 const mediaOverlay = createMediaOverlay();
 
@@ -41,11 +38,11 @@ let features = []
 map.on("pointermove", handlePointerMove);
 map.on("click", handlePointerClick);
 
-map.on("moveend", (ev) => {
-  // NOTE: for debugging and map configuration
-  console.log(map.getView().getZoom())
-  console.log(map.getView().getCenter())
-});
+// map.on("moveend", (ev) => {
+//   // NOTE: for debugging and map configuration
+//   console.log(map.getView().getZoom())
+//   console.log(map.getView().getCenter())
+// });
 
 
 async function initApp() {
@@ -122,7 +119,13 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
     let width = allImagesWidth
     if (allImagesWidth > elMaxWidth) {
       imagesEl.style.overflowX = 'scroll';
+      imagesEl.onscroll = (ev) => {
+        setCarouselPreviousVisibility(ev.target, previousImageEl)
+        setCarouselNextVisibility(ev.target, nextImageEl)
+      }
       width = elMaxWidth
+      nextImageEl.onclick = () => carouselNext(imagesEl, img_size)
+      previousImageEl.onclick = () => carouselPrevious(imagesEl, img_size)
     } else {
       imagesEl.style.overflowX = 'hidden';
     }
@@ -170,10 +173,10 @@ async function next(index) {
       arrived = 'cancelled 😭'
       return Promise.resolve('cancelled')
     }
-    // await showMediaOverlay({ coordinates, ...rest })
+    await showMediaOverlay({ coordinates, ...rest })
 
-    await wait(500)
-    // closeOverlay()
+    await wait(2000)
+    closeOverlay()
     await next(index + 1);
   } else {
     arrived = 'complete 🙌'

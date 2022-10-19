@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createImageCollectionElement, createImageElement } from '../../src/image'
+import { createImageCollectionElement, createImageElement, carouselNext } from '../../src/image'
 
 // describe("createImageElement", () => {
 // TODO: vitest 'new Image() is not defined'

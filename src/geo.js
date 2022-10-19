@@ -1,4 +1,3 @@
-import { fromLonLat } from 'ol/proj'
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from "ol/layer/Vector";
 import Point from 'ol/geom/Point';

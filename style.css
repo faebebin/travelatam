@@ -85,7 +85,26 @@ img {
 #popup-images {
   display: flex;
   overflow-x: hidden;
-  width: 100%
+  width: 100%;
+}
+button.carousel {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  top: calc(50% - 25px);
+  position: absolute;
+  background: rgba(100,100,100,0.5);
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+}
+#next-image {
+  right: 15px;
+}
+#previous-image {
+  left: 15px;
+  display: none;
 }
 @keyframes spinner {
   to {

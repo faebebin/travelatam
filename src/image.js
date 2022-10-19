@@ -12,7 +12,6 @@ export function appendImageToDOM(img_size, container, imgUrl) {
 }
 
 export async function createImageCollectionElement(img_size, container, imgUrls) {
-  // TODO: create all images and keep them ready for inserting into overlay? OR create and destroy
   // precaching? https://stackoverflow.com/questions/10240110/how-do-you-cache-an-image-in-javascript
 
   // TODO handle order of images?
@@ -20,3 +19,33 @@ export async function createImageCollectionElement(img_size, container, imgUrls)
     imgUrls.map(imgUrl => appendImageToDOM(img_size, container, imgUrl))
   )
 }
+
+export function carouselNext(imagesEl, image_width, times = 1) {
+  const currentPosition = imagesEl.scrollLeft
+  const offset = currentPosition + (image_width * times)
+  imagesEl.scrollTo({ left: offset, behavior: 'smooth' })
+}
+
+export function carouselPrevious(imagesEl, image_width, times = 1) {
+  const currentPosition = imagesEl.scrollLeft
+  const offset = currentPosition - (image_width * times)
+  imagesEl.scrollTo({ left: offset, behavior: 'smooth' })
+}
+
+
+export function setCarouselPreviousVisibility(imagesEl, buttonEl) {
+  if (imagesEl.scrollLeft === 0) {
+    buttonEl.style.display = 'none'
+  } else {
+    buttonEl.style.display = 'block'
+  }
+}
+
+export function setCarouselNextVisibility(imagesEl, buttonEl) {
+  if (imagesEl.scrollWidth - imagesEl.scrollLeft === imagesEl.offsetWidth) {
+    buttonEl.style.display = 'none'
+  } else {
+    buttonEl.style.display = 'block'
+  }
+}
+
