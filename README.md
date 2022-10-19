@@ -19,6 +19,7 @@ Following https://openlayers.org/doc/quickstart.html
 ## Optimize
 
 *   data fetching / image loading during animations
+* More pure CSS, eg. image carrousel
 
 ## Dev:
 
