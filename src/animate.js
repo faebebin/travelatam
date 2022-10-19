@@ -48,7 +48,23 @@ async function driveTo(location, view) {
     }
     throw new Error(error)
   }
+}
 
+export async function zoomTo(zoom, view) {
+  try {
+    await animate(view,
+      {
+        zoom: zoom,
+        duration: 1000,
+      }
+    )
+    return true
+  } catch (error) {
+    if (error === 'cancelled') {
+      return false
+    }
+    throw new Error(error)
+  }
 }
 
 export const movements = {
@@ -61,9 +77,53 @@ export function turnTowards(current, destination, azimuthCorrection) {
   return azimuthRad + azimuthCorrection
 }
 
-export function vehicleByDistance(current, destination, vehicleConfig) { // Vehicle
+export const vehicles = [
+  {
+    maxDistance: 1 * 1000,
+    symbol: '🚶',
+    name: 'walk',
+    mode: 'walk',
+    azimuthCorrection: 1.5708, // radians
+    zoom: 18,
+    move: driveTo
+  },
+  {
+    maxDistance: 10 * 1000,
+    symbol: '🚲',
+    name: 'bicycle',
+    mode: 'drive',
+    azimuthCorrection: 1.5708,
+    zoom: 15,
+    move: driveTo
+  },
+  {
+    maxDistance: 1000 * 1000,
+    symbol: '🚌',
+    name: 'bus',
+    mode: 'drive',
+    azimuthCorrection: 1.5708,
+    zoom: 10,
+    move: driveTo
+  },
+  {
+    maxDistance: Infinity,
+    symbol: '✈️ ',
+    name: 'airplane',
+    mode: 'fly',
+    azimuthCorrection: -0.785398,
+    zoom: 6,
+    move: flyTo
+  }
+]
+
+export function choseVehicle(current, destination) {
+  // TODO class Vehicle with move() method ...
+  return vehicleByDistance(current, destination)
+}
+
+export function vehicleByDistance(current, destination) { // Vehicle
   const airDistance = getDistance(toLonLat(current), toLonLat(destination))
-  return vehicleConfig.find((vehicle) => airDistance <= vehicle.maxDistance)
+  return vehicles.find((vehicle) => airDistance <= vehicle.maxDistance)
 }
 
 /*

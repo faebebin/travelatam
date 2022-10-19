@@ -3,7 +3,7 @@ import { Collection, Map } from 'ol';
 import VectorSource from "ol/source/Vector";
 import { getMediaUrls, getPostItems, getPosts } from './src/api'
 import { createImageCollectionElement } from './src/image'
-import { movements, turnTowards, vehicleByDistance } from './src/animate'
+import { zoomTo, turnTowards, choseVehicle, vehicles, movements } from './src/animate'
 import { wait } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove } from './src/geo';
 
@@ -40,6 +40,13 @@ let features = []
 
 map.on("pointermove", handlePointerMove);
 map.on("click", handlePointerClick);
+
+map.on("moveend", (ev) => {
+  // NOTE: for debugging and map configuration
+  console.log(map.getView().getZoom())
+  console.log(map.getView().getCenter())
+});
+
 
 async function initApp() {
   showMapSpinner(map)
@@ -127,15 +134,6 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
   }
 }
 
-function choseVehicle(current, destination) {
-  const vehicleConfig = [
-    { maxDistance: 1 * 1000, symbol: '🚶', name: 'walk', mode: 'walk', azimuthCorrection: 1.5708 }, // radians
-    { maxDistance: 10 * 1000, symbol: '🚲', name: 'bicycle', mode: 'drive', azimuthCorrection: 1.5708 },
-    { maxDistance: 1000 * 1000, symbol: '🚌', name: 'bus', mode: 'drive', azimuthCorrection: 1.5708 },
-    { maxDistance: Infinity, symbol: '✈️ ', name: 'airplane', mode: 'fly', azimuthCorrection: -0.785398 }
-  ]
-  return vehicleByDistance(current, destination, vehicleConfig)
-}
 
 function getFeatureCoordinates(feature) {
   return feature.getGeometry().getCoordinates()
@@ -155,15 +153,21 @@ async function next(index) {
       onTravelStart()
     } else {
       const currentCoordinates = view.getCenter()
-      const { symbol, mode, azimuthCorrection } = choseVehicle(currentCoordinates, coordinates)
+      const { symbol, azimuthCorrection, move, zoom } = choseVehicle(currentCoordinates, coordinates)
+
+      await zoomTo(zoom, view)
+
       const azimuthRad = turnTowards(currentCoordinates, coordinates, azimuthCorrection)
       vehicleEl.textContent = symbol
       vehicleEl.style.transform = `rotate(${azimuthRad}rad)`
+
       await wait(1000) // TODO transition is set to 1s. Set as css constant (less?)
-      arrived = await movements[`${mode}To`](coordinates, view);
+
+      arrived = await move(coordinates, view);
+      vehicleEl.textContent = ''
     }
     if (!arrived) {
-      arrived = 'cancelled 😔'
+      arrived = 'cancelled 😭'
       return Promise.resolve('cancelled')
     }
     // await showMediaOverlay({ coordinates, ...rest })
@@ -227,6 +231,7 @@ function onTravelEnd(arrived) {
 
 function cancel() {
   map.getView().cancelAnimations()
+  console.log(map.getView())
 }
 
 travelEl.onclick = travel

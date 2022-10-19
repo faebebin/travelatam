@@ -75,10 +75,10 @@ export function createMediaOverlay() {
 }
 
 export function createView() {
-  const zurichAirport = fromLonLat([47.459, 8.5474].reverse());
+  const worldCenter = [-5696128.88, 1928330.23];
   return new View({
-    center: zurichAirport,
-    zoom: 6,
+    center: worldCenter,
+    zoom: 2.46,
   })
 }
 
