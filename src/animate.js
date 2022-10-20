@@ -2,7 +2,8 @@ import { animate } from '../utils/promisify'
 import { toLonLat } from 'ol/proj';
 import { getDistance } from 'ol/sphere';
 
-async function flyTo(location, view) {
+async function flyTo(location, speed, view) {
+  // TODO bind view
   const duration = 2000;
   const zoom = view.getZoom();
 
@@ -33,7 +34,7 @@ async function flyTo(location, view) {
   }
 }
 
-async function driveTo(location, view) {
+async function driveTo(location, speed, view) {
   try {
     await animate(view,
       {
@@ -79,13 +80,14 @@ export function turnTowards(current, destination, azimuthCorrection) {
 
 export const vehicles = [
   {
-    maxDistance: 1 * 1000,
+    maxDistance: 1 * 1000, // for vehicle choice
     symbol: '🚶',
     name: 'walk',
     mode: 'walk',
     azimuthCorrection: 1.5708, // radians
     zoom: 18,
-    move: driveTo
+    move: driveTo,
+    speed: 10 // m/s
   },
   {
     maxDistance: 10 * 1000,
@@ -94,7 +96,8 @@ export const vehicles = [
     mode: 'drive',
     azimuthCorrection: 1.5708,
     zoom: 15,
-    move: driveTo
+    move: driveTo,
+    speed: 5 * 1000
   },
   {
     maxDistance: 1000 * 1000,
@@ -103,7 +106,8 @@ export const vehicles = [
     mode: 'drive',
     azimuthCorrection: 1.5708,
     zoom: 10,
-    move: driveTo
+    move: driveTo,
+    speed: 100 * 1000
   },
   {
     maxDistance: Infinity,
@@ -112,7 +116,8 @@ export const vehicles = [
     mode: 'fly',
     azimuthCorrection: -0.785398,
     zoom: 6,
-    move: flyTo
+    move: flyTo,
+    speed: 1000 * 1000
   }
 ]
 

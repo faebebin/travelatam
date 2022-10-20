@@ -164,7 +164,7 @@ async function next(index) {
   if (index < features.getLength()) {
     const { coordinates, ...rest } = getFeatureData(features.item(index))
     if (index === 0) {
-      arrived = await movements.driveTo(coordinates, view);
+      arrived = await movements.driveTo(coordinates,speed, view);
       onTravelStart()
     } else {
       const currentCoordinates = view.getCenter()
