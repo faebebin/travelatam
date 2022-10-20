@@ -11,6 +11,27 @@ export function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+export function scrollEnd(el) {
+  let last_changed_frame = 0;
+  let last_y = el.scrollY;
+  return new Promise((resolve) => {
+    function tick(frames) {
+      // We requestAnimationFrame either for 500 frames or until 20 frames with
+      // no change have been observed.
+      if (frames >= 500 || frames - last_changed_frame > 20) {
+        resolve('Scroll ended');
+      } else {
+        if (el.scrollY != last_y) {
+          last_changed_frame = frames;
+          last_y = el.scrollY;
+        }
+        requestAnimationFrame(tick.bind(null, frames + 1));
+      }
+    }
+    tick(0);
+  });
+}
+
 /**
  * Animate the view. ... (see ol)
  * @param {...(AnimationOptions|function(boolean): void)} var_args Animation

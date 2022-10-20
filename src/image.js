@@ -1,3 +1,5 @@
+import { scrollEnd } from '../utils/promisify'
+
 export function createImageElement(img_size, imgUrl) {
   const img = new Image(img_size, img_size);
   img.src = imgUrl;
@@ -20,16 +22,19 @@ export async function createImageCollectionElement(img_size, container, imgUrls)
   )
 }
 
-export function carouselNext(imagesEl, image_width, times = 1) {
+export async function carouselNext(imagesEl, image_width, times = 1) {
   const currentPosition = imagesEl.scrollLeft
   const offset = currentPosition + (image_width * times)
   imagesEl.scrollTo({ left: offset, behavior: 'smooth' })
+  // FIXME: Better attach to el.onscroll, but then fires to often?
+  await scrollEnd(imagesEl)
 }
 
-export function carouselPrevious(imagesEl, image_width, times = 1) {
+export async function carouselPrevious(imagesEl, image_width, times = 1) {
   const currentPosition = imagesEl.scrollLeft
   const offset = currentPosition - (image_width * times)
   imagesEl.scrollTo({ left: offset, behavior: 'smooth' })
+  await scrollEnd(imagesEl)
 }
 
 

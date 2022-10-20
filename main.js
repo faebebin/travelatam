@@ -95,6 +95,7 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
   captionEl.textContent = caption
   mediaOverlay.setPosition(coordinates);
 
+  let imagesCount = 0
   if (SUPPORTED_INSTA_MEDIA_TYPES.includes(media_type)) {
     const overlayMargin = 0.1
     const imgMargin = 2
@@ -107,6 +108,7 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
 
     let mediaItems = []
     if (media_type === image_type) {
+      imagesCount = 1
       mediaItems = [{ id, media_type, media_url }]
     }
     if (media_type === carousel_album_type) {
@@ -114,7 +116,8 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
     }
     const imgUrls = getMediaUrls(mediaItems)
 
-    const allImagesWidth = imgUrls.length * img_size
+    imagesCount = imgUrls.length
+    const allImagesWidth = imagesCount * img_size
     const elMaxWidth = window.innerWidth * (1 - overlayMargin)
     let width = allImagesWidth
     if (allImagesWidth > elMaxWidth) {
@@ -124,8 +127,8 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
         setCarouselNextVisibility(ev.target, nextImageEl)
       }
       width = elMaxWidth
-      nextImageEl.onclick = () => carouselNext(imagesEl, img_size)
-      previousImageEl.onclick = () => carouselPrevious(imagesEl, img_size)
+      nextImageEl.onclick = async () => await carouselNext(imagesEl, img_size)
+      previousImageEl.onclick = async () => await carouselPrevious(imagesEl, img_size)
     } else {
       imagesEl.style.overflowX = 'hidden';
     }
@@ -135,6 +138,7 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
     const imageCollectionResult = await createImageCollectionElement(img_size, imagesEl, imgUrls);
     // TODO display image load errors / timeouts
   }
+  return imagesCount
 }
 
 
@@ -173,7 +177,13 @@ async function next(index) {
       arrived = 'cancelled 😭'
       return Promise.resolve('cancelled')
     }
-    await showMediaOverlay({ coordinates, ...rest })
+    const imagesCount = await showMediaOverlay({ coordinates, ...rest })
+    // TODO wrap scroll event in promise
+
+    // for (let i = 0; i < cars.length; i++) {
+    //   // Autoscroll
+    //   nextImageEl.click()
+    // }
 
     await wait(2000)
     closeOverlay()
