@@ -4,6 +4,7 @@ import Point from 'ol/geom/Point';
 import OSM from 'ol/source/OSM';
 import { View, Overlay, Feature } from 'ol';
 import { Style, RegularShape, Fill, Stroke } from "ol/style";
+import { urlIfy } from '../utils/parseCaption';
 
 
 export async function getOSMLatLonFromNames(osmSearchTerms) {
@@ -23,7 +24,7 @@ export async function getOSMLatLonFromNames(osmSearchTerms) {
 export function toNominatimSearchParams(osmSearchTerms) {
   // FIXME only exported for testing. Try https://github.com/jhnns/rewire with vitest?
   // return Object.values(arguments).join(',+')
-  return osmSearchTerms.replace(/,/g, ',+')
+  return urlIfy(osmSearchTerms).replace(/,(%20)?/g, ',+')
 }
 
 export function createOSMLayer() {

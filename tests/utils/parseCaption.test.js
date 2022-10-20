@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { extractLocationLatLon, fromLatLon, extractLocationNames, removeWhitespace, extractDateTime } from '../../utils/parseCaption'
+import { extractLocationLatLon, fromLatLon, extractLocationNames, removeWhitespace, extractDateTime ,urlIfy} from '../../utils/parseCaption'
 
 describe("extractCoordinates", () => {
   it('extracts coordinates from a string', async () => {
@@ -37,8 +37,8 @@ describe("extractCoordinates", () => {
 
 describe("extractLocationNames", () => {
   it.each([
-    ['[Bogota,Colombia]', 'Bogota,Colombia'],
-    ['[Zürich,Flughafen,Schweiz]', 'Zürich,Flughafen,Schweiz'],
+    ['[ Bogota,Colombia]', ' Bogota,Colombia'],
+    ['[Zürich,  Flughafen,Schweiz ]', 'Zürich,  Flughafen,Schweiz '],
     ['[Yvéèrdoñ]', 'Yvéèrdoñ'],
     ['[Street,nr,City,Country]', 'Street,nr,City,Country'],
   ])('returns an osm search string for "%s"', (searchString, expected) => {
@@ -78,6 +78,12 @@ describe("extractDateTime", () => {
 describe("removeWhitespace", () => {
   it('returns string without any whitespaces', () => {
     expect(removeWhitespace(' ab    sdf . ')).toMatch('absdf.');
+  });
+});
+
+describe("urlIfy", () => {
+  it('returns trimmed string with %20 url spaces', () => {
+    expect(urlIfy(' ab  sdf . ')).toMatch('ab%20sdf%20.');
   });
 });
 

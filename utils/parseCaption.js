@@ -4,13 +4,18 @@ import { getOSMLatLonFromNames } from '../src/geo'
 
 export async function extractLocationLatLon(stringInclLocation) { // Promise
   if (!stringInclLocation) return null
-  const stringWithoutSpaces = removeWhitespace(stringInclLocation)
-  let coordinates = extractLocationCoordinates(stringWithoutSpaces)
+  let coordinates = extractLocationCoordinates(
+    removeWhitespace(stringInclLocation)
+  )
   if (coordinates) return coordinates
 
-  const osmSearchTerms = extractLocationNames(stringWithoutSpaces)
+  const osmSearchTerms = extractLocationNames(stringInclLocation)
   if (!osmSearchTerms) return null
   return getOSMLatLonFromNames(osmSearchTerms)
+}
+
+export function urlIfy(string) {
+  return string.trim().replace(/  +/g, ' ').replace(/\s/g, '%20');
 }
 
 export function extractLocationCoordinates(stringInclCoordinates) {
