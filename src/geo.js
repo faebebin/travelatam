@@ -1,4 +1,6 @@
 import TileLayer from 'ol/layer/Tile';
+import { getDistance } from 'ol/sphere';
+import { toLonLat } from 'ol/proj';
 import VectorLayer from "ol/layer/Vector";
 import Point from 'ol/geom/Point';
 import OSM from 'ol/source/OSM';
@@ -50,6 +52,9 @@ export function createVectorLayer() {
   return new VectorLayer({ style });
 }
 
+export function greatCircleDistance(coordinatesA, coordinatesB) {
+  return getDistance(toLonLat(coordinatesA), toLonLat(coordinatesB))
+}
 
 
 export function createDestinationFeature({ coordinates, ...rest }) {

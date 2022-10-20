@@ -7,14 +7,25 @@
  * see https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop
 */
 
+export const abortController = new AbortController();
+// TODO use Rxjs instead
+
 export function wait(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise((resolve, reject) => {
+    abortController.signal.addEventListener("abort", () => {
+      reject();
+    });
+    setTimeout(resolve, ms)
+  });
 }
 
 export function scrollEnd(el) {
   let last_changed_frame = 0;
   let last_y = el.scrollY;
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    abortController.signal.addEventListener("abort", () => {
+      reject();
+    });
     function tick(frames) {
       // We requestAnimationFrame either for 500 frames or until 20 frames with
       // no change have been observed.
@@ -40,6 +51,9 @@ export function scrollEnd(el) {
  */
 export function animate(view, var_args) {
   return new Promise((resolve, reject) => {
+    abortController.signal.addEventListener("abort", () => {
+      reject();
+    });
     view.animate(
       ...Object.values(arguments).slice(1),
       (animationComplete) => {

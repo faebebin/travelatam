@@ -3,9 +3,9 @@ import { Collection, Map } from 'ol';
 import VectorSource from "ol/source/Vector";
 import { getMediaUrls, getPostItems, getPosts } from './src/api'
 import { carouselNext, carouselPrevious, createImageCollectionElement, setCarouselNextVisibility, setCarouselPreviousVisibility } from './src/image'
-import { zoomTo, turnTowards, choseVehicle, vehicles, movements } from './src/animate'
-import { wait, scrollEnd } from './utils/promisify'
-import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove } from './src/geo';
+import { zoomTo, turnTowards, movements, choseVehicleByDistance } from './src/animate'
+import { wait, abortController, scrollEnd } from './utils/promisify'
+import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove, greatCircleDistance } from './src/geo';
 import { SUPPORTED_INSTA_MEDIA_TYPES, MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
 
 
@@ -44,6 +44,7 @@ map.on("click", handlePointerClick);
 //   console.log(map.getView().getCenter())
 // });
 
+const travelEl = document.getElementById('travel');
 
 async function initApp() {
   showMapSpinner(map)
@@ -51,6 +52,7 @@ async function initApp() {
   features = new Collection(posts.map(post => createDestinationFeature(post)))
   destinationsLayer.setSource(new VectorSource({ features }))
   removeMapSpinner(map)
+  travelEl.style.display = 'block'
 }
 
 // FIXME Window.onload ?
@@ -68,7 +70,7 @@ async function handlePointerClick(ev) {
   const feature = this.getFeaturesAtPixel(ev.pixel)[0]
   if (feature) {
     const { coordinates, ...rest } = getFeatureData(feature)
-    await movements.driveTo(coordinates, view)
+    await movements.driveTo(coordinates, 2000, view)
 
     await showMediaOverlay({ coordinates, ...rest })
   }
@@ -164,24 +166,55 @@ async function next(index) {
   if (index < features.getLength()) {
     const { coordinates, ...rest } = getFeatureData(features.item(index))
     if (index === 0) {
-      arrived = await movements.driveTo(coordinates,speed, view);
+      arrived = await movements.driveTo(coordinates, 2000, view);
       onTravelStart()
     } else {
       const currentCoordinates = view.getCenter()
-      const { symbol, azimuthCorrection, move, zoom } = choseVehicle(currentCoordinates, coordinates)
+      const distance = greatCircleDistance(currentCoordinates, coordinates)
+      const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByDistance(distance)
 
       await zoomTo(zoom, view)
 
+      const turnTime = 1000
       const azimuthRad = turnTowards(currentCoordinates, coordinates, azimuthCorrection)
+      const rotateValue = `rotate(${azimuthRad}rad)`
       vehicleEl.textContent = symbol
-      vehicleEl.style.transform = `rotate(${azimuthRad}rad)`
+      vehicleEl.style.transform = rotateValue
+      vehicleEl.style.transition = `transform ${turnTime / 1000}s ease-in-out`
 
-      await wait(1000) // TODO transition is set to 1s. Set as css constant (less?)
+      await wait(turnTime)
+      vehicleEl.style.transition = 'none'
+      let driveAnimation = null
 
-      arrived = await move(coordinates, view);
+      if (mode === 'drive') {
+        driveAnimation = vehicleEl.animate([
+          // keyframes
+          { transform: `translate(1px, 1px) ${rotateValue}` },
+          { transform: `translate(-1px, -2px) ${rotateValue}` },
+          { transform: `translate(-3px, 0px) ${rotateValue}` },
+          { transform: `translate(3px, 2px) ${rotateValue}` },
+          { transform: `translate(1px, -1px) ${rotateValue}` },
+          { transform: `translate(-1px, 2px) ${rotateValue}` },
+          { transform: `translate(-3px, 1px) ${rotateValue}` },
+          { transform: `translate(3px, 1px) ${rotateValue}` },
+          { transform: `translate(-1px, -1px) ${rotateValue}` },
+          { transform: `translate(1px, 2px) ${rotateValue}` },
+          { transform: `translate(1px, -2px) ${rotateValue}` }
+        ], {
+          // timing options
+          duration: 1000,
+          iterations: Infinity
+        });
+      }
+
+      const duration = distance / velocity
+      console.log(duration, distance, velocity)
+      arrived = await move(coordinates, duration, view);
       vehicleEl.textContent = ''
+      driveAnimation?.cancel()
     }
     if (!arrived) {
+      // FIXME clean all this up!
       arrived = 'cancelled 😭'
       return Promise.resolve('cancelled')
     }
@@ -200,19 +233,22 @@ async function next(index) {
 
 async function travel() {
   initTravel()
-
   if (!features) {
     Promise.reject(new Error('no post features'))
   }
 
-  await next(0)
+  try {
+    abortController.signal.addEventListener("abort", () => {
+      Promise.reject();
+    });
 
-  onTravelEnd(arrived)
+    await next(0)
+    onTravelEnd('complete 🙌')
+  } catch (error) {
+    onTravelEnd('cancelled 😭')
+  }
 }
 
-// TODO move to controls.js
-
-const travelEl = document.getElementById('travel');
 const vehicleEl = document.getElementById('vehicle');
 const cancelEl = document.getElementById('cancel');
 
@@ -247,11 +283,12 @@ function onTravelEnd(arrived) {
   alert(`Tour ${arrived}`)
 }
 
-function cancel() {
+function cancelTravel() {
+  cancelEl.style.display = 'none'
   map.getView().cancelAnimations()
-  console.log(map.getView())
+  abortController.abort()
 }
 
 travelEl.onclick = travel
-cancelEl.onclick = cancel
+cancelEl.onclick = cancelTravel
 

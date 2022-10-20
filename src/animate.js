@@ -1,27 +1,36 @@
-import { animate } from '../utils/promisify'
-import { toLonLat } from 'ol/proj';
-import { getDistance } from 'ol/sphere';
+import { animate, abortController } from '../utils/promisify'
 
-async function flyTo(location, speed, view) {
+async function flyTo(location, duration, view) {
   // TODO bind view
-  const duration = 2000;
+  abortController.signal.addEventListener("abort", () => {
+    Promise.reject();
+  });
+
+
   const zoom = view.getZoom();
 
   try {
     const horizontalMove = animate(view,
       {
         center: location,
-        duration: duration,
+        duration,
       }
     );
+    const flightFactor = (duration / 10000) + 1
+    const groundAltitude = zoom
+    const flightAltitude = zoom - flightFactor
     const verticalMove = animate(view,
       {
-        zoom: zoom - 1.5,
-        duration: duration / 2,
+        zoom: flightAltitude,
+        duration: duration / 3,
       },
       {
-        zoom: zoom,
-        duration: duration / 2,
+        zoom: flightAltitude + 0.001,
+        duration: duration / 3,
+      },
+      {
+        zoom: groundAltitude,
+        duration: duration / 3,
       }
     );
     await Promise.all([horizontalMove, verticalMove])
@@ -34,12 +43,12 @@ async function flyTo(location, speed, view) {
   }
 }
 
-async function driveTo(location, speed, view) {
+async function driveTo(location, duration, view) {
   try {
     await animate(view,
       {
         center: location,
-        duration: 1000,
+        duration,
       }
     )
     return true
@@ -79,6 +88,7 @@ export function turnTowards(current, destination, azimuthCorrection) {
 }
 
 export const vehicles = [
+  // TODO class Vehicle with move() method ...
   {
     maxDistance: 1 * 1000, // for vehicle choice
     symbol: '🚶',
@@ -87,7 +97,7 @@ export const vehicles = [
     azimuthCorrection: 1.5708, // radians
     zoom: 18,
     move: driveTo,
-    speed: 10 // m/s
+    velocity: 10 // m/s
   },
   {
     maxDistance: 10 * 1000,
@@ -95,9 +105,19 @@ export const vehicles = [
     name: 'bicycle',
     mode: 'drive',
     azimuthCorrection: 1.5708,
-    zoom: 15,
+    zoom: 16,
     move: driveTo,
-    speed: 5 * 1000
+    velocity: 50
+  },
+  {
+    maxDistance: 100 * 1000,
+    symbol: '🚗',
+    name: 'car',
+    mode: 'drive',
+    azimuthCorrection: 1.5708,
+    zoom: 13,
+    move: driveTo,
+    velocity: 20
   },
   {
     maxDistance: 1000 * 1000,
@@ -107,7 +127,7 @@ export const vehicles = [
     azimuthCorrection: 1.5708,
     zoom: 10,
     move: driveTo,
-    speed: 100 * 1000
+    velocity: 80
   },
   {
     maxDistance: Infinity,
@@ -117,18 +137,12 @@ export const vehicles = [
     azimuthCorrection: -0.785398,
     zoom: 6,
     move: flyTo,
-    speed: 1000 * 1000
+    velocity: 800
   }
 ]
 
-export function choseVehicle(current, destination) {
-  // TODO class Vehicle with move() method ...
-  return vehicleByDistance(current, destination)
-}
-
-export function vehicleByDistance(current, destination) { // Vehicle
-  const airDistance = getDistance(toLonLat(current), toLonLat(destination))
-  return vehicles.find((vehicle) => airDistance <= vehicle.maxDistance)
+export function choseVehicleByDistance(distance) { // Vehicle
+  return vehicles.find((vehicle) => distance <= vehicle.maxDistance)
 }
 
 /*

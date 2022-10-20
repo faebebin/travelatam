@@ -1,4 +1,5 @@
 import { extractDateTime, extractLocationLatLon, fromLatLon } from '../utils/parseCaption'
+import { abortController } from '../utils/promisify'
 // import json from '../tests/fixtures/posts'
 
 // Yes, I hardcoded my shortlived readonly insta api token for this frontend-only POC :D
@@ -34,6 +35,10 @@ export async function getPostItems(mediaId) {
 }
 
 export async function processPosts(posts) {
+  abortController.signal.addEventListener("abort", () => {
+    Promise.reject();
+  });
+
   const processedPosts = await Promise.allSettled(
     posts.map(post => processPost(post))
   )
@@ -50,6 +55,10 @@ export async function processPosts(posts) {
 }
 
 async function processPost(post) { // Promise
+  abortController.signal.addEventListener("abort", () => {
+    Promise.reject();
+  });
+
   const { caption, timestamp } = post
   const latLon = await extractLocationLatLon(caption)
   if (!latLon) return Promise.reject('No location information')
