@@ -4,7 +4,7 @@ import VectorSource from "ol/source/Vector";
 import { getMediaUrls, getPostItems, getPosts } from './src/api'
 import { carouselNext, carouselPrevious, createImageCollectionElement, setCarouselNextVisibility, setCarouselPreviousVisibility } from './src/image'
 import { zoomTo, turnTowards, choseVehicle, vehicles, movements } from './src/animate'
-import { wait } from './utils/promisify'
+import { wait, scrollEnd } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove } from './src/geo';
 import { SUPPORTED_INSTA_MEDIA_TYPES, MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
 
@@ -94,8 +94,8 @@ closerEl.onclick = closeOverlay
 async function showMediaOverlay({ id, caption, media_type, media_url, coordinates }) {
   captionEl.textContent = caption
   mediaOverlay.setPosition(coordinates);
-
   let imagesCount = 0
+
   if (SUPPORTED_INSTA_MEDIA_TYPES.includes(media_type)) {
     const overlayMargin = 0.1
     const imgMargin = 2
@@ -108,7 +108,6 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
 
     let mediaItems = []
     if (media_type === image_type) {
-      imagesCount = 1
       mediaItems = [{ id, media_type, media_url }]
     }
     if (media_type === carousel_album_type) {
@@ -127,8 +126,8 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
         setCarouselNextVisibility(ev.target, nextImageEl)
       }
       width = elMaxWidth
-      nextImageEl.onclick = async () => await carouselNext(imagesEl, img_size)
-      previousImageEl.onclick = async () => await carouselPrevious(imagesEl, img_size)
+      nextImageEl.onclick = () => carouselNext(imagesEl, img_size)
+      previousImageEl.onclick = () => carouselPrevious(imagesEl, img_size)
     } else {
       imagesEl.style.overflowX = 'hidden';
     }
@@ -149,6 +148,15 @@ function getFeatureCoordinates(feature) {
 function getFeatureData(feature) {
   const coordinates = getFeatureCoordinates(feature)
   return { coordinates, ...feature.getProperties() }
+}
+
+async function autoScrollImageCarousel(imagesCount) {
+  for (let i = 1; i < imagesCount; i++) {
+    // Autoscroll through images carousel
+    nextImageEl.click()
+    await scrollEnd(imagesEl)
+    await wait(1000)
+  }
 }
 
 let arrived = null
@@ -180,13 +188,10 @@ async function next(index) {
     const imagesCount = await showMediaOverlay({ coordinates, ...rest })
     // TODO wrap scroll event in promise
 
-    // for (let i = 0; i < cars.length; i++) {
-    //   // Autoscroll
-    //   nextImageEl.click()
-    // }
-
-    await wait(2000)
+    await autoScrollImageCarousel(imagesCount)
+    await wait(1000)
     closeOverlay()
+
     await next(index + 1);
   } else {
     arrived = 'complete 🙌'
