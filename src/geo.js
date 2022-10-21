@@ -89,10 +89,12 @@ export function createView() {
 
 export function showMapSpinner(map) {
   map.getTargetElement().classList.add('spinner');
+  document.getElementById('info').style.display = 'block'
   // TODO add message (wg fetching instagram posts)
 }
 export function removeMapSpinner(map) {
   map.getTargetElement().classList.remove('spinner');
+  document.getElementById('info').style.display = 'none'
 }
 
 export function handlePointerMove(ev) {
