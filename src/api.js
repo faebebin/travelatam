@@ -2,10 +2,6 @@ import { extractDateTime, extractLocationLatLon, fromLatLon } from '../utils/par
 import { abortController } from '../utils/promisify'
 // import json from '../tests/fixtures/posts'
 
-// Yes, I hardcoded my shortlived readonly insta api token for this frontend-only POC :D
-// But if you want to consume my insta media, rather just connect with me, I will accept ;)
-const INSTA_API_TOKEN = 'IGQVJVREFMaWVpQjMtMmFweEw1TW5TSDNYTFZA0LW5qS3BVS0lmRkprVzhWRzZAfckxVaG5GX1RaQlF0N2w2dnNLU1V6U1hLM09LRkoxQVh3MENFQ3FCQWkwOE9ER3I5Rll3M3Uya3JB'
-
 // all fields: caption,id,media_type,media_url,permalink,thumbnail_url,timestamp,username
 
 // Add a location or coordinates per post/album in the form "travelatam[lat,lon]"
