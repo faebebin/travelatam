@@ -66,7 +66,7 @@ img {
   text-align: right;
 }
 #popup-caption {
-  margin: 5px
+  margin: 5px;
 }
 .ol-popup-closer {
   text-decoration: none;
@@ -95,13 +95,13 @@ button.carousel {
   font-weight: bold;
   font-size: 30px;
   text-align: center;
+  display: none;
 }
 #next-image {
   right: 15px;
 }
 #previous-image {
   left: 15px;
-  display: none;
 }
 @keyframes spinner {
   to {

@@ -70,7 +70,7 @@ async function handlePointerClick(ev) {
   const feature = this.getFeaturesAtPixel(ev.pixel)[0]
   if (feature) {
     const { coordinates, ...rest } = getFeatureData(feature)
-    await movements.driveTo(coordinates, 2000, view)
+    await movements.driveTo(coordinates, 1000, view)
 
     await showMediaOverlay({ coordinates, ...rest })
   }
@@ -122,6 +122,7 @@ async function showMediaOverlay({ id, caption, media_type, media_url, coordinate
     const elMaxWidth = window.innerWidth * (1 - overlayMargin)
     let width = allImagesWidth
     if (allImagesWidth > elMaxWidth) {
+      nextImageEl.style.display = 'block'
       imagesEl.style.overflowX = 'scroll';
       imagesEl.onscroll = (ev) => {
         setCarouselPreviousVisibility(ev.target, previousImageEl)
@@ -166,9 +167,11 @@ async function next(index) {
   if (index < features.getLength()) {
     const { coordinates, ...rest } = getFeatureData(features.item(index))
     if (index === 0) {
-      arrived = await movements.driveTo(coordinates, 2000, view);
-      onTravelStart()
+      // TODO start on 1 and get proper zoom upon first move
+      arrived = await movements.flyTo(coordinates, 2000, view);
+      await zoomTo(6, view)
     } else {
+      onTravelStart()
       const currentCoordinates = view.getCenter()
       const distance = greatCircleDistance(currentCoordinates, coordinates)
       const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByDistance(distance)
@@ -208,7 +211,6 @@ async function next(index) {
       }
 
       const duration = distance / velocity
-      console.log(duration, distance, velocity)
       arrived = await move(coordinates, duration, view);
       vehicleEl.textContent = ''
       driveAnimation?.cancel()

@@ -125,7 +125,7 @@ export const vehicles = [
     name: 'bus',
     mode: 'drive',
     azimuthCorrection: 1.5708,
-    zoom: 10,
+    zoom: 9,
     move: driveTo,
     velocity: 80
   },
