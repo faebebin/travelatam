@@ -1,0 +1,28 @@
+environment: {}
+parameters: {}
+packages:
+  - name: instagram
+    environment: {}
+    parameters: {}
+    annotations: {}
+    functions:
+      - name: get_posts
+        binary: false
+        main: ''
+        runtime: 'python:default'
+        web: true
+        parameters: {}
+        environment:
+          INSTA_API_TOKEN: "${INSTA_API_TOKEN}"
+        annotations: {}
+        limits: {}
+      - name: get_post_items
+        binary: false
+        main: ''
+        runtime: 'python:default'
+        web: true
+        parameters: {}
+        environment:
+          INSTA_API_TOKEN: "${INSTA_API_TOKEN}"
+        annotations: {}
+        limits: {}
