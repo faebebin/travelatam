@@ -7,11 +7,12 @@ import { abortController } from '../utils/promisify'
 // Add a location or coordinates per post/album in the form "travelatam[lat,lon]"
 // The client will make a stop there and request and display the photos.
 
+// Digital Ocean Function Namespace is used to store the API token and proxy the Instagram API requests.
+
 export async function getPosts() {
-  const fields = 'id,caption,media_type,media_url,timestamp'
   // FIXME setup dev API and according .env
   // if (!import.meta.env.VITE_API === 'dev') {
-  const url = `https://graph.instagram.com/me/media?fields=${fields}&access_token=${INSTA_API_TOKEN}`
+  const url = 'https://faas-fra1-afec6ce7.doserverless.co/api/v1/web/fn-45360257-2fa9-446d-9264-40a1030ad4c0/instagram/get_posts'
   // ? 'http://localhost:8000/tests/fixtures/posts.json'
   const response = await fetch(url)
   // TODO if !response.ok { return text}
@@ -23,7 +24,7 @@ export async function getPosts() {
 export async function getPostItems(mediaId) {
   const fields = 'media_type,media_url'
   // const url = import.meta.env.VITE_API === 'dev'  ? 'http://localhost:8000/tests/fixtures/postItems.json'
-  const url = `https://graph.instagram.com/${mediaId}/children?fields=${fields}&access_token=${INSTA_API_TOKEN}`
+  const url = `https://faas-fra1-afec6ce7.doserverless.co/api/v1/web/fn-45360257-2fa9-446d-9264-40a1030ad4c0/instagram/get_post_items?media_id=${mediaId}`
   const response = await fetch(url)
   // TODO if !response.ok { return text}
   const json = await response.json()
