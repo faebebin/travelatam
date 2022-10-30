@@ -120,6 +120,16 @@ export const vehicles = [
     velocity: 20
   },
   {
+    maxDistance: 100 * 1000,
+    symbol: '🛥️ ',
+    name: 'boat',
+    mode: 'drive',
+    azimuthCorrection: 1.5708,
+    zoom: 13,
+    move: driveTo,
+    velocity: 15
+  },
+  {
     maxDistance: 1000 * 1000,
     symbol: '🚌',
     name: 'bus',
