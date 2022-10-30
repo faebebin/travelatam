@@ -3,7 +3,7 @@ import { Collection, Map } from 'ol';
 import VectorSource from "ol/source/Vector";
 import { getMediaUrls, getPostItems, getPosts } from './src/api'
 import { carouselNext, carouselPrevious, createImageCollectionElement, setCarouselNextVisibility, setCarouselPreviousVisibility } from './src/image'
-import { zoomTo, turnTowards, movements, choseVehicleByDistance } from './src/animate'
+import { zoomTo, turnTowards, movements, choseVehicleByDistance, choseVehicleByName } from './src/animate'
 import { wait, abortController, scrollEnd } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove, greatCircleDistance } from './src/geo';
 import { SUPPORTED_INSTA_MEDIA_TYPES, MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
@@ -165,7 +165,7 @@ async function autoScrollImageCarousel(imagesCount) {
 let arrived = null
 async function next(index) {
   if (index < features.getLength()) {
-    const { coordinates, ...rest } = getFeatureData(features.item(index))
+    const { coordinates, caption, ...rest } = getFeatureData(features.item(index))
     if (index === 0) {
       // TODO start on 1 and get proper zoom upon first move
       arrived = await movements.flyTo(coordinates, 2000, view);
@@ -173,8 +173,9 @@ async function next(index) {
     } else {
       onTravelStart()
       const currentCoordinates = view.getCenter()
+      // TODO move all to processPosts
       const distance = greatCircleDistance(currentCoordinates, coordinates)
-      const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByDistance(distance)
+      const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByName(caption) || choseVehicleByDistance(distance)
 
       await zoomTo(zoom, view)
 
@@ -220,7 +221,7 @@ async function next(index) {
       arrived = 'cancelled 😭'
       return Promise.resolve('cancelled')
     }
-    const imagesCount = await showMediaOverlay({ coordinates, ...rest })
+    const imagesCount = await showMediaOverlay({ coordinates, caption, ...rest })
     // TODO wrap scroll event in promise
 
     await autoScrollImageCarousel(imagesCount)

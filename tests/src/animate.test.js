@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { turnTowards, choseVehicleByDistance } from '../../src/animate'
+import { turnTowards, choseVehicleByDistance, choseVehicleByName } from '../../src/animate'
 
 describe("turnTowards", () => {
   it('returns a radiant number for two coordinates', () => {
@@ -17,5 +17,19 @@ describe("choseVehicleByDistance", () => {
   it('returns the right vehicle for the distance', () => {
     expect(choseVehicleByDistance(999999).name).toMatch('bus')
   });
+});
+
+describe("choseVehicleByName", () => {
+  it('returns the right vehicle for given Name', () => {
+    expect(choseVehicleByName('A string includig boat  and ...').name).toMatch('boat')
+  });
+
+  it('ignores case', () => {
+    expect(choseVehicleByName(' A string BoAt and more').name).toMatch('boat')
+  });
+
+  // it('needs surrounding space if not beginning or end of line', () => {
+  //   expect(choseVehicleByName('A string includigBoat and ...')).toBeUndefined
+  // });
 });
 

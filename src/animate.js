@@ -155,6 +155,12 @@ export function choseVehicleByDistance(distance) { // Vehicle
   return vehicles.find((vehicle) => distance <= vehicle.maxDistance)
 }
 
+export function choseVehicleByName(caption) {
+  return vehicles.find(vehicle =>
+    caption.toLowerCase().includes(vehicle.name)
+  )
+}
+
 /*
 import { easeIn, easeOut } from 'ol/easing';
 
