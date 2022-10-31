@@ -28,8 +28,20 @@ describe("choseVehicleByName", () => {
     expect(choseVehicleByName(' A string BoAt and more').name).toMatch('boat')
   });
 
-  // it('needs surrounding space if not beginning or end of line', () => {
-  //   expect(choseVehicleByName('A string includigBoat and ...')).toBeUndefined
-  // });
+  it('needs to be seperate word', () => {
+    expect(choseVehicleByName('A string includigBoat and ...')).toBeUndefined
+  });
+
+  it('needs to be seperate word', () => {
+    expect(choseVehicleByName('Cartagena is a city in Colombia')).toBeUndefined
+  });
+
+  it('can be at end of line', () => {
+    expect(choseVehicleByName('A string includig boat.')).toBeUndefined
+  });
+
+  it('can be at beginning of line', () => {
+    expect(choseVehicleByName('Boat in  string')).toBeUndefined
+  });
 });
 

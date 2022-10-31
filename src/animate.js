@@ -156,9 +156,10 @@ export function choseVehicleByDistance(distance) { // Vehicle
 }
 
 export function choseVehicleByName(caption) {
-  return vehicles.find(vehicle =>
-    caption.toLowerCase().includes(vehicle.name)
-  )
+  return vehicles.find(vehicle => {
+    const re = new RegExp(`\\b${vehicle.name}\\b`, 'gi');
+    return caption.match(re)
+  })
 }
 
 /*
