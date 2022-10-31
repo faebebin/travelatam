@@ -39,7 +39,7 @@ export function createOSMLayer() {
 export function createVectorLayer() {
   const stroke = new Stroke({ color: 'black', width: 2 });
   const fill = new Fill({ color: 'red' });
-  const style = new Style({
+  const star = new Style({
     image: new RegularShape({
       fill: fill,
       stroke: stroke,
@@ -49,7 +49,7 @@ export function createVectorLayer() {
       angle: 0,
     }),
   })
-  return new VectorLayer({ style });
+  return new VectorLayer({ style: star });
 }
 
 export function greatCircleDistance(coordinatesA, coordinatesB) {
