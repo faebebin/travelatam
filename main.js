@@ -7,6 +7,9 @@ import { zoomTo, turnTowards, movements, choseVehicleByDistance, choseVehicleByN
 import { wait, abortController, scrollEnd } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove, greatCircleDistance } from './src/geo';
 import { SUPPORTED_INSTA_MEDIA_TYPES, MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
+import NoSleep from 'nosleep.js';
+
+const noSleep = new NoSleep();
 
 
 const closerEl = document.getElementById('popup-closer');
@@ -266,6 +269,8 @@ function initTravel() {
 
   travelEl.style.display = 'none'
   cancelEl.style.display = 'block'
+  // Prevent mobile browsers from sleep
+  noSleep.enable()
 }
 
 function onTravelStart() {
@@ -283,11 +288,13 @@ function onTravelEnd(arrived) {
   vehicleEl.style.zIndex = -1
   cancelEl.style.display = 'none'
   travelEl.style.display = 'block'
+  noSleep.disable()
   alert(`Tour ${arrived}`)
 }
 
 function cancelTravel() {
   cancelEl.style.display = 'none'
+  noSleep.disable()
   map.getView().cancelAnimations()
   abortController.abort()
 }
