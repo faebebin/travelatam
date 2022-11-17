@@ -8,16 +8,8 @@ Idea: Animate your travel pictures collection from instagram (hopefully later al
 
 
 # NEXT
-1. try pictramap &6 
-
-
 (before other TODO's ;)
-2. Enable Insta API Authentication in site / shortlived token generation via UI?
-
-3. try google photos api again 
-
-instead of access token store the app_id instead of 
-then you can pla through the whole auth flow access
+Enable Insta API Authentication in site / shortlived token generation via UI?
 
 # Tools
 

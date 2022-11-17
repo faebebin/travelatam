@@ -21,15 +21,6 @@ export async function getPosts() {
   return await processPosts(json.data)
 }
 
-
-export async function authTestuser getPosts() {
-  const url = "https://api.instagram.com/oauth/authorize?client_id=633450068233514&redirect_uri=https://faebebin.github.io/travelatam/&scope=user_profile,user_media&response_type=code"
-  const response = await fetch(url)
-  const json = await response.json()
-  return json.data
-
-}
-
 export async function getPostItems(mediaId) {
   const fields = 'media_type,media_url'
   // const url = import.meta.env.VITE_API === 'dev'  ? 'http://localhost:8000/tests/fixtures/postItems.json'
