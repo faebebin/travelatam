@@ -1,11 +1,132 @@
 {
-"type": "FeatureCollection",
-"name": "travel_photos",
-"crs": { "type": "name", "properties": { "name": "EPSG: 4326" } },
-"features": [
-{ "type": "Feature", "properties": { "fid": 0, "ID": "9f57e344-ccdb-4505-a8a1-c4f55f4514c5", "Name": "PXL_20221221_230331284~2.jpg", "Date": "2022-12-21", "Time": "18:03:31", "Lon": -87.395061111111104, "Lat": 21.514030555555557, "Altitude": 10.68, "North": "M", "Azimuth": 186.0, "Cam. Maker": "", "Cam. Model": "", "Title": "", "Comment": "", "Path": "/home/faebe/Downloads/pics/PXL_20221221_230331284~2.jpg", "RelPath": "./pics/PXL_20221221_230331284~2.jpg", "Timestamp": "2022-12-21T18:03:31", "Images": "<img src = \"./pics/PXL_20221221_230331284~2.jpg\" width=\"300\" height=\"225\"/>" }, "geometry": { "type": "Point", "coordinates": [ -87.395061111111104, 21.514030555555557 ] } },
-{ "type": "Feature", "properties": { "fid": 0, "ID": "4ea2afd5-f625-4a63-af3a-78c4395ff380", "Name": "PXL_20221221_225326855~2.jpg", "Date": "2022-12-21", "Time": "17:53:26", "Lon": -87.396136111111105, "Lat": 21.510558333333332, "Altitude": 10.6, "North": "M", "Azimuth": 114.0, "Cam. Maker": "", "Cam. Model": "", "Title": "", "Comment": "", "Path": "/home/faebe/Downloads/pics/PXL_20221221_225326855~2.jpg", "RelPath": "./pics/PXL_20221221_225326855~2.jpg", "Timestamp": "2022-12-21T17:53:26", "Images": "<img src = \"./pics/PXL_20221221_225326855~2.jpg\" width=\"300\" height=\"225\"/>" }, "geometry": { "type": "Point", "coordinates": [ -87.396136111111105, 21.510558333333332 ] } },
-{ "type": "Feature", "properties": { "fid": 0, "ID": "f4583784-0f9b-4887-9fee-dbbd9d448cc9", "Name": "PXL_20221221_195308689.jpg", "Date": "2022-12-21", "Time": "14:53:08", "Lon": -87.362955555555558, "Lat": 21.5353, "Altitude": 9.1, "North": "M", "Azimuth": 309.0, "Cam. Maker": "", "Cam. Model": "", "Title": "", "Comment": "", "Path": "/home/faebe/Downloads/pics/PXL_20221221_195308689.jpg", "RelPath": "./pics/PXL_20221221_195308689.jpg", "Timestamp": "2022-12-21T14:53:08", "Images": "<img src = \"./pics/PXL_20221221_195308689.jpg\" width=\"300\" height=\"225\"/>" }, "geometry": { "type": "Point", "coordinates": [ -87.362955555555558, 21.5353 ] } },
-{ "type": "Feature", "properties": { "fid": 0, "ID": "f88b2e88-8ef0-42cb-b08f-099497d88a6d", "Name": "PXL_20221221_230022791.jpg", "Date": "2022-12-21", "Time": "18:00:22", "Lon": -87.394847222222225, "Lat": 21.513997222222223, "Altitude": 6.79, "North": "M", "Azimuth": 83.0, "Cam. Maker": "", "Cam. Model": "", "Title": "", "Comment": "", "Path": "/home/faebe/Downloads/pics/PXL_20221221_230022791.jpg", "RelPath": "./pics/PXL_20221221_230022791.jpg", "Timestamp": "2022-12-21T18:00:22", "Images": "<img src = \"./pics/PXL_20221221_230022791.jpg\" width=\"300\" height=\"225\"/>" }, "geometry": { "type": "Point", "coordinates": [ -87.394847222222225, 21.513997222222223 ] } }
-]
+  "type": "FeatureCollection",
+  "name": "travel_photos",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "EPSG: 4326"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 0,
+        "ID": "9f57e344-ccdb-4505-a8a1-c4f55f4514c5",
+        "Name": "PXL_20221221_230331284~2.jpg",
+        "Date": "2022-12-21",
+        "Time": "18:03:31",
+        "Lon": -87.395061111111104,
+        "Lat": 21.514030555555557,
+        "Altitude": 10.68,
+        "North": "M",
+        "Azimuth": 186.0,
+        "Cam. Maker": "",
+        "Cam. Model": "",
+        "Title": "",
+        "Comment": "",
+        "Path": "/home/faebe/Downloads/pics/PXL_20221221_230331284~2.jpg",
+        "RelPath": "./pics/PXL_20221221_230331284~2.jpg",
+        "Timestamp": "2022-12-21T18:03:31",
+        "Images": "<img src = \"./pics/PXL_20221221_230331284~2.jpg\" width=\"300\" height=\"225\"/>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.395061111111104,
+          21.514030555555557
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 0,
+        "ID": "4ea2afd5-f625-4a63-af3a-78c4395ff380",
+        "Name": "PXL_20221221_225326855~2.jpg",
+        "Date": "2022-12-21",
+        "Time": "17:53:26",
+        "Lon": -87.396136111111105,
+        "Lat": 21.510558333333332,
+        "Altitude": 10.6,
+        "North": "M",
+        "Azimuth": 114.0,
+        "Cam. Maker": "",
+        "Cam. Model": "",
+        "Title": "",
+        "Comment": "",
+        "Path": "/home/faebe/Downloads/pics/PXL_20221221_225326855~2.jpg",
+        "RelPath": "./pics/PXL_20221221_225326855~2.jpg",
+        "Timestamp": "2022-12-21T17:53:26",
+        "Images": "<img src = \"./pics/PXL_20221221_225326855~2.jpg\" width=\"300\" height=\"225\"/>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.396136111111105,
+          21.510558333333332
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 0,
+        "ID": "f4583784-0f9b-4887-9fee-dbbd9d448cc9",
+        "Name": "PXL_20221221_195308689.jpg",
+        "Date": "2022-12-21",
+        "Time": "14:53:08",
+        "Lon": -87.362955555555558,
+        "Lat": 21.5353,
+        "Altitude": 9.1,
+        "North": "M",
+        "Azimuth": 309.0,
+        "Cam. Maker": "",
+        "Cam. Model": "",
+        "Title": "",
+        "Comment": "",
+        "Path": "/home/faebe/Downloads/pics/PXL_20221221_195308689.jpg",
+        "RelPath": "./pics/PXL_20221221_195308689.jpg",
+        "Timestamp": "2022-12-21T14:53:08",
+        "Images": "<img src = \"./pics/PXL_20221221_195308689.jpg\" width=\"300\" height=\"225\"/>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.362955555555558,
+          21.5353
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 0,
+        "ID": "f88b2e88-8ef0-42cb-b08f-099497d88a6d",
+        "Name": "PXL_20221221_230022791.jpg",
+        "Date": "2022-12-21",
+        "Time": "18:00:22",
+        "Lon": -87.394847222222225,
+        "Lat": 21.513997222222223,
+        "Altitude": 6.79,
+        "North": "M",
+        "Azimuth": 83.0,
+        "Cam. Maker": "",
+        "Cam. Model": "",
+        "Title": "",
+        "Comment": "",
+        "Path": "/home/faebe/Downloads/pics/PXL_20221221_230022791.jpg",
+        "RelPath": "./pics/PXL_20221221_230022791.jpg",
+        "Timestamp": "2022-12-21T18:00:22",
+        "Images": "<img src = \"./pics/PXL_20221221_230022791.jpg\" width=\"300\" height=\"225\"/>"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -87.394847222222225,
+          21.513997222222223
+        ]
+      }
+    }
+  ]
 }
