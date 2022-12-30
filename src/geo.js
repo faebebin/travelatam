@@ -2,9 +2,8 @@ import TileLayer from 'ol/layer/Tile';
 import { getDistance } from 'ol/sphere';
 import { toLonLat } from 'ol/proj';
 import VectorLayer from "ol/layer/Vector";
-import Point from 'ol/geom/Point';
 import OSM from 'ol/source/OSM';
-import { View, Overlay, Feature } from 'ol';
+import { View, Overlay } from 'ol';
 import { Style, RegularShape, Fill, Stroke } from "ol/style";
 import { urlIfy } from '../utils/parseCaption';
 
@@ -54,15 +53,6 @@ export function createVectorLayer() {
 
 export function greatCircleDistance(coordinatesA, coordinatesB) {
   return getDistance(toLonLat(coordinatesA), toLonLat(coordinatesB))
-}
-
-
-export function createDestinationFeature({ coordinates, ...rest }) {
-  const feature = new Feature({
-    geometry: new Point(coordinates),
-  });
-  feature.setProperties(rest, true)
-  return feature
 }
 
 export function createMediaOverlay() {

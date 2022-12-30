@@ -1,11 +1,11 @@
 import './style.css';
-import { Collection, Map } from 'ol';
+import { Map } from 'ol';
 import VectorSource from "ol/source/Vector";
-import { getMediaUrls, getPostItems, getPosts } from './src/api'
+import { getMediaUrls, getPostItems } from './src/api'
 import { carouselNext, carouselPrevious, createImageCollectionElement, setCarouselNextVisibility, setCarouselPreviousVisibility } from './src/image'
 import { zoomTo, turnTowards, movements, choseVehicleByDistance, choseVehicleByName } from './src/animate'
 import { wait, abortController, scrollEnd } from './utils/promisify'
-import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove, greatCircleDistance } from './src/geo';
+import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, handlePointerMove, greatCircleDistance } from './src/geo';
 import { SUPPORTED_INSTA_MEDIA_TYPES, MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
 import NoSleep from 'nosleep.js';
 import json from './data/travel_photos'

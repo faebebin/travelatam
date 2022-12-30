@@ -2,24 +2,20 @@ import { extractDateTime, extractLocationLatLon, fromLatLon } from '../utils/par
 import { abortController } from '../utils/promisify'
 // import json from '../tests/fixtures/posts'
 
+
+// TODO recipe:
+// QGIS or OL?: 
+// *  group / cluster photos (given radius)
+// *  destinations (prior 'post') 
+// *  destination photos
+
+
 // all fields: caption,id,media_type,media_url,permalink,thumbnail_url,timestamp,username
 
 // Add a location or coordinates per post/album in the form "travelatam[lat,lon]"
 // The client will make a stop there and request and display the photos.
 
 // Digital Ocean Function Namespace is used to store the API token and proxy the Instagram API requests.
-
-export async function getPosts() {
-  // FIXME setup dev API and according .env
-  // if (!import.meta.env.VITE_API === 'dev') {
-  const url = 'https://faas-fra1-afec6ce7.doserverless.co/api/v1/web/fn-45360257-2fa9-446d-9264-40a1030ad4c0/instagram/get_posts'
-  // ? 'http://localhost:8000/tests/fixtures/posts.json'
-  const response = await fetch(url)
-  // TODO if !response.ok { return text}
-  const json = await response.json()
-  // }
-  return await processPosts(json.data)
-}
 
 export async function getPostItems(mediaId) {
   const fields = 'media_type,media_url'
