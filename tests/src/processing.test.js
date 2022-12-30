@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getMediaUrls, processPosts } from '../../src/api'
+import { getMediaUrls, processPosts } from '../../src/processing'
 import { fromLatLon } from '../../utils/parseCaption'
 
 const posts = {

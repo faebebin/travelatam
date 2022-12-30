@@ -8,24 +8,7 @@ import { abortController } from '../utils/promisify'
 // *  group / cluster photos (given radius)
 // *  destinations (prior 'post') 
 // *  destination photos
-
-
-// all fields: caption,id,media_type,media_url,permalink,thumbnail_url,timestamp,username
-
-// Add a location or coordinates per post/album in the form "travelatam[lat,lon]"
-// The client will make a stop there and request and display the photos.
-
-// Digital Ocean Function Namespace is used to store the API token and proxy the Instagram API requests.
-
-export async function getPostItems(mediaId) {
-  const fields = 'media_type,media_url'
-  // const url = import.meta.env.VITE_API === 'dev'  ? 'http://localhost:8000/tests/fixtures/postItems.json'
-  const url = `https://faas-fra1-afec6ce7.doserverless.co/api/v1/web/fn-45360257-2fa9-446d-9264-40a1030ad4c0/instagram/get_post_items?media_id=${mediaId}`
-  const response = await fetch(url)
-  // TODO if !response.ok { return text}
-  const json = await response.json()
-  return json.data
-}
+// *  process post data & sort date
 
 export async function processPosts(posts) {
   abortController.signal.addEventListener("abort", () => {

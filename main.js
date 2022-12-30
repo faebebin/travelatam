@@ -1,7 +1,6 @@
 import './style.css';
 import { Map } from 'ol';
 import VectorSource from "ol/source/Vector";
-import { getMediaUrls, getPostItems } from './src/api'
 import { carouselNext, carouselPrevious, createImageCollectionElement, setCarouselNextVisibility, setCarouselPreviousVisibility } from './src/image'
 import { zoomTo, turnTowards, movements, choseVehicleByDistance, choseVehicleByName } from './src/animate'
 import { wait, abortController, scrollEnd } from './utils/promisify'
@@ -171,7 +170,8 @@ async function next(index) {
       const currentCoordinates = view.getCenter()
       // TODO move all to processPosts
       const distance = greatCircleDistance(currentCoordinates, coordinates)
-      const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByName(caption) || choseVehicleByDistance(distance)
+      // const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByName(caption) || choseVehicleByDistance(distance)
+       const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByDistance(distance)
 
       await zoomTo(zoom, view)
 
