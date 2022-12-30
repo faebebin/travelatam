@@ -8,6 +8,9 @@ import { wait, abortController, scrollEnd } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, createDestinationFeature, handlePointerMove, greatCircleDistance } from './src/geo';
 import { SUPPORTED_INSTA_MEDIA_TYPES, MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
 import NoSleep from 'nosleep.js';
+import json from './data/travel_photos'
+
+import GeoJSON from 'ol/format/GeoJSON.js';
 
 const noSleep = new NoSleep();
 
@@ -49,17 +52,16 @@ map.on("click", handlePointerClick);
 
 const travelEl = document.getElementById('travel');
 
-async function initApp() {
-  showMapSpinner(map)
-  const posts = await getPosts()
-  features = new Collection(posts.map(post => createDestinationFeature(post)))
-  destinationsLayer.setSource(new VectorSource({ features }))
-  removeMapSpinner(map)
+function initApp() {
+  // showMapSpinner(map)
+  const geojson = new GeoJSON().readFeatures(json)
+  destinationsLayer.setSource(new VectorSource(geojson))
+  /// removeMapSpinner(map)
+  
   travelEl.style.display = 'block'
 }
 
-// FIXME Window.onload ?
-await initApp()
+initApp()
 
 // loading spinner
 // map.on('loadstart', function() {
