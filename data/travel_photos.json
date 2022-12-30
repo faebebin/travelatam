@@ -26,15 +26,15 @@
         "Title": "",
         "Comment": "",
         "Path": "/home/faebe/Downloads/pics/PXL_20221221_230331284~2.jpg",
-        "RelPath": "./pics/PXL_20221221_230331284~2.jpg",
+        "RelPath": "./data/photos/PXL_20221221_230331284~2.jpg",
         "Timestamp": "2022-12-21T18:03:31",
-        "Images": "<img src = \"./pics/PXL_20221221_230331284~2.jpg\" width=\"300\" height=\"225\"/>"
+        "Images": "<img src = \"./data/photos/PXL_20221221_230331284~2.jpg\" width=\"300\" height=\"225\"/>"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -87.395061111111104,
-          21.514030555555557
+          -2395794.4779149625,
+          -6651238.203297801
         ]
       }
     },
@@ -56,15 +56,15 @@
         "Title": "",
         "Comment": "",
         "Path": "/home/faebe/Downloads/pics/PXL_20221221_225326855~2.jpg",
-        "RelPath": "./pics/PXL_20221221_225326855~2.jpg",
+        "RelPath": "./data/photos/PXL_20221221_225326855~2.jpg",
         "Timestamp": "2022-12-21T17:53:26",
-        "Images": "<img src = \"./pics/PXL_20221221_225326855~2.jpg\" width=\"300\" height=\"225\"/>"
+        "Images": "<img src = \"./data/photos/PXL_20221221_225326855~2.jpg\" width=\"300\" height=\"225\"/>"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -87.396136111111105,
-          21.510558333333332
+          3635851.153481818,
+          4729225.252167828
         ]
       }
     },
@@ -86,15 +86,15 @@
         "Title": "",
         "Comment": "",
         "Path": "/home/faebe/Downloads/pics/PXL_20221221_195308689.jpg",
-        "RelPath": "./pics/PXL_20221221_195308689.jpg",
+        "RelPath": "./data/photos/PXL_20221221_195308689.jpg",
         "Timestamp": "2022-12-21T14:53:08",
-        "Images": "<img src = \"./pics/PXL_20221221_195308689.jpg\" width=\"300\" height=\"225\"/>"
+        "Images": "<img src = \"./data/photos/PXL_20221221_195308689.jpg\" width=\"300\" height=\"225\"/>"
       },
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -87.362955555555558,
-          21.5353
+          -5326263.81769737,
+          6208685.501378364
         ]
       }
     },
@@ -116,9 +116,9 @@
         "Title": "",
         "Comment": "",
         "Path": "/home/faebe/Downloads/pics/PXL_20221221_230022791.jpg",
-        "RelPath": "./pics/PXL_20221221_230022791.jpg",
+        "RelPath": "./data/photos/PXL_20221221_230022791.jpg",
         "Timestamp": "2022-12-21T18:00:22",
-        "Images": "<img src = \"./pics/PXL_20221221_230022791.jpg\" width=\"300\" height=\"225\"/>"
+        "Images": "<img src = \"./data/photos/PXL_20221221_230022791.jpg\" width=\"300\" height=\"225\"/>"
       },
       "geometry": {
         "type": "Point",

@@ -70,7 +70,7 @@ export function createMediaOverlay() {
 }
 
 export function createView() {
-  const worldCenter = [-5696128.88, 1928330.23];
+  const worldCenter = [307065.59275812306, -746078.6820344215];
   return new View({
     center: worldCenter,
     zoom: 2.46,

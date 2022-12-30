@@ -6,7 +6,7 @@ import { carouselNext, carouselPrevious, createImageCollectionElement, setCarous
 import { zoomTo, turnTowards, movements, choseVehicleByDistance, choseVehicleByName } from './src/animate'
 import { wait, abortController, scrollEnd } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, handlePointerMove, greatCircleDistance } from './src/geo';
-import { SUPPORTED_INSTA_MEDIA_TYPES, MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
+import { MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
 import NoSleep from 'nosleep.js';
 import json from './data/travel_photos'
 
@@ -30,7 +30,7 @@ const destinationsLayer = createVectorLayer()
 const map = new Map({
   target: 'map',
   layers: [
-    createOSMLayer(),
+    // createOSMLayer(),
     destinationsLayer
   ],
   view: view,
@@ -44,11 +44,11 @@ let features = []
 map.on("pointermove", handlePointerMove);
 map.on("click", handlePointerClick);
 
-// map.on("moveend", (ev) => {
-//   // NOTE: for debugging and map configuration
-//   console.log(map.getView().getZoom())
-//   console.log(map.getView().getCenter())
-// });
+map.on("moveend", (ev) => {
+  // NOTE: for debugging and map configuration
+  console.log(map.getView().getZoom())
+  console.log(map.getView().getCenter())
+});
 
 const travelEl = document.getElementById('travel');
 
@@ -98,53 +98,44 @@ function clearOverlay() { // TODO necessary ?
 closerEl.onclick = closeOverlay
 
 
-async function showMediaOverlay({ id, caption, media_type, media_url, coordinates }) {
-  captionEl.textContent = caption
+async function showMediaOverlay({ id, coordinates, RelPath }) {
+  captionEl.textContent = "add meta like altitude, direction ..."
   mediaOverlay.setPosition(coordinates);
   let imagesCount = 0
 
-  if (SUPPORTED_INSTA_MEDIA_TYPES.includes(media_type)) {
-    const overlayMargin = 0.1
-    const imgMargin = 2
+  const overlayMargin = 0.1
+  const imgMargin = 2
 
-    const img_size = Math.min(
-      (window.innerWidth * (1 - overlayMargin)),
-      (window.innerHeight / 2 * (1 - overlayMargin)),
-      MAX_IMAGE_DIMENSION + (2 * imgMargin)
-    )
+  const img_size = Math.min(
+    (window.innerWidth * (1 - overlayMargin)),
+    (window.innerHeight / 2 * (1 - overlayMargin)),
+    MAX_IMAGE_DIMENSION + (2 * imgMargin)
+  )
 
-    let mediaItems = []
-    if (media_type === image_type) {
-      mediaItems = [{ id, media_type, media_url }]
+  const imgRelPaths = [RelPath] // TODO generate url arrray in QGIS clustering
+
+  imagesCount = imgRelPaths.length
+  const allImagesWidth = imagesCount * img_size
+  const elMaxWidth = window.innerWidth * (1 - overlayMargin)
+  let width = allImagesWidth
+  if (allImagesWidth > elMaxWidth) {
+    nextImageEl.style.display = 'block'
+    imagesEl.style.overflowX = 'scroll';
+    imagesEl.onscroll = (ev) => {
+      setCarouselPreviousVisibility(ev.target, previousImageEl)
+      setCarouselNextVisibility(ev.target, nextImageEl)
     }
-    if (media_type === carousel_album_type) {
-      mediaItems = await getPostItems(id)
-    }
-    const imgUrls = getMediaUrls(mediaItems)
-
-    imagesCount = imgUrls.length
-    const allImagesWidth = imagesCount * img_size
-    const elMaxWidth = window.innerWidth * (1 - overlayMargin)
-    let width = allImagesWidth
-    if (allImagesWidth > elMaxWidth) {
-      nextImageEl.style.display = 'block'
-      imagesEl.style.overflowX = 'scroll';
-      imagesEl.onscroll = (ev) => {
-        setCarouselPreviousVisibility(ev.target, previousImageEl)
-        setCarouselNextVisibility(ev.target, nextImageEl)
-      }
-      width = elMaxWidth
-      nextImageEl.onclick = () => carouselNext(imagesEl, img_size)
-      previousImageEl.onclick = () => carouselPrevious(imagesEl, img_size)
-    } else {
-      imagesEl.style.overflowX = 'hidden';
-    }
-
-    mediaOverlay.getElement().style.width = `${width}px`
-
-    const imageCollectionResult = await createImageCollectionElement(img_size, imagesEl, imgUrls);
-    // TODO display image load errors / timeouts
+    width = elMaxWidth
+    nextImageEl.onclick = () => carouselNext(imagesEl, img_size)
+    previousImageEl.onclick = () => carouselPrevious(imagesEl, img_size)
+  } else {
+    imagesEl.style.overflowX = 'hidden';
   }
+
+  mediaOverlay.getElement().style.width = `${width}px`
+
+  const imageCollectionResult = await createImageCollectionElement(img_size, imagesEl, imgRelPaths);
+  // TODO display image load errors / timeouts
   return imagesCount
 }
 
