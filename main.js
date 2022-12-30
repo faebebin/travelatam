@@ -53,11 +53,11 @@ map.on("click", handlePointerClick);
 const travelEl = document.getElementById('travel');
 
 function initApp() {
-  // showMapSpinner(map)
-  const geojson = new GeoJSON().readFeatures(json)
-  destinationsLayer.setSource(new VectorSource(geojson))
-  /// removeMapSpinner(map)
-  
+  showMapSpinner(map)
+  const features = new GeoJSON({ dataProjection: 'EPSG:3857' }).readFeatures(json)
+  destinationsLayer.setSource(new VectorSource({ features }))
+  removeMapSpinner(map)
+
   travelEl.style.display = 'block'
 }
 
