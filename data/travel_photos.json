@@ -26,7 +26,10 @@
         "Title": "",
         "Comment": "",
         "Path": "/home/faebe/Downloads/pics/PXL_20221221_230331284~2.jpg",
-        "RelPath": "./data/photos/PXL_20221221_230331284~2.jpg",
+        "RelPath": [
+          "./data/photos/PXL_20221221_230331284~2.jpg",
+          "./data/photos/PXL_20221221_225326855~2.jpg"
+        ],
         "Timestamp": "2022-12-21T18:03:31",
         "Images": "<img src = \"./data/photos/PXL_20221221_230331284~2.jpg\" width=\"300\" height=\"225\"/>"
       },
@@ -35,36 +38,6 @@
         "coordinates": [
           -2395794.4779149625,
           -6651238.203297801
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "fid": 0,
-        "ID": "4ea2afd5-f625-4a63-af3a-78c4395ff380",
-        "Name": "PXL_20221221_225326855~2.jpg",
-        "Date": "2022-12-21",
-        "Time": "17:53:26",
-        "Lon": -87.396136111111105,
-        "Lat": 21.510558333333332,
-        "Altitude": 10.6,
-        "North": "M",
-        "Azimuth": 114.0,
-        "Cam. Maker": "",
-        "Cam. Model": "",
-        "Title": "",
-        "Comment": "",
-        "Path": "/home/faebe/Downloads/pics/PXL_20221221_225326855~2.jpg",
-        "RelPath": "./data/photos/PXL_20221221_225326855~2.jpg",
-        "Timestamp": "2022-12-21T17:53:26",
-        "Images": "<img src = \"./data/photos/PXL_20221221_225326855~2.jpg\" width=\"300\" height=\"225\"/>"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          3635851.153481818,
-          4729225.252167828
         ]
       }
     },
@@ -86,7 +59,9 @@
         "Title": "",
         "Comment": "",
         "Path": "/home/faebe/Downloads/pics/PXL_20221221_195308689.jpg",
-        "RelPath": "./data/photos/PXL_20221221_195308689.jpg",
+        "RelPath": [
+          "./data/photos/PXL_20221221_195308689.jpg"
+        ],
         "Timestamp": "2022-12-21T14:53:08",
         "Images": "<img src = \"./data/photos/PXL_20221221_195308689.jpg\" width=\"300\" height=\"225\"/>"
       },
@@ -116,7 +91,9 @@
         "Title": "",
         "Comment": "",
         "Path": "/home/faebe/Downloads/pics/PXL_20221221_230022791.jpg",
-        "RelPath": "./data/photos/PXL_20221221_230022791.jpg",
+        "RelPath": [
+          "./data/photos/PXL_20221221_230022791.jpg"
+        ],
         "Timestamp": "2022-12-21T18:00:22",
         "Images": "<img src = \"./data/photos/PXL_20221221_230022791.jpg\" width=\"300\" height=\"225\"/>"
       },
