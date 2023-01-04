@@ -29,7 +29,7 @@ const destinationsLayer = createVectorLayer()
 const map = new Map({
   target: 'map',
   layers: [
-    // createOSMLayer(),
+    createOSMLayer(),
     destinationsLayer
   ],
   view: view,
@@ -97,7 +97,7 @@ function clearOverlay() { // TODO necessary ?
 closerEl.onclick = closeOverlay
 
 
-async function showMediaOverlay({ id, coordinates, RelPath }) {
+async function showMediaOverlay({ id, coordinates, PhotosRelPaths }) {
   captionEl.textContent = "add meta like altitude, direction ..."
   mediaOverlay.setPosition(coordinates);
   let imagesCount = 0
@@ -111,9 +111,8 @@ async function showMediaOverlay({ id, coordinates, RelPath }) {
     MAX_IMAGE_DIMENSION + (2 * imgMargin)
   )
 
-  const imgRelPaths = [RelPath] // TODO generate url arrray in QGIS clustering
 
-  imagesCount = imgRelPaths.length
+  imagesCount = PhotosRelPaths.length
   const allImagesWidth = imagesCount * img_size
   const elMaxWidth = window.innerWidth * (1 - overlayMargin)
   let width = allImagesWidth
@@ -133,7 +132,7 @@ async function showMediaOverlay({ id, coordinates, RelPath }) {
 
   mediaOverlay.getElement().style.width = `${width}px`
 
-  const imageCollectionResult = await createImageCollectionElement(img_size, imagesEl, imgRelPaths);
+  const imageCollectionResult = await createImageCollectionElement(img_size, imagesEl, PhotosRelPaths);
   // TODO display image load errors / timeouts
   return imagesCount
 }
@@ -171,7 +170,7 @@ async function next(index) {
       // TODO move all to processPosts
       const distance = greatCircleDistance(currentCoordinates, coordinates)
       // const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByName(caption) || choseVehicleByDistance(distance)
-       const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByDistance(distance)
+      const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByDistance(distance)
 
       await zoomTo(zoom, view)
 
