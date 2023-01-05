@@ -2,10 +2,10 @@ import './style.css';
 import { Map } from 'ol';
 import VectorSource from "ol/source/Vector";
 import { carouselNext, carouselPrevious, createImageCollectionElement, setCarouselNextVisibility, setCarouselPreviousVisibility } from './src/image'
-import { zoomTo, turnTowards, movements, choseVehicleByDistance, choseVehicleByName } from './src/animate'
+import { zoomTo, turnTowards, movements, choseVehicleByDistance } from './src/animate'
 import { wait, abortController, scrollEnd } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, handlePointerMove, greatCircleDistance } from './src/geo';
-import { MAX_IMAGE_DIMENSION, image_type, carousel_album_type } from './src/constants'
+import { MAX_IMAGE_DIMENSION } from './src/constants'
 import NoSleep from 'nosleep.js';
 import json from './data/travel_photos'
 
@@ -38,23 +38,24 @@ const map = new Map({
   ],
 });
 
-let features = []
+let features = [] // Collection<Feature<Geometry>>
 
 map.on("pointermove", handlePointerMove);
 map.on("click", handlePointerClick);
-
-map.on("moveend", (ev) => {
-  // NOTE: for debugging and map configuration
-  console.log(map.getView().getZoom())
-  console.log(map.getView().getCenter())
-});
 
 const travelEl = document.getElementById('travel');
 
 function initApp() {
   showMapSpinner(map)
-  const features = new GeoJSON({ dataProjection: 'EPSG:3857' }).readFeatures(json)
-  destinationsLayer.setSource(new VectorSource({ features }))
+  // NOTE: Just get vector features as ol/Collection somehow.
+  // Could also create a collection from json.features ...
+  // Moreover, this way useSpatialindex has to be set to false,
+  // which improves performance but disables some capabilities 
+  // (see https://openlayers.org/en/latest/apidoc/module-ol_source_Vector-VectorSource.html)
+  const source = new VectorSource({ features: new GeoJSON().readFeatures(json), useSpatialIndex: false })
+  destinationsLayer.setSource(source)
+  features = source.getFeaturesCollection()
+
   removeMapSpinner(map)
 
   travelEl.style.display = 'block'
@@ -71,6 +72,12 @@ initApp()
 // });
 
 async function handlePointerClick(ev) {
+  // For debugging
+  // console.log('coords:', ev.coordinate)
+  // console.log('zoom:', map.getView().getZoom())
+  // console.log('map center:', map.getView().getCenter())
+  // console.log('projection', map.getView().getProjection())
+
   const feature = this.getFeaturesAtPixel(ev.pixel)[0]
   if (feature) {
     const { coordinates, ...rest } = getFeatureData(feature)
@@ -137,13 +144,8 @@ async function showMediaOverlay({ id, coordinates, PhotosRelPaths }) {
   return imagesCount
 }
 
-
-function getFeatureCoordinates(feature) {
-  return feature.getGeometry().getCoordinates()
-}
-
 function getFeatureData(feature) {
-  const coordinates = getFeatureCoordinates(feature)
+  const coordinates = feature.getGeometry().getCoordinates()
   return { coordinates, ...feature.getProperties() }
 }
 
