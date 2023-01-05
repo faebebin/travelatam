@@ -5,7 +5,7 @@ import { carouselNext, carouselPrevious, createImageCollectionElement, setCarous
 import { zoomTo, turnTowards, movements, choseVehicleByName } from './src/animate'
 import { wait, abortController, scrollEnd } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, handlePointerMove, greatCircleDistance } from './src/geo';
-import { MAX_IMAGE_DIMENSION } from './src/constants'
+import { DISPLAY_VELOCITY, MAX_IMAGE_DIMENSION } from './src/constants'
 import NoSleep from 'nosleep.js';
 import json from './data/travel_photos'
 
@@ -147,7 +147,7 @@ async function showMediaOverlay({ coordinates, caption, PhotosRelPaths }) {
 function getFeatureData(feature) {
   const coordinates = feature.getGeometry().getCoordinates()
   // TODO Add location name
-  const {Timestamp, ...rest} = feature.getProperties()
+  const { Timestamp, ...rest } = feature.getProperties()
   const caption = (new Date(Timestamp)).toString()
   return { coordinates, caption, ...rest }
 }
@@ -164,7 +164,7 @@ async function autoScrollImageCarousel(imagesCount) {
 let arrived = null
 async function next(index) {
   if (index < features.getLength()) {
-    const { coordinates, caption, Vehicle, ...rest } = getFeatureData(features.item(index))
+    const { coordinates, caption, Vehicle, Distance, ...rest } = getFeatureData(features.item(index))
     if (index === 0) {
       // TODO start on 1 and get proper zoom upon first move
       arrived = await movements.flyTo(coordinates, 2000, view);
@@ -173,7 +173,6 @@ async function next(index) {
       onTravelStart()
       const currentCoordinates = view.getCenter()
       // TODO move all to processPosts
-      const distance = greatCircleDistance(currentCoordinates, coordinates)
       const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByName(Vehicle)
 
       await zoomTo(zoom, view)
@@ -210,7 +209,7 @@ async function next(index) {
         });
       }
 
-      const duration = distance / velocity
+      const duration = (Distance / velocity) * 1000 / DISPLAY_VELOCITY // in ms 
       arrived = await move(coordinates, duration, view);
       vehicleEl.textContent = ''
       driveAnimation?.cancel()
