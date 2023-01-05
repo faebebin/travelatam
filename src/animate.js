@@ -93,7 +93,8 @@ export const vehicles = [
     maxDistance: 1 * 1000, // for vehicle choice
     symbol: '🚶',
     name: 'walk',
-    mode: 'walk',
+    // mode: 'walk',
+    mode: 'drive',
     azimuthCorrection: 1.5708, // radians
     zoom: 18,
     move: driveTo,

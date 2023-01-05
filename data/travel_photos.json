@@ -14,7 +14,7 @@
         "Name": "PXL_20221221_195308689.jpg",
         "Timestamp": "2022-12-21T14:53:08.000",
         "PhotosRelPaths": [
-          "data/photos/PXL_20221221_195308689.jpg"
+          "./PXL_20221221_195308689.jpg"
         ],
         "Vehicle": null,
         "Distance": null
@@ -33,7 +33,7 @@
         "Name": "PXL_20221221_225326855~2.jpg",
         "Timestamp": "2022-12-21T17:53:26.000",
         "PhotosRelPaths": [
-          "data/photos/PXL_20221221_225326855~2.jpg"
+          "./PXL_20221221_225326855~2.jpg"
         ],
         "Vehicle": "bicycle",
         "Distance": 4395
@@ -52,8 +52,8 @@
         "Name": "PXL_20221221_230022791.jpg",
         "Timestamp": "2022-12-21T18:00:22.000",
         "PhotosRelPaths": [
-          "data/photos/PXL_20221221_230022791.jpg",
-          "data/photos/PXL_20221221_230331284~2.jpg"
+          "./PXL_20221221_230022791.jpg",
+          "./PXL_20221221_230331284~2.jpg"
         ],
         "Vehicle": "walk",
         "Distance": 400
