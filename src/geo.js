@@ -5,28 +5,7 @@ import VectorLayer from "ol/layer/Vector";
 import OSM from 'ol/source/OSM';
 import { View, Overlay } from 'ol';
 import { Style, RegularShape, Fill, Stroke } from "ol/style";
-import { urlIfy } from '../utils/parseCaption';
 
-
-export async function getOSMLatLonFromNames(osmSearchTerms) {
-  // eg: https://nominatim.openstreetmap.org/search?q=bogota,+colombia&format=json
-  const searchParams = toNominatimSearchParams(osmSearchTerms)
-  const url = `https://nominatim.openstreetmap.org/search?q=${searchParams}&format=json`
-  const response = await fetch(url)
-  // TODO if !response.ok { return text}
-  const json = await response.json()
-  const data = json[0]
-  if (!data) return null // TODO msg: Location not found
-  const lat = data.lat
-  const lon = data.lon
-  return [lat, lon]
-}
-
-export function toNominatimSearchParams(osmSearchTerms) {
-  // FIXME only exported for testing. Try https://github.com/jhnns/rewire with vitest?
-  // return Object.values(arguments).join(',+')
-  return urlIfy(osmSearchTerms).replace(/,(%20)?/g, ',+')
-}
 
 export function createOSMLayer() {
   return new TileLayer({
@@ -99,4 +78,26 @@ export function handlePointerMove(ev) {
     }
   }
 }
+
+// export function urlIfy(string) {
+//   return string.trim().replace(/  +/g, ' ').replace(/\s/g, '%20');
+// }
+
+// export function extractLocationNames(stringInclNames) {
+//   const pattern = /\[[\w\W,]+\]/g;
+//   const match = stringInclNames.match(pattern)
+//   if (!match) return null
+//   // return match[0].replace(/\[|\]/g, '').split(',')
+//   return match[0].replace(/\[|\]/g, '')
+// }
+// 
+// export function fromLatLon(latLon) {
+//   // To default EPSG:3857
+//   if (!Array.isArray(latLon)) {
+//     // NOTE: Else strange error '.reverse() not a function' TODO TS
+//     return false
+//   }
+//   return fromLonLat(latLon.reverse())
+// }
+// 
 

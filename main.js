@@ -104,7 +104,7 @@ function clearOverlay() { // TODO necessary ?
 closerEl.onclick = closeOverlay
 
 
-async function showMediaOverlay({ id, coordinates, PhotosRelPaths }) {
+async function showMediaOverlay({ coordinates, PhotosRelPaths }) {
   captionEl.textContent = "add meta like altitude, direction ..."
   mediaOverlay.setPosition(coordinates);
   let imagesCount = 0

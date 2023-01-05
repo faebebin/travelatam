@@ -4,7 +4,7 @@ export function createImageElement(img_size, imgUrl) {
   return img
 }
 
-export function appendImageToDOM(img_size, container, imgUrl) {
+function appendImageToDOM(img_size, container, imgUrl) {
   const img = createImageElement(img_size, imgUrl)
   container.appendChild(img)
   // TODO handle failure

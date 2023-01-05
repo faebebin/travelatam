@@ -1,4 +1,5 @@
 module.exports = {
+    // Use for dead code
     "env": {
         "browser": true,
         "es2021": true
@@ -7,7 +8,7 @@ module.exports = {
       'import',
     ],
     "ignorePatterns": ["dist/"],
-    "extends": "eslint:recommended",
+    // "extends": "eslint:recommended",
     "overrides": [
     ],
     "parserOptions": {
@@ -15,7 +16,7 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-      "import/no-unused-modules": [1, {"unusedExports": true}]
-    // "no-unused-vars"
+      "import/no-unused-modules": [1, {"unusedExports": true}],
+      "no-unused-vars": "warn"
     }
 }
