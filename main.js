@@ -2,7 +2,7 @@ import './style.css';
 import { Map } from 'ol';
 import VectorSource from "ol/source/Vector";
 import { carouselNext, carouselPrevious, createImageCollectionElement, setCarouselNextVisibility, setCarouselPreviousVisibility } from './src/image'
-import { zoomTo, turnTowards, movements, choseVehicleByDistance } from './src/animate'
+import { zoomTo, turnTowards, movements, choseVehicleByName } from './src/animate'
 import { wait, abortController, scrollEnd } from './utils/promisify'
 import { createMediaOverlay, createOSMLayer, createView, showMapSpinner, removeMapSpinner, createVectorLayer, handlePointerMove, greatCircleDistance } from './src/geo';
 import { MAX_IMAGE_DIMENSION } from './src/constants'
@@ -104,8 +104,8 @@ function clearOverlay() { // TODO necessary ?
 closerEl.onclick = closeOverlay
 
 
-async function showMediaOverlay({ coordinates, PhotosRelPaths }) {
-  captionEl.textContent = "add meta like altitude, direction ..."
+async function showMediaOverlay({ coordinates, caption, PhotosRelPaths }) {
+  captionEl.textContent = caption
   mediaOverlay.setPosition(coordinates);
   let imagesCount = 0
 
@@ -146,7 +146,10 @@ async function showMediaOverlay({ coordinates, PhotosRelPaths }) {
 
 function getFeatureData(feature) {
   const coordinates = feature.getGeometry().getCoordinates()
-  return { coordinates, ...feature.getProperties() }
+  // TODO Add location name
+  const {Timestamp, ...rest} = feature.getProperties()
+  const caption = (new Date(Timestamp)).toString()
+  return { coordinates, caption, ...rest }
 }
 
 async function autoScrollImageCarousel(imagesCount) {
@@ -161,7 +164,7 @@ async function autoScrollImageCarousel(imagesCount) {
 let arrived = null
 async function next(index) {
   if (index < features.getLength()) {
-    const { coordinates, caption, ...rest } = getFeatureData(features.item(index))
+    const { coordinates, caption, Vehicle, ...rest } = getFeatureData(features.item(index))
     if (index === 0) {
       // TODO start on 1 and get proper zoom upon first move
       arrived = await movements.flyTo(coordinates, 2000, view);
@@ -171,8 +174,7 @@ async function next(index) {
       const currentCoordinates = view.getCenter()
       // TODO move all to processPosts
       const distance = greatCircleDistance(currentCoordinates, coordinates)
-      // const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByName(caption) || choseVehicleByDistance(distance)
-      const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByDistance(distance)
+      const { symbol, azimuthCorrection, move, zoom, velocity, mode } = choseVehicleByName(Vehicle)
 
       await zoomTo(zoom, view)
 
