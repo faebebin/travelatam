@@ -1,70 +1,106 @@
 {
-  "type": "FeatureCollection",
-  "name": "travel_photos",
-  "crs": {
-    "type": "name",
-    "properties": {
-      "name": "urn:ogc:def:crs:EPSG::3857"
-    }
-  },
-  "features": [
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "PXL_20221221_195308689.jpg",
-        "Timestamp": "2022-12-21T14:53:08.000",
-        "PhotosRelPaths": [
-          "./PXL_20221221_195308689.jpg"
-        ],
-        "Vehicle": null,
-        "Distance": null
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -9725199.7,
-          2455823.1
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "PXL_20221221_225326855~2.jpg",
-        "Timestamp": "2022-12-21T17:53:26.000",
-        "PhotosRelPaths": [
-          "./PXL_20221221_225326855~2.jpg"
-        ],
-        "Vehicle": "bicycle",
-        "Distance": 4395
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -9728893.4,
-          2452862.4
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "Name": "PXL_20221221_230022791.jpg",
-        "Timestamp": "2022-12-21T18:00:22.000",
-        "PhotosRelPaths": [
-          "./PXL_20221221_230022791.jpg",
-          "./PXL_20221221_230331284~2.jpg"
-        ],
-        "Vehicle": "walk",
-        "Distance": 400
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -9728749.9,
-          2453273.9
-        ]
-      }
-    }
-  ]
+"type": "FeatureCollection",
+"name": "travel_photos",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::3857" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "PXL_20220917_223501752.PANO.jpg", "Timestamp": "2022-09-17T17:35:04.000", "PhotosRelPaths": [ "./PXL_20220917_223501752.PANO.jpg" ], "Vehicle": null, "Distance": null }, "geometry": { "type": "Point", "coordinates": [ -8409546.5, 1166072.1 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220917_233048708.NIGHT.jpg", "Timestamp": "2022-09-17T18:30:48.000", "PhotosRelPaths": [ "./PXL_20220917_233048708.NIGHT.jpg", "./PXL_20220918_180906193.jpg", "./PXL_20220918_183459805.jpg", "./PXL_20220918_204131268.jpg" ], "Vehicle": "walk", "Distance": 2713 }, "geometry": { "type": "Point", "coordinates": [ -8410077.1, 1166727.0 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220920_155759601.jpg", "Timestamp": "2022-09-20T10:57:59.000", "PhotosRelPaths": [ "./PXL_20220920_155759601.jpg" ], "Vehicle": "bus", "Distance": 202283 }, "geometry": { "type": "Point", "coordinates": [ -8228205.5, 1263978.3 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220920_210534647.jpg", "Timestamp": "2022-09-20T16:05:34.000", "PhotosRelPaths": [ "./PXL_20220920_210534647.jpg" ], "Vehicle": "car", "Distance": 16081 }, "geometry": { "type": "Point", "coordinates": [ -8220135.8, 1249616.7 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220921_134521758.jpg", "Timestamp": "2022-09-21T08:45:21.000", "PhotosRelPaths": [ "./PXL_20220921_134521758.jpg" ], "Vehicle": "bicycle", "Distance": 6071 }, "geometry": { "type": "Point", "coordinates": [ -8223131.5, 1244168.5 ] } },
+{ "type": "Feature", "properties": { "Name": "IMG_20220921_093826.jpg", "Timestamp": "2022-09-21T09:38:26.000", "PhotosRelPaths": [ "./IMG_20220921_093826.jpg", "./PXL_20220925_114424866.jpg" ], "Vehicle": "walk", "Distance": 18586 }, "geometry": { "type": "Point", "coordinates": [ -8223465.8, 1243826.2 ] } },
+{ "type": "Feature", "properties": { "Name": "original_9429c1ba-baa7-413e-9158-6297404af1ba_PXL_20220925_124733683.jpg", "Timestamp": "2022-09-25T07:47:33.000", "PhotosRelPaths": [ "./original_9429c1ba-baa7-413e-9158-6297404af1ba_PXL_20220925_124733683.jpg" ], "Vehicle": "car", "Distance": 19103 }, "geometry": { "type": "Point", "coordinates": [ -8222016.2, 1263369.1 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220926_003205881.jpg", "Timestamp": "2022-09-25T19:32:05.000", "PhotosRelPaths": [ "./PXL_20220926_003205881.jpg" ], "Vehicle": "bus", "Distance": 126876 }, "geometry": { "type": "Point", "coordinates": [ -8100776.6, 1309026.6 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220926_144715295.jpg", "Timestamp": "2022-09-26T09:47:15.000", "PhotosRelPaths": [ "./PXL_20220926_144715295.jpg" ], "Vehicle": "car", "Distance": 10272 }, "geometry": { "type": "Point", "coordinates": [ -8107621.2, 1301029.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220926_164620494~2.jpg", "Timestamp": "2022-09-26T11:46:20.000", "PhotosRelPaths": [ "./PXL_20220926_164620494~2.jpg" ], "Vehicle": "bicycle", "Distance": 8087 }, "geometry": { "type": "Point", "coordinates": [ -8102360.4, 1307433.7 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220926_170206268.jpg", "Timestamp": "2022-09-26T12:02:06.000", "PhotosRelPaths": [ "./PXL_20220926_170206268.jpg", "./PXL_20220928_191838097.jpg" ], "Vehicle": "walk", "Distance": 560307 }, "geometry": { "type": "Point", "coordinates": [ -8102306.3, 1307464.3 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220928_205009197.jpg", "Timestamp": "2022-09-28T15:50:09.000", "PhotosRelPaths": [ "./PXL_20220928_205009197.jpg" ], "Vehicle": "bus", "Distance": 560226 }, "geometry": { "type": "Point", "coordinates": [ -8134042.2, 737063.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220928_214326448.jpg", "Timestamp": "2022-09-28T16:43:26.000", "PhotosRelPaths": [ "./PXL_20220928_214326448.jpg" ], "Vehicle": "bicycle", "Distance": 2919 }, "geometry": { "type": "Point", "coordinates": [ -8131140.2, 737530.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220929_155005073.jpg", "Timestamp": "2022-09-29T10:50:05.000", "PhotosRelPaths": [ "./PXL_20220929_155005073.jpg" ], "Vehicle": "bicycle", "Distance": 6490 }, "geometry": { "type": "Point", "coordinates": [ -8135633.2, 742305.6 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220929_203233693.jpg", "Timestamp": "2022-09-29T15:32:33.000", "PhotosRelPaths": [ "./PXL_20220929_203233693.jpg" ], "Vehicle": "bicycle", "Distance": 4064 }, "geometry": { "type": "Point", "coordinates": [ -8135555.9, 746424.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20220930_201416308.jpg", "Timestamp": "2022-09-30T15:14:16.000", "PhotosRelPaths": [ "./PXL_20220930_201416308.jpg" ], "Vehicle": "car", "Distance": 17774 }, "geometry": { "type": "Point", "coordinates": [ -8140293.7, 729055.6 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221001_230243019.jpg", "Timestamp": "2022-10-01T18:02:43.000", "PhotosRelPaths": [ "./PXL_20221001_230243019.jpg" ], "Vehicle": "bus", "Distance": 236979 }, "geometry": { "type": "Point", "coordinates": [ -8243849.9, 513215.0 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221008_221606212.jpg", "Timestamp": "2022-10-08T17:16:06.000", "PhotosRelPaths": [ "./PXL_20221008_221606212.jpg" ], "Vehicle": "bicycle", "Distance": 6610 }, "geometry": { "type": "Point", "coordinates": [ -8250048.3, 515590.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221008_222053129.jpg", "Timestamp": "2022-10-08T17:20:53.000", "PhotosRelPaths": [ "./PXL_20221008_222053129.jpg", "./original_5b81ff0d-5766-456f-aaad-056d113b2532_PXL_20221008_222357002.jpg", "./PXL_20221008_223059873~2.jpg", "./PXL_20221012_170524455.jpg" ], "Vehicle": "walk", "Distance": 10498 }, "geometry": { "type": "Point", "coordinates": [ -8250068.4, 515559.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221012_170840189.jpg", "Timestamp": "2022-10-12T12:08:40.000", "PhotosRelPaths": [ "./PXL_20221012_170840189.jpg" ], "Vehicle": "car", "Distance": 10592 }, "geometry": { "type": "Point", "coordinates": [ -8242101.9, 522640.2 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221012_202108501.jpg", "Timestamp": "2022-10-12T15:21:08.000", "PhotosRelPaths": [ "./PXL_20221012_202108501.jpg" ], "Vehicle": "bicycle", "Distance": 7295 }, "geometry": { "type": "Point", "coordinates": [ -8249227.9, 520956.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221012_205024408.jpg", "Timestamp": "2022-10-12T15:50:24.000", "PhotosRelPaths": [ "./PXL_20221012_205024408.jpg", "./PXL_20221016_185550332.jpg" ], "Vehicle": "walk", "Distance": 7689 }, "geometry": { "type": "Point", "coordinates": [ -8248733.5, 520173.3 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221017_145309012.jpg", "Timestamp": "2022-10-17T09:53:09.000", "PhotosRelPaths": [ "./PXL_20221017_145309012.jpg" ], "Vehicle": "car", "Distance": 53416 }, "geometry": { "type": "Point", "coordinates": [ -8215106.9, 562202.9 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221017_162518404.jpg", "Timestamp": "2022-10-17T11:25:18.000", "PhotosRelPaths": [ "./PXL_20221017_162518404.jpg" ], "Vehicle": "bicycle", "Distance": 2228 }, "geometry": { "type": "Point", "coordinates": [ -8215140.6, 559951.2 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221017_173659328.jpg", "Timestamp": "2022-10-17T12:36:59.000", "PhotosRelPaths": [ "./PXL_20221017_173659328.jpg" ], "Vehicle": "bicycle", "Distance": 1126 }, "geometry": { "type": "Point", "coordinates": [ -8214782.9, 558870.9 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221017_175737762~2.jpg", "Timestamp": "2022-10-17T12:57:37.000", "PhotosRelPaths": [ "./PXL_20221017_175737762~2.jpg", "./original_d02c049d-e603-43ef-a862-9123011aabfa_PXL_20221017_182713712.jpg", "./PXL_20221017_190517601.PANO.jpg" ], "Vehicle": "walk", "Distance": 1058 }, "geometry": { "type": "Point", "coordinates": [ -8213987.9, 559021.2 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221027_144852680.jpg", "Timestamp": "2022-10-27T09:48:52.000", "PhotosRelPaths": [ "./PXL_20221027_144852680.jpg" ], "Vehicle": "bus", "Distance": 501962 }, "geometry": { "type": "Point", "coordinates": [ -8547699.6, 941222.6 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221027_155530539.jpg", "Timestamp": "2022-10-27T10:55:30.000", "PhotosRelPaths": [ "./PXL_20221027_155530539.jpg" ], "Vehicle": "bicycle", "Distance": 1301 }, "geometry": { "type": "Point", "coordinates": [ -8546457.4, 940786.0 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221027_160604883.jpg", "Timestamp": "2022-10-27T11:06:04.000", "PhotosRelPaths": [ "./PXL_20221027_160604883.jpg" ], "Vehicle": "bicycle", "Distance": 1467 }, "geometry": { "type": "Point", "coordinates": [ -8547900.6, 941130.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221027_161007789.jpg", "Timestamp": "2022-10-27T11:10:07.000", "PhotosRelPaths": [ "./PXL_20221027_161007789.jpg", "./PXL_20221027_162548768.jpg" ], "Vehicle": "walk", "Distance": 4581 }, "geometry": { "type": "Point", "coordinates": [ -8548223.4, 941725.9 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221027_171902978.jpg", "Timestamp": "2022-10-27T12:19:02.000", "PhotosRelPaths": [ "./PXL_20221027_171902978.jpg" ], "Vehicle": "bicycle", "Distance": 1022 }, "geometry": { "type": "Point", "coordinates": [ -8548273.8, 942764.7 ] } },
+{ "type": "Feature", "properties": { "Name": "original_3c56a1de-cf46-49ba-a498-b206f5f2767d_PXL_20221027_173028490.jpg", "Timestamp": "2022-10-27T12:30:28.000", "PhotosRelPaths": [ "./original_3c56a1de-cf46-49ba-a498-b206f5f2767d_PXL_20221027_173028490.jpg", "./PXL_20221028_142359543.jpg" ], "Vehicle": "walk", "Distance": 43953 }, "geometry": { "type": "Point", "coordinates": [ -8548225.9, 942750.6 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221028_145853659.jpg", "Timestamp": "2022-10-28T09:58:53.000", "PhotosRelPaths": [ "./PXL_20221028_145853659.jpg" ], "Vehicle": "car", "Distance": 65007 }, "geometry": { "type": "Point", "coordinates": [ -8610046.2, 965231.2 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221028_222411548.jpg", "Timestamp": "2022-10-28T17:24:11.000", "PhotosRelPaths": [ "./PXL_20221028_222411548.jpg" ], "Vehicle": "bicycle", "Distance": 1648 }, "geometry": { "type": "Point", "coordinates": [ -8609478.8, 963652.7 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221029_144449042.jpg", "Timestamp": "2022-10-29T09:44:49.000", "PhotosRelPaths": [ "./PXL_20221029_144449042.jpg" ], "Vehicle": "bicycle", "Distance": 3062 }, "geometry": { "type": "Point", "coordinates": [ -8611616.7, 965909.0 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221029_145150091.PORTRAIT.jpg", "Timestamp": "2022-10-29T09:51:50.000", "PhotosRelPaths": [ "./PXL_20221029_145150091.PORTRAIT.jpg", "./PXL_20221029_162133472.jpg" ], "Vehicle": "walk", "Distance": 2841 }, "geometry": { "type": "Point", "coordinates": [ -8611728.1, 966066.0 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221029_162719807.jpg", "Timestamp": "2022-10-29T11:27:19.000", "PhotosRelPaths": [ "./PXL_20221029_162719807.jpg" ], "Vehicle": "bicycle", "Distance": 2743 }, "geometry": { "type": "Point", "coordinates": [ -8612569.5, 968727.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221029_170046259.jpg", "Timestamp": "2022-10-29T12:00:46.000", "PhotosRelPaths": [ "./PXL_20221029_170046259.jpg", "./PXL_20221031_171109891~2.jpg" ], "Vehicle": "walk", "Distance": 44381 }, "geometry": { "type": "Point", "coordinates": [ -8612548.1, 968716.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221031_203333319~2.jpg", "Timestamp": "2022-10-31T15:33:33.000", "PhotosRelPaths": [ "./PXL_20221031_203333319~2.jpg" ], "Vehicle": "car", "Distance": 44527 }, "geometry": { "type": "Point", "coordinates": [ -8648817.2, 995619.8 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221031_224602192~2.jpg", "Timestamp": "2022-10-31T17:46:02.000", "PhotosRelPaths": [ "./PXL_20221031_224602192~2.jpg", "./PXL_20221031_225048017~2.jpg", "./PXL_20221101_144355407.jpg" ], "Vehicle": "walk", "Distance": 2114 }, "geometry": { "type": "Point", "coordinates": [ -8649188.0, 995207.3 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221101_152906635.jpg", "Timestamp": "2022-11-01T10:29:06.000", "PhotosRelPaths": [ "./PXL_20221101_152906635.jpg" ], "Vehicle": "bicycle", "Distance": 2551 }, "geometry": { "type": "Point", "coordinates": [ -8648803.3, 997777.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221101_155816138.jpg", "Timestamp": "2022-11-01T10:58:16.000", "PhotosRelPaths": [ "./PXL_20221101_155816138.jpg", "./PXL_20221101_183711604.jpg", "./PXL_20221101_225237136.jpg" ], "Vehicle": "walk", "Distance": 43616 }, "geometry": { "type": "Point", "coordinates": [ -8648838.3, 997900.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221102_011707874.jpg", "Timestamp": "2022-11-01T20:17:07.000", "PhotosRelPaths": [ "./PXL_20221102_011707874.jpg" ], "Vehicle": "car", "Distance": 43515 }, "geometry": { "type": "Point", "coordinates": [ -8681315.7, 1027873.0 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221102_183702691~2.jpg", "Timestamp": "2022-11-02T13:37:02.000", "PhotosRelPaths": [ "./PXL_20221102_183702691~2.jpg" ], "Vehicle": "car", "Distance": 77883 }, "geometry": { "type": "Point", "coordinates": [ -8753757.5, 1059395.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221102_223142155~2.jpg", "Timestamp": "2022-11-02T17:31:42.000", "PhotosRelPaths": [ "./PXL_20221102_223142155~2.jpg" ], "Vehicle": "car", "Distance": 12870 }, "geometry": { "type": "Point", "coordinates": [ -8740714.0, 1059727.5 ] } },
+{ "type": "Feature", "properties": { "Name": "original_a326c208-1aa7-4e31-b003-13d69a648355_PXL_20221103_030720664.jpg", "Timestamp": "2022-11-02T22:07:20.000", "PhotosRelPaths": [ "./original_a326c208-1aa7-4e31-b003-13d69a648355_PXL_20221103_030720664.jpg", "./PXL_20221104_024401367.jpg" ], "Vehicle": "walk", "Distance": 125701 }, "geometry": { "type": "Point", "coordinates": [ -8740639.4, 1059693.7 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221104_134606152.jpg", "Timestamp": "2022-11-04T08:46:06.000", "PhotosRelPaths": [ "./PXL_20221104_134606152.jpg" ], "Vehicle": "bus", "Distance": 127882 }, "geometry": { "type": "Point", "coordinates": [ -8857744.1, 1003927.3 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221104_184214617~2.jpg", "Timestamp": "2022-11-04T13:42:14.000", "PhotosRelPaths": [ "./PXL_20221104_184214617~2.jpg" ], "Vehicle": "bicycle", "Distance": 5773 }, "geometry": { "type": "Point", "coordinates": [ -8853472.3, 999911.9 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221104_194932345.jpg", "Timestamp": "2022-11-04T14:49:32.000", "PhotosRelPaths": [ "./PXL_20221104_194932345.jpg" ], "Vehicle": "bicycle", "Distance": 3447 }, "geometry": { "type": "Point", "coordinates": [ -8853007.2, 996430.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221104_201945927.jpg", "Timestamp": "2022-11-04T15:19:45.000", "PhotosRelPaths": [ "./PXL_20221104_201945927.jpg", "./PXL_20221104_225530014~2.jpg" ], "Vehicle": "walk", "Distance": 4832 }, "geometry": { "type": "Point", "coordinates": [ -8853796.0, 996894.7 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221107_180058848.jpg", "Timestamp": "2022-11-07T13:00:58.000", "PhotosRelPaths": [ "./PXL_20221107_180058848.jpg" ], "Vehicle": "bus", "Distance": 179698 }, "geometry": { "type": "Point", "coordinates": [ -8926577.6, 829489.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221107_221254046.jpg", "Timestamp": "2022-11-07T17:12:54.000", "PhotosRelPaths": [ "./PXL_20221107_221254046.jpg" ], "Vehicle": "bicycle", "Distance": 1864 }, "geometry": { "type": "Point", "coordinates": [ -8928116.9, 830575.6 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221109_025439172~2.jpg", "Timestamp": "2022-11-08T21:54:39.000", "PhotosRelPaths": [ "./PXL_20221109_025439172~2.jpg" ], "Vehicle": "bicycle", "Distance": 1276 }, "geometry": { "type": "Point", "coordinates": [ -8927124.6, 829750.8 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221109_031844836~2.jpg", "Timestamp": "2022-11-08T22:18:44.000", "PhotosRelPaths": [ "./PXL_20221109_031844836~2.jpg", "./PXL_20221109_033824736~2.jpg", "./PXL_20221112_213522910~2.jpg" ], "Vehicle": "walk", "Distance": 1637 }, "geometry": { "type": "Point", "coordinates": [ -8927808.6, 829650.7 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221112_230916256~2.jpg", "Timestamp": "2022-11-12T18:09:16.000", "PhotosRelPaths": [ "./PXL_20221112_230916256~2.jpg" ], "Vehicle": "bicycle", "Distance": 1241 }, "geometry": { "type": "Point", "coordinates": [ -8928635.5, 828703.9 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221112_231658853~2.jpg", "Timestamp": "2022-11-12T18:16:58.000", "PhotosRelPaths": [ "./PXL_20221112_231658853~2.jpg", "./PXL_20221113_031922710.jpg" ], "Vehicle": "walk", "Distance": 24386 }, "geometry": { "type": "Point", "coordinates": [ -8928636.7, 828688.0 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221116_230852869.jpg", "Timestamp": "2022-11-16T17:08:52.000", "PhotosRelPaths": [ "./PXL_20221116_230852869.jpg" ], "Vehicle": "bus", "Distance": 510838 }, "geometry": { "type": "Point", "coordinates": [ -9362364.1, 1111470.8 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221117_193609951~2.jpg", "Timestamp": "2022-11-17T13:36:09.000", "PhotosRelPaths": [ "./PXL_20221117_193609951~2.jpg" ], "Vehicle": "bus", "Distance": 296466 }, "geometry": { "type": "Point", "coordinates": [ -9584259.0, 1317413.3 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221117_213412860~3.jpg", "Timestamp": "2022-11-17T15:34:12.000", "PhotosRelPaths": [ "./PXL_20221117_213412860~3.jpg" ], "Vehicle": "airplane", "Distance": 1533370 }, "geometry": { "type": "Point", "coordinates": [ -10957841.4, 2123804.9 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221118_164100649~2.jpg", "Timestamp": "2022-11-18T10:41:00.000", "PhotosRelPaths": [ "./PXL_20221118_164100649~2.jpg" ], "Vehicle": "bus", "Distance": 259108 }, "geometry": { "type": "Point", "coordinates": [ -10767478.2, 1928036.0 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221118_170729253~2.jpg", "Timestamp": "2022-11-18T11:07:29.000", "PhotosRelPaths": [ "./PXL_20221118_170729253~2.jpg", "./PXL_20221118_201832861.jpg" ], "Vehicle": "walk", "Distance": 9618 }, "geometry": { "type": "Point", "coordinates": [ -10767729.6, 1927818.6 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221118_203220790~2.jpg", "Timestamp": "2022-11-18T14:32:20.000", "PhotosRelPaths": [ "./PXL_20221118_203220790~2.jpg" ], "Vehicle": "bicycle", "Distance": 9917 }, "geometry": { "type": "Point", "coordinates": [ -10757476.2, 1926256.1 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221118_220029932~2.jpg", "Timestamp": "2022-11-18T16:00:29.000", "PhotosRelPaths": [ "./PXL_20221118_220029932~2.jpg" ], "Vehicle": "car", "Distance": 13416 }, "geometry": { "type": "Point", "coordinates": [ -10771461.6, 1927367.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221120_174446589~2.jpg", "Timestamp": "2022-11-20T11:44:46.000", "PhotosRelPaths": [ "./PXL_20221120_174446589~2.jpg" ], "Vehicle": "bus", "Distance": 136730 }, "geometry": { "type": "Point", "coordinates": [ -10806698.6, 1788399.3 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221121_155419569~2.jpg", "Timestamp": "2022-11-21T09:54:19.000", "PhotosRelPaths": [ "./PXL_20221121_155419569~2.jpg" ], "Vehicle": "bicycle", "Distance": 4601 }, "geometry": { "type": "Point", "coordinates": [ -10803019.8, 1785325.1 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221122_123022464~2.jpg", "Timestamp": "2022-11-22T06:30:22.000", "PhotosRelPaths": [ "./PXL_20221122_123022464~2.jpg", "./PXL_20221122_125253796.jpg" ], "Vehicle": "walk", "Distance": 3673 }, "geometry": { "type": "Point", "coordinates": [ -10802968.4, 1785422.1 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221122_142627236.jpg", "Timestamp": "2022-11-22T08:26:27.000", "PhotosRelPaths": [ "./PXL_20221122_142627236.jpg" ], "Vehicle": "car", "Distance": 84561 }, "geometry": { "type": "Point", "coordinates": [ -10715432.1, 1777843.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221122_154738535.jpg", "Timestamp": "2022-11-22T09:47:38.000", "PhotosRelPaths": [ "./PXL_20221122_154738535.jpg" ], "Vehicle": "car", "Distance": 31900 }, "geometry": { "type": "Point", "coordinates": [ -10682977.5, 1784610.3 ] } },
+{ "type": "Feature", "properties": { "Name": "original_2506b091-b34c-4018-a841-6d2a9708a557_PXL_20221122_154744969~2.jpg", "Timestamp": "2022-11-22T09:47:44.000", "PhotosRelPaths": [ "./original_2506b091-b34c-4018-a841-6d2a9708a557_PXL_20221122_154744969~2.jpg", "./PXL_20221122_213004784~2.jpg", "./PXL_20221122_214633424.jpg", "./original_a0f75384-49f8-4669-9c9c-70b821efacfa_PXL_20221122_215304832.jpg", "./PXL_20221123_144910491~2.jpg" ], "Vehicle": "walk", "Distance": 20816 }, "geometry": { "type": "Point", "coordinates": [ -10682978.4, 1784613.1 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221123_153327322~2.jpg", "Timestamp": "2022-11-23T09:33:27.000", "PhotosRelPaths": [ "./PXL_20221123_153327322~2.jpg" ], "Vehicle": "car", "Distance": 20707 }, "geometry": { "type": "Point", "coordinates": [ -10662275.1, 1790523.2 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221123_232918717.jpg", "Timestamp": "2022-11-23T17:29:18.000", "PhotosRelPaths": [ "./PXL_20221123_232918717.jpg" ], "Vehicle": "bicycle", "Distance": 3351 }, "geometry": { "type": "Point", "coordinates": [ -10660501.4, 1793539.9 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221125_210154850.jpg", "Timestamp": "2022-11-25T15:01:54.000", "PhotosRelPaths": [ "./PXL_20221125_210154850.jpg" ], "Vehicle": "bus", "Distance": 135634 }, "geometry": { "type": "Point", "coordinates": [ -10801088.7, 1783151.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221125_215917204.jpg", "Timestamp": "2022-11-25T15:59:17.000", "PhotosRelPaths": [ "./PXL_20221125_215917204.jpg" ], "Vehicle": "bicycle", "Distance": 1020 }, "geometry": { "type": "Point", "coordinates": [ -10800448.0, 1784001.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221125_220107305.jpg", "Timestamp": "2022-11-25T16:01:07.000", "PhotosRelPaths": [ "./PXL_20221125_220107305.jpg", "./PXL_20221125_225838223.jpg" ], "Vehicle": "walk", "Distance": 1868 }, "geometry": { "type": "Point", "coordinates": [ -10800453.2, 1783994.1 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221125_230724409~2.jpg", "Timestamp": "2022-11-25T17:07:24.000", "PhotosRelPaths": [ "./PXL_20221125_230724409~2.jpg" ], "Vehicle": "bicycle", "Distance": 1868 }, "geometry": { "type": "Point", "coordinates": [ -10799321.2, 1782406.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221125_231049181.jpg", "Timestamp": "2022-11-25T17:10:49.000", "PhotosRelPaths": [ "./PXL_20221125_231049181.jpg", "./PXL_20221125_232738966~2.jpg", "./PXL_20221128_150259230~2.jpg" ], "Vehicle": "walk", "Distance": 9598 }, "geometry": { "type": "Point", "coordinates": [ -10799315.9, 1782402.3 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221128_154749623~2.jpg", "Timestamp": "2022-11-28T09:47:49.000", "PhotosRelPaths": [ "./PXL_20221128_154749623~2.jpg" ], "Vehicle": "bicycle", "Distance": 4640 }, "geometry": { "type": "Point", "coordinates": [ -10802965.7, 1785573.2 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221128_191220401~2.jpg", "Timestamp": "2022-11-28T13:12:20.000", "PhotosRelPaths": [ "./PXL_20221128_191220401~2.jpg" ], "Vehicle": "car", "Distance": 64674 }, "geometry": { "type": "Point", "coordinates": [ -10867888.4, 1803159.1 ] } },
+{ "type": "Feature", "properties": { "Name": "original_0c35884e-926e-402b-93be-e1c1b033b29e_PXL_20221128_191809626.jpg", "Timestamp": "2022-11-28T13:18:09.000", "PhotosRelPaths": [ "./original_0c35884e-926e-402b-93be-e1c1b033b29e_PXL_20221128_191809626.jpg" ], "Vehicle": "bicycle", "Distance": 1978 }, "geometry": { "type": "Point", "coordinates": [ -10869942.3, 1803030.8 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221201_140342091~2.jpg", "Timestamp": "2022-12-01T08:03:42.000", "PhotosRelPaths": [ "./PXL_20221201_140342091~2.jpg" ], "Vehicle": "bicycle", "Distance": 3761 }, "geometry": { "type": "Point", "coordinates": [ -10873368.4, 1801131.8 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221201_140620611~2.jpg", "Timestamp": "2022-12-01T08:06:20.000", "PhotosRelPaths": [ "./PXL_20221201_140620611~2.jpg", "./PXL_20221201_153003697~2.jpg", "./PXL_20221203_171445590.jpg" ], "Vehicle": "walk", "Distance": 65888 }, "geometry": { "type": "Point", "coordinates": [ -10873390.7, 1801075.8 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221204_021053629.jpg", "Timestamp": "2022-12-03T20:10:53.000", "PhotosRelPaths": [ "./PXL_20221204_021053629.jpg" ], "Vehicle": "bus", "Distance": 413042 }, "geometry": { "type": "Point", "coordinates": [ -11039239.7, 2204038.5 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221204_031005872.jpg", "Timestamp": "2022-12-03T21:10:05.000", "PhotosRelPaths": [ "./PXL_20221204_031005872.jpg", "./PXL_20221204_040040505.jpg", "./PXL_20221205_200250282.jpg" ], "Vehicle": "walk", "Distance": 14952 }, "geometry": { "type": "Point", "coordinates": [ -11039070.6, 2203695.9 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221205_234203218~2.jpg", "Timestamp": "2022-12-05T17:42:03.000", "PhotosRelPaths": [ "./PXL_20221205_234203218~2.jpg" ], "Vehicle": "car", "Distance": 19545 }, "geometry": { "type": "Point", "coordinates": [ -11020115.4, 2195299.2 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221207_014427732~2.jpg", "Timestamp": "2022-12-06T19:44:27.000", "PhotosRelPaths": [ "./PXL_20221207_014427732~2.jpg" ], "Vehicle": "car", "Distance": 21001 }, "geometry": { "type": "Point", "coordinates": [ -11040204.8, 2204934.3 ] } },
+{ "type": "Feature", "properties": { "Name": "original_3782e45b-25e2-4e4c-b892-813d8c876f3c_PXL_20221207_021926985.jpg", "Timestamp": "2022-12-06T20:19:26.000", "PhotosRelPaths": [ "./original_3782e45b-25e2-4e4c-b892-813d8c876f3c_PXL_20221207_021926985.jpg", "./PXL_20221207_030316148~2.jpg" ], "Vehicle": "walk", "Distance": 1424 }, "geometry": { "type": "Point", "coordinates": [ -11039286.4, 2205379.9 ] } },
+{ "type": "Feature", "properties": { "Name": "original_8c385258-e9d9-4a29-b57c-17ee87f5f83a_PXL_20221207_165012112.jpg", "Timestamp": "2022-12-07T10:50:12.000", "PhotosRelPaths": [ "./original_8c385258-e9d9-4a29-b57c-17ee87f5f83a_PXL_20221207_165012112.jpg" ], "Vehicle": "car", "Distance": 65527 }, "geometry": { "type": "Point", "coordinates": [ -10982029.2, 2165949.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221208_203912569~3.jpg", "Timestamp": "2022-12-08T14:39:12.000", "PhotosRelPaths": [ "./PXL_20221208_203912569~3.jpg" ], "Vehicle": "car", "Distance": 66653 }, "geometry": { "type": "Point", "coordinates": [ -11041489.3, 2204200.2 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221212_222242305.jpg", "Timestamp": "2022-12-12T16:22:42.000", "PhotosRelPaths": [ "./PXL_20221212_222242305.jpg" ], "Vehicle": "bicycle", "Distance": 1271 }, "geometry": { "type": "Point", "coordinates": [ -11041671.1, 2202856.6 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221213_230951488~2.jpg", "Timestamp": "2022-12-13T17:09:51.000", "PhotosRelPaths": [ "./PXL_20221213_230951488~2.jpg" ], "Vehicle": "car", "Distance": 11390 }, "geometry": { "type": "Point", "coordinates": [ -11030022.5, 2206048.1 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221214_203609052~2.jpg", "Timestamp": "2022-12-14T15:36:09.000", "PhotosRelPaths": [ "./PXL_20221214_203609052~2.jpg" ], "Vehicle": "airplane", "Distance": 1297638 }, "geometry": { "type": "Point", "coordinates": [ -9663767.1, 2428532.6 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221214_205139979~2.jpg", "Timestamp": "2022-12-14T15:51:39.000", "PhotosRelPaths": [ "./PXL_20221214_205139979~2.jpg", "./PXL_20221215_201009196.jpg" ], "Vehicle": "walk", "Distance": 3404 }, "geometry": { "type": "Point", "coordinates": [ -9663423.3, 2429287.3 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221215_201033593~2.jpg", "Timestamp": "2022-12-15T15:10:33.000", "PhotosRelPaths": [ "./PXL_20221215_201033593~2.jpg" ], "Vehicle": "bicycle", "Distance": 2635 }, "geometry": { "type": "Point", "coordinates": [ -9662159.8, 2431832.0 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221219_230754623~2.jpg", "Timestamp": "2022-12-19T18:07:54.000", "PhotosRelPaths": [ "./PXL_20221219_230754623~2.jpg" ], "Vehicle": "car", "Distance": 64038 }, "geometry": { "type": "Point", "coordinates": [ -9727082.0, 2454627.7 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221221_195308689.jpg", "Timestamp": "2022-12-21T14:53:08.000", "PhotosRelPaths": [ "./PXL_20221221_195308689.jpg" ], "Vehicle": "bicycle", "Distance": 2071 }, "geometry": { "type": "Point", "coordinates": [ -9725199.7, 2455823.1 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221221_224041085~2.jpg", "Timestamp": "2022-12-21T17:40:41.000", "PhotosRelPaths": [ "./PXL_20221221_224041085~2.jpg" ], "Vehicle": "bicycle", "Distance": 4313 }, "geometry": { "type": "Point", "coordinates": [ -9728765.0, 2452844.8 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221221_224149515~2.jpg", "Timestamp": "2022-12-21T17:41:49.000", "PhotosRelPaths": [ "./PXL_20221221_224149515~2.jpg", "./PXL_20221221_225326855~2.jpg", "./PXL_20221221_230331284~2.jpg", "./PXL_20221221_232151253~2.jpg" ], "Vehicle": "walk", "Distance": 2033 }, "geometry": { "type": "Point", "coordinates": [ -9728763.2, 2452846.8 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221223_211935862.jpg", "Timestamp": "2022-12-23T16:19:35.000", "PhotosRelPaths": [ "./PXL_20221223_211935862.jpg" ], "Vehicle": "bicycle", "Distance": 4307 }, "geometry": { "type": "Point", "coordinates": [ -9725189.5, 2455804.4 ] } },
+{ "type": "Feature", "properties": { "Name": "PXL_20221224_205618737~2.jpg", "Timestamp": "2022-12-24T15:56:18.000", "PhotosRelPaths": [ "./PXL_20221224_205618737~2.jpg" ], "Vehicle": "walk", "Distance": 176 }, "geometry": { "type": "Point", "coordinates": [ -9725243.0, 2455986.9 ] } }
+]
 }
