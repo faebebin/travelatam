@@ -90,7 +90,7 @@ export function turnTowards(current, destination, azimuthCorrection) {
 export const vehicles = [
   // TODO class Vehicle with move() method ...
   {
-    maxDistance: 1 * 1000, // for vehicle choice
+    maxDistance: 2 * 1000, // for vehicle choice
     symbol: '🚶',
     name: 'walk',
     // mode: 'walk',
@@ -98,47 +98,47 @@ export const vehicles = [
     azimuthCorrection: 1.5708, // radians
     zoom: 18,
     move: driveTo,
-    velocity: 10 // m/s
+    velocity: 1000 // m/s
   },
   {
-    maxDistance: 10 * 1000,
+    maxDistance: 5 * 1000,
     symbol: '🚲',
     name: 'bicycle',
     mode: 'drive',
     azimuthCorrection: 1.5708,
     zoom: 16,
     move: driveTo,
-    velocity: 50
+    velocity: 2500
   },
   {
-    maxDistance: 100 * 1000,
+    maxDistance: 50 * 1000,
     symbol: '🚗',
     name: 'car',
     mode: 'drive',
     azimuthCorrection: 1.5708,
     zoom: 13,
     move: driveTo,
-    velocity: 20
+    velocity: 25000
   },
   {
-    maxDistance: 100 * 1000,
+    maxDistance: 50 * 1000,
     symbol: '🛥️ ',
     name: 'boat',
     mode: 'drive',
     azimuthCorrection: 1.5708,
     zoom: 13,
     move: driveTo,
-    velocity: 15
+    velocity: 25000
   },
   {
-    maxDistance: 1000 * 1000,
+    maxDistance: 500 * 1000,
     symbol: '🚌',
     name: 'bus',
     mode: 'drive',
     azimuthCorrection: 1.5708,
     zoom: 9,
     move: driveTo,
-    velocity: 80
+    velocity: 250000
   },
   {
     maxDistance: Infinity,
@@ -148,7 +148,7 @@ export const vehicles = [
     azimuthCorrection: -0.785398,
     zoom: 6,
     move: flyTo,
-    velocity: 800
+    velocity: 500000
   }
 ]
 

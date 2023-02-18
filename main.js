@@ -209,8 +209,8 @@ async function next(index) {
         });
       }
 
-      const duration = (Distance / velocity) * 1000 / DISPLAY_VELOCITY // in ms 
-      arrived = await move(coordinates, duration, view);
+      const duration = (Distance / velocity) // in ms 
+      arrived = await move(coordinates, 2000, view);
       vehicleEl.textContent = ''
       driveAnimation?.cancel()
     }
